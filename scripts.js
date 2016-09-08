@@ -3,46 +3,37 @@
 /*global Event: false */
 /*global console: false */
 /*global Tone:false */
-/*global PIXI:false */
 /*global requestAnimationFrame: false */
+document.write("<"+"script type='text/javascript' src='pixi.min.js'><"+"/script>")
 // Autodetect and create the renderer
-var renderer = PIXI.autoDetectRenderer(800, 600);
-
-  // Set the background color of the renderer to a baby-blue'ish color
-renderer.backgroundColor = 0x3498db;
-
-  // Append the renderer to the body of the page
-document.body.appendChild(renderer.view);
-
-  // Se crea el contenedor principal
-var stage = new PIXI.Container();
-var graphics = new PIXI.Graphics();
-
-  //Se crea la nota
-var a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
-a_quarter.width = 40;
-a_quarter.height = 50;
-a_quarter.x = 700;
-a_quarter.y = 120;
-
-//Definicion del rectangulo
-graphics.drawRect(100, 100, 20, 200);
-
-  // Add the elements to the stage
-stage.addChild(graphics);
-stage.addChild(a_quarter);
-
-// Start animating
-animate();
-
+var a_quarter;
+var renderer;
+var canvas;
+var stage;
+var graphics;
+function iniciarPixi(){
+  renderer = PIXI.autoDetectRenderer(1000, 300);
+  renderer.backgroundColor = 0xCEF6F5;
+  canvas = document.getElementById('canvas');
+  canvas.appendChild(renderer.view);
+  stage = new PIXI.Container();
+  graphics = new PIXI.Graphics();
+  a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
+  a_quarter.width = 40;
+  a_quarter.height = 50;
+  a_quarter.x =700;a_quarter.y=120;
+  graphics.drawRect(100,100,20,200);
+  stage.addChild(graphics);
+  stage.addChild(a_quarter);
+  animate();
+  document.getElementById("BotonInicio").displayObject= false;
+  
+}
 function animate() {
     "use strict";
     requestAnimationFrame(animate);
-    // La nota se mueve
     a_quarter.x -= 1;
-    // La nota desaparece si pasa el rectangulo
     if (a_quarter.x === 55) a_quarter.visible = false;
-    // Render our container
     renderer.render(stage);
 }
 
@@ -50,7 +41,6 @@ function makeNoteBigger() {
     "use strict";
     a_quarter.width = 60;
     a_quarter.height = 70;
-    // Render our container
     renderer.render(stage);
 }
 
@@ -58,11 +48,9 @@ function makeNoteSmaller() {
     "use strict";
     a_quarter.width = 30;
     a_quarter.height = 35;
-    // Render our container
     renderer.render(stage);
 }
-function iniciar() {
-	//el Metronomo
+function metronomo() {
     "use strict";
 	var synth = new Tone.Synth().toMaster();
 	Tone.Transport.start();
@@ -75,18 +63,16 @@ function iniciar() {
 
 function izq() {
 	"use strict";
-	//var sonido = document.getElementById("sonido");
-	//sonido.play();
 	var synth = new Tone.Synth().toMaster();
 	synth.triggerAttackRelease("C4", "8n");
-	document.getElementById("res").textContent = document.getElementById("res").textContent + "I-";
+    puntaje();
 }
 
 function der() {
     "use strict";
 	var synth = new Tone.Synth().toMaster();
 	synth.triggerAttackRelease("A4", "8n");
-	document.getElementById("res").textContent = document.getElementById("res").textContent + "D-";
+    puntaje();
 }
 function s(Event) {
 	"use strict";
@@ -100,13 +86,13 @@ function s(Event) {
 }
 function puntaje() {
     "use strict";
-    if (a_quarter.x <= 110 && a_quarter.x >= 90) {
-        var puntaje = document.getElementById('Score').innerHTML + 100;
+    if (a_quarter.x <= 110 && a_quarter.x > 50) {
+        var puntaje = document.getElementById('Score').innerHTML - (-100);
         document.getElementById('Score').innerHTML = puntaje;
         console.log("gj");
     } else {
         var puntaje = document.getElementById('Score').innerHTML - 100;
         document.getElementById('Score').innerHTML = puntaje;
-        console.log("pls..");
+        console.log("pls"+a_quarter.x);
     }
 }

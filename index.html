@@ -1,133 +1,35 @@
 <!-- <!DOCTYPE html> -->
 <html>
+    <link rel="stylesheet" href="style.css">
+    <script src="scripts.js"></script>  
+    <script src="pixi.min.js"></script>
+    <script src="Tone.js"></script>
 <head>
   <meta charset="utf-8">
-  <title>Pixi.js basic example</title>
+  <title>TARATATAPP</title>
 
-  <style>
+  <!--<style>
   body {
     margin: 0;
     padding: 0;
-    background-color: #FFF;
+    background-color: #000;
+    background-image: url(fondo2.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
   }
-  </style>
+  </style> -->
 </head>
 <body onkeypress="s()" onfocus="s()">
   <div class="botones">
-    <center><button type="button" onClick="iniciar()">Iniciar!</button></center>
+    <center><button type="button" onClick="metronomo()">Metronomo</button></center>
     <center> </center><b></b><b></b>
-    <center>Puntaje:<button type="label" id="Score">0</button></center>
+    <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
   </div>
-  <div class="juego" id="canvas">
-  </div>
+  <center class="pixi"><div class="juego" id="canvas">
+  </div></center>
+    <div><center><button type="button" id = "BotonInicio" onClick="iniciarPixi()">JUGAR!</button></center></div>
+  
 
-  <script src="pixi.min.js"></script>
-  <script src="Tone.js"></script>
-  <script>
-  // Autodetect and create the renderer
-  var renderer = PIXI.autoDetectRenderer(1000, 300);
-  // Set the background color of the renderer to a baby-blue'ish color
-  renderer.backgroundColor = 0xCEF6F5;
-  // Append the renderer to the body of the page
-  //document.body.appendChild(renderer.view);
-  var canvas = document.getElementById('canvas');
-  canvas.appendChild(renderer.view);
-  // Se crea el contenedor principal
-  var stage = new PIXI.Container();
-  var graphics = new PIXI.Graphics();
-  //Se crea la nota
-  var a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
-  a_quarter.width = 40;
-  a_quarter.height = 50;
-  a_quarter.x =700;a_quarter.y=120;
-  //Definicion del rectangulo
-  graphics.drawRect(100,100,20,200);
-  // Add the elements to the stage
-  stage.addChild(graphics);
-  stage.addChild(a_quarter);
-  // Start animating
-  animate();
-  function animate() {
-    requestAnimationFrame(animate);
-    // La nota se mueve
-    a_quarter.x-=3;
-    // La nota desaparece si pasa el rectangulo
-    if (a_quarter.x===55) {
-       // a_quarter.visible = false;
-        crearNota();
-    }// Render our container
-    renderer.render(stage);
-  }
-  function crearNota(){
-      var a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
-      a_quarter.width = 40;
-      a_quarter.height = 50;
-      a_quarter.x =700;
-      a_quarter.y =120;
-      stage.addChild(a_quarter);
-      animate();
-  }
-  function makeNoteBigger() {
-    a_quarter.width = 60;a_quarter.height = 70;
-    // Render our container
-    renderer.render(stage);
-  }
-  function makeNoteSmaller() {
-    a_quarter.width = 30;a_quarter.height = 35;
-    // Render our container
-    renderer.render(stage);
-  }
-  function iniciar(){
-    //el Metronomo
-    var synth = new Tone.Synth().toMaster();
-    Tone.Transport.start();
-    Tone.Transport.scheduleRepeat(function(time){
-      synth.triggerAttackRelease("B4","8n");
-      console.log(time);
-    }, "0.9");
-  }
-  function izq() {
-    "use strict";
-    //var sonido = document.getElementById("sonido");
-    //sonido.play();
-    var synth = new Tone.Synth().toMaster();
-    synth.triggerAttackRelease("C4","8n");
-    puntaje();
-    //document.getElementById("res").textContent = document.getElementById("res").textContent + "I-";
-  }
-  function der() {
-    "use strict";
-    var synth = new Tone.Synth().toMaster();
-    synth.triggerAttackRelease("A4","8n");
-    puntaje();
-    //document.getElementById("res").textContent = document.getElementById("res").textContent + "D-";
-  }
-  function s(Event) {
-    "use strict";
-    var char = event.which || event.keyCode;
-    console.log(char);
-    if (char === 115 || char === 83) {
-        //la nota se hace grande cuando se toca el izquierdo
-        makeNoteBigger();
-      izq();
-    } else if (char === 75 || char === 107) {
-      makeNoteSmaller();
-      der();
-    }
-  }
-  function puntaje() {
-    "use strict";
-    if (a_quarter.x >= 55 && a_quarter.x <= 100 ) {
-        var puntaje = document.getElementById('Score').innerHTML - -100;
-        document.getElementById('Score').innerHTML = puntaje;
-        console.log("gj");
-    } else {
-        var puntaje = document.getElementById('Score').innerHTML - 50;
-        document.getElementById('Score').innerHTML = puntaje;
-        console.log("pls..");
-    }
-}
-
-  </script>
 </body>
 </html>
