@@ -4,14 +4,15 @@
 /*global console: false */
 /*global Tone:false */
 /*global requestAnimationFrame: false */
-document.write("<"+"script type='text/javascript' src='pixi.min.js'><"+"/script>")
 // Autodetect and create the renderer
 var counter =0;
 var renderer;
 var canvas;
 var stage;
 var graphics;
+var level=2;
 var notas = [];
+var posiciones = [700,750,850,900,950,1000,1050,1100,1200,1250,1300,1350,1400,1450,1550,1600,1650,1700,1750,1800,1900,1950,2000,2050,2100,2150,2250,2300,2350,2400,2450,2500,2600,2750,2800,2850,2950,3000,3050,3100,3150,3200,3300,3450]
 function iniciarPixi(){
   renderer = PIXI.autoDetectRenderer(1000, 300);
   renderer.backgroundColor = 0xCEF6F5;
@@ -21,15 +22,16 @@ function iniciarPixi(){
   //renderer.view.backgroundImage()
   graphics = new PIXI.Graphics();
  
-  for (var i=0; i<15; i++){
+  for (var i=0; i<posiciones.length; i++){
       var a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
       a_quarter.width = 40;
       a_quarter.height = 50;
-      a_quarter.x =700 +(100*i);a_quarter.y=120;
+      a_quarter.x =posiciones[i];
+      a_quarter.y=120;
       notas.push(a_quarter);
       stage.addChild(a_quarter);
   }
-  graphics.drawRect(100,100,20,200);
+  graphics.drawRect(100,70,20,200);
   stage.addChild(graphics);
   
   animate();
@@ -39,13 +41,13 @@ function iniciarPixi(){
 }
 function animate() {
     "use strict";
-    for (var i=0; i< 15; i++){
+    for (var i=0; i<posiciones.length; i++){
         var nota = notas[i];
-        if (notas[counter].x === 55 || notas[counter.x] === 54) {
+        if (notas[counter].x < 55) {
         notas[counter].visible = false;
         counter +=1;
         }
-        notas[i].x -= 1;
+        notas[i].x -= level;
     }
     requestAnimationFrame(animate);
     
@@ -102,7 +104,7 @@ function s(Event) {
 }
 function puntaje() {
     "use strict";
-    if (notas[counter].x <= 110 && notas[counter].x > 50) {
+    if (notas[counter].x <= 100 - (level*3) && notas[counter].x > 55) {
         var puntaje = document.getElementById('Score').innerHTML - (-100);
         document.getElementById('Score').innerHTML = puntaje;
         console.log("gj");
