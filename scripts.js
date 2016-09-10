@@ -6,34 +6,50 @@
 /*global requestAnimationFrame: false */
 document.write("<"+"script type='text/javascript' src='pixi.min.js'><"+"/script>")
 // Autodetect and create the renderer
-var a_quarter;
+var counter =0;
 var renderer;
 var canvas;
 var stage;
 var graphics;
+var notas = [];
 function iniciarPixi(){
   renderer = PIXI.autoDetectRenderer(1000, 300);
   renderer.backgroundColor = 0xCEF6F5;
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
   stage = new PIXI.Container();
+  //renderer.view.backgroundImage()
   graphics = new PIXI.Graphics();
-  a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
-  a_quarter.width = 40;
-  a_quarter.height = 50;
-  a_quarter.x =700;a_quarter.y=120;
+ 
+  for (var i=0; i<15; i++){
+      var a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
+      a_quarter.width = 40;
+      a_quarter.height = 50;
+      a_quarter.x =700 +(100*i);a_quarter.y=120;
+      notas.push(a_quarter);
+      stage.addChild(a_quarter);
+  }
   graphics.drawRect(100,100,20,200);
   stage.addChild(graphics);
-  stage.addChild(a_quarter);
+  
   animate();
+ 
   document.getElementById("BotonInicio").displayObject= false;
   
 }
 function animate() {
     "use strict";
+    for (var i=0; i< 15; i++){
+        var nota = notas[i];
+        if (notas[counter].x === 55 || notas[counter.x] === 54) {
+        notas[counter].visible = false;
+        counter +=1;
+        }
+        notas[i].x -= 1;
+    }
     requestAnimationFrame(animate);
-    a_quarter.x -= 1;
-    if (a_quarter.x === 55) a_quarter.visible = false;
+    
+   
     renderer.render(stage);
 }
 
@@ -86,13 +102,15 @@ function s(Event) {
 }
 function puntaje() {
     "use strict";
-    if (a_quarter.x <= 110 && a_quarter.x > 50) {
+    if (notas[counter].x <= 110 && notas[counter].x > 50) {
         var puntaje = document.getElementById('Score').innerHTML - (-100);
         document.getElementById('Score').innerHTML = puntaje;
         console.log("gj");
+
     } else {
         var puntaje = document.getElementById('Score').innerHTML - 100;
         document.getElementById('Score').innerHTML = puntaje;
-        console.log("pls"+a_quarter.x);
+        console.log("pls"+notas[counter].x);
+        console.log(counter);
     }
 }
