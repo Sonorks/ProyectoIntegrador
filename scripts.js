@@ -10,18 +10,18 @@ var renderer;
 var canvas;
 var stage;
 var graphics;
+//Nivel de dificultad
 var level=2;
 var notas = [];
 var posiciones = [700,750,850,900,950,1000,1050,1100,1200,1250,1300,1350,1400,1450,1550,1600,1650,1700,1750,1800,1900,1950,2000,2050,2100,2150,2250,2300,2350,2400,2450,2500,2600,2750,2800,2850,2950,3000,3050,3100,3150,3200,3300,3450]
 function iniciarPixi(){
-  renderer = PIXI.autoDetectRenderer(1000, 300);
-  renderer.backgroundColor = 0xCEF6F5;
+  renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
   stage = new PIXI.Container();
   //renderer.view.backgroundImage()
   graphics = new PIXI.Graphics();
- 
+
   for (var i=0; i<posiciones.length; i++){
       var a_quarter = PIXI.Sprite.fromImage('quarter_note.png');
       a_quarter.width = 40;
@@ -33,11 +33,11 @@ function iniciarPixi(){
   }
   graphics.drawRect(100,70,20,200);
   stage.addChild(graphics);
-  
+
   animate();
- 
+
   document.getElementById("BotonInicio").displayObject= false;
-  
+
 }
 function animate() {
     "use strict";
@@ -50,8 +50,8 @@ function animate() {
         notas[i].x -= level;
     }
     requestAnimationFrame(animate);
-    
-   
+
+
     renderer.render(stage);
 }
 
