@@ -10,6 +10,7 @@ var renderer;
 var canvas;
 var stage;
 var graphics;
+var pent;
 //Nivel de dificultad
 var level=2;
 var notas = [];
@@ -19,21 +20,48 @@ function iniciarPixi(){
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
   stage = new PIXI.Container();
-  //renderer.view.backgroundImage()
   graphics = new PIXI.Graphics();
-
+  //Crea las notas
   for (var i=0; i<posiciones.length; i++){
     var a_quarter = makeQuarterNote();
+    a_quarter.y = 110;
     a_quarter.x = posiciones[i];
     notas.push(a_quarter);
     stage.addChild(a_quarter);
   }
+  pent = makePentagram();
   graphics.drawRect(100,70,20,200);
   stage.addChild(graphics);
-
+  stage.addChild(pent);
+  //comienza la animacion
   animate();
 
   document.getElementById("BotonInicio").displayObject= false;
+
+}
+
+function makePentagram(){
+  var pentagram = new PIXI.Graphics();
+  // set a line style again
+  pentagram.lineStyle(2, 0x000000, 0.5);
+  //start drawing
+  pentagram.moveTo(0,100);
+  pentagram.lineTo(1000,100);
+  pentagram.moveTo(0,120);
+  pentagram.lineTo(1000,120);
+  pentagram.moveTo(0,140);
+  pentagram.lineTo(1000,140);
+  pentagram.moveTo(0,160);
+  pentagram.lineTo(1000,160);
+  pentagram.moveTo(0,180);
+  pentagram.lineTo(1000,180);
+  pentagram.moveTo(1,100);
+  pentagram.lineTo(1,180);
+  pentagram.moveTo(1000,100);
+  pentagram.lineTo(1000,180);
+  pentagram.drawRect(30,90,20,100);
+  return pentagram;
+
 
 }
 
@@ -44,12 +72,12 @@ function makeQuarterNote(){
   a_quarter.lineStyle(5, 0x000000, 1);
   a_quarter.beginFill(0x000000, 1);
   // draw a second shape
-  a_quarter.moveTo(15,150);
-  a_quarter.lineTo(15,230);
-  a_quarter.drawCircle(5,230,10);
+  a_quarter.moveTo(11,0);
+  a_quarter.lineTo(11,50);
+  a_quarter.drawCircle(5,50,6);
   a_quarter.endFill();
-  a_quarter.width = 40;
-  a_quarter.height = 50;
+  //a_quarter.width = 40;
+  //a_quarter.height = 50;
   return a_quarter;
 }
 
