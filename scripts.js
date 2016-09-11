@@ -14,6 +14,7 @@ var pent;
 //Nivel de dificultad
 var level=2;
 var notas = [];
+var count = 0;
 var posiciones = [700,750,850,900,950,1000,1050,1100,1200,1250,1300,1350,1400,1450,1550,1600,1650,1700,1750,1800,1900,1950,2000,2050,2100,2150,2250,2300,2350,2400,2450,2500,2600,2750,2800,2850,2950,3000,3050,3100,3150,3200,3300,3450]
 function iniciarPixi(){
   renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
@@ -37,6 +38,7 @@ function iniciarPixi(){
   animate();
 
   document.getElementById("BotonInicio").displayObject= false;
+  document.getElementById("BotonInicio").disabled = true;
 
 }
 
@@ -89,11 +91,16 @@ function animate() {
       notas[counter].visible = false;
       counter +=1;
     }
+    /*if (notas[counter].x < 100){
+        count = 0.8;
+        notas[counter].scale.x = Math.sin(count)
+        notas[counter].scale.y = Math.sin(count)
+        notas[counter].rotation += 0.01
+    }*/
     notas[i].x -= level;
   }
   requestAnimationFrame(animate);
-
-
+    
   renderer.render(stage);
 }
 
@@ -149,12 +156,23 @@ function puntaje() {
   if (notas[counter].x <= 100 - (level*3) && notas[counter].x > 55) {
     var puntaje = document.getElementById('Score').innerHTML - (-100);
     document.getElementById('Score').innerHTML = puntaje;
+    animateRotation();
     console.log("gj");
 
   } else {
     var puntaje = document.getElementById('Score').innerHTML - 100;
-    document.getElementById('Score').innerHTML = puntaje;
+    document.getElementById('Score').innerHTML = puntaje;    
     console.log("pls"+notas[counter].x);
     console.log(counter);
   }
+}
+
+function animateRotation() {
+  "use strict";
+  count = 0.6;
+  notas[counter].scale.x = Math.sin(count)
+  notas[counter].scale.y = Math.sin(count)
+  notas[counter].rotation += 0.75
+  //requestAnimationFrame(animateRotation);    
+  renderer.render(stage);
 }
