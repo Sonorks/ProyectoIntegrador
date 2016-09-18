@@ -5,7 +5,7 @@
 /*global Tone:false */
 /*global requestAnimationFrame: false */
 // Autodetect and create the renderer
-var counter =0;
+var counter=0;
 var renderer;
 var canvas;
 var stage;
@@ -16,7 +16,27 @@ var level=2;
 var notas = [];
 var count = 0;
 var posiciones = [700,750,850,900,950,1000,1050,1100,1200,1250,1300,1350,1400,1450,1550,1600,1650,1700,1750,1800,1900,1950,2000,2050,2100,2150,2250,2300,2350,2400,2450,2500,2600,2750,2800,2850,2950,3000,3050,3100,3150,3200,3300,3450]
+function readTextFile(file)
+{
+    var file = "./cancion.txt";
+    debugger;
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET",file,true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
 function iniciarPixi(){
+  readTextFile();   
   renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
@@ -39,7 +59,6 @@ function iniciarPixi(){
 
   document.getElementById("BotonInicio").displayObject= false;
   document.getElementById("BotonInicio").disabled = true;
-
 }
 
 function makePentagram(){
@@ -63,8 +82,6 @@ function makePentagram(){
   pentagram.lineTo(1000,180);
   pentagram.drawRect(30,90,20,100);
   return pentagram;
-
-
 }
 
 //Este metodo hace el dibujo de la cuarta
