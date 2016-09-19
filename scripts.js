@@ -12,8 +12,9 @@ var stage;
 var graphics;
 var pent;
 //Nivel de dificultad
-var level=2;
+var level=4;
 var notas = [];
+var notasTocadas = [];
 var count = 0;
 var posiciones =[];// = [700,750,850,900,950,1000,1050,1100,1200,1250,1300,1350,1400,1450,1550,1600,1650,1700,1750,1800,1900,1950,2000,2050,2100,2150,2250,2300,2350,2400,2450,2500,2600,2750,2800,2850,2950,3000,3050,3100,3150,3200,3300,3450]
 function readTextFile(file)
@@ -106,6 +107,10 @@ function animate() {
   for (var i=0; i<posiciones.length; i++){
     var nota = notas[i];
     if (notas[counter].x < 55) {
+      if(notasTocadas[counter] != 1){
+          var puntaje = document.getElementById('Score').innerHTML - 200;
+          document.getElementById('Score').innerHTML = puntaje; 
+      }
       notas[counter].visible = false;
       counter +=1;
     }
@@ -137,32 +142,30 @@ function makeNoteSmaller() {
 }
 function metronomo() {
   "use strict";
-  var synth = new Tone.Synth().toMaster();
+     var synth = new Tone.Synth().toMaster();
   Tone.Transport.start();
   Tone.Transport.scheduleRepeat(function (time) {
-    synth.triggerAttackRelease("B4", "8n");
-    console.log(time);
-  }, "0.5");
+  synth.triggerAttackRelease("B1","8n");
+  }, "0.48");
 
 }
 
 function izq() {
   "use strict";
-  var synth = new Tone.Synth().toMaster();
-  synth.triggerAttackRelease("C4", "8n");
+  var synth = new Tone.MembraneSynth().toMaster();
+  synth.triggerAttackRelease("C1","8n");
   puntaje();
 }
 
 function der() {
   "use strict";
-  var synth = new Tone.Synth().toMaster();
-  synth.triggerAttackRelease("A4", "8n");
+  var synth = new Tone.MembraneSynth().toMaster();
+  synth.triggerAttackRelease("C1","8n");
   puntaje();
 }
 function s(Event) {
   "use strict";
   var char = event.which || event.keyCode;
-  console.log(char);
   if (char === 115 || char === 83) {
     izq();
   } else if (char === 75 || char === 107) {
@@ -171,17 +174,15 @@ function s(Event) {
 }
 function puntaje() {
   "use strict";
-  if (notas[counter].x <= 100 - (level*3) && notas[counter].x > 55) {
+  if (notas[counter].x <= 110 - (level*3) && notas[counter].x > 65) {
     var puntaje = document.getElementById('Score').innerHTML - (-100);
     document.getElementById('Score').innerHTML = puntaje;
     animateRotation();
-    console.log("gj");
+    notasTocadas[counter]=1;
 
   } else {
     var puntaje = document.getElementById('Score').innerHTML - 100;
     document.getElementById('Score').innerHTML = puntaje;    
-    console.log("pls"+notas[counter].x);
-    console.log(counter);
   }
 }
 
