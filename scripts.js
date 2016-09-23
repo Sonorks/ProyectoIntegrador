@@ -5,12 +5,10 @@
 /*global Tone:false */
 /*global requestAnimationFrame: false */
 // Autodetect and create the renderer
-
 /*MACROS*/
 var PI_NUMBER = 3.14159265359;
 var PI_MEDIOS = PI_NUMBER/2;
-
-/*CONSTANTES*/
+//Constantes
 var counter=0;
 var counter2=0;
 var renderer;
@@ -26,7 +24,6 @@ var notasTocadas = [];
 var notasTocadas2 = [];
 var count = 0;
 var posiciones2  = [900,1250,1300,1350,1650,2000,2050,2450,2950,3200];
-
 function readTextFile(file)
 {
     var file = "./cancion.txt";
@@ -47,8 +44,8 @@ function readTextFile(file)
     iniciarPixi();
 }
 function iniciarPixi(){
-
-  //readTextFile();
+  
+  //readTextFile();   
   renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
@@ -56,15 +53,27 @@ function iniciarPixi(){
   graphics = new PIXI.Graphics();
   //Crea las notas
   for (var i=0; i<posiciones.length; i++){
-    var a_quarter = semiCorchea();
+    var a_quarter = makeQuarterNote();
     a_quarter.y = 110;
     a_quarter.x = posiciones[i];
-    //Si se requiere voltear
+       //Si se requiere voltear
     a_quarter.rotation = PI_NUMBER;
     setCenterPivot(a_quarter);
     notas.push(a_quarter);
     stage.addChild(a_quarter);
   }
+
+  for (var i=0; i<posiciones2.length; i++){
+    var a_quarter = makeQuarterNote();
+    a_quarter.y = 80;
+    a_quarter.x = posiciones2[i];
+       //Si se requiere voltear
+    a_quarter.rotation = PI_NUMBER;
+    setCenterPivot(a_quarter);
+    notas2.push(a_quarter);
+    stage.addChild(a_quarter);
+  }
+
   pent = makePentagram();
   graphics.drawRect(100,70,20,200);
   stage.addChild(graphics);
@@ -104,7 +113,6 @@ function makePentagram(){
   pentagram.moveTo(1000,100);
   pentagram.lineTo(1000,180);
   pentagram.drawRect(30,90,20,100);
-  //Separacion entre las lineas: 20px
   return pentagram;
 }
 
@@ -119,6 +127,8 @@ function makeQuarterNote(){
   a_quarter.lineTo(11,50);
   a_quarter.drawCircle(5,50,6);
   a_quarter.endFill();
+  //a_quarter.width = 40;
+  //a_quarter.height = 50;
   return a_quarter;
 }
 
@@ -155,6 +165,7 @@ function semiCorchea(){
 
   return semiQuaver;
 }
+
 
 function animate() {
   "use strict";
@@ -210,6 +221,7 @@ function metronomo() {
   Tone.Transport.scheduleRepeat(function (time) {
   synth.triggerAttackRelease("B1","8n");
   }, "0.48");
+
 }
 
 function izq() {
