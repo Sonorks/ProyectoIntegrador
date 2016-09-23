@@ -12,16 +12,20 @@ var PI_MEDIOS = PI_NUMBER/2;
 
 /*CONSTANTES*/
 var counter=0;
+var counter2=0;
 var renderer;
 var canvas;
 var stage;
 var graphics;
 var pent;
-var level=4; //Nivel de dificultad
+//Nivel de dificultad
+var level=4;
 var notas = [];
+var notas2 = []; 
 var notasTocadas = [];
+var notasTocadas2 = [];
 var count = 0;
-var posiciones =[];// = [700,750,850,900,950,1000,1050,1100,1200,1250,1300,1350,1400,1450,1550,1600,1650,1700,1750,1800,1900,1950,2000,2050,2100,2150,2250,2300,2350,2400,2450,2500,2600,2750,2800,2850,2950,3000,3050,3100,3150,3200,3300,3450]
+var posiciones2  = [900,1250,1300,1350,1650,2000,2050,2450,2950,3200];
 
 function readTextFile(file)
 {
@@ -156,25 +160,34 @@ function animate() {
   "use strict";
   for (var i=0; i<posiciones.length; i++){
     var nota = notas[i];
-    if (notas[counter].x < 55) {
-      if(notasTocadas[counter] != 1){
-          var puntaje = document.getElementById('Score').innerHTML - 200;
-          document.getElementById('Score').innerHTML = puntaje;
-      }
-      notas[counter].visible = false;
-      counter +=1;
+    if (counter < posiciones.length){
+        if (notas[counter].x < 55) {
+          if(notasTocadas[counter] != 1){
+              var puntaje = document.getElementById('Score').innerHTML - 200;
+              document.getElementById('Score').innerHTML = puntaje; 
+          }
+        notas[counter].visible = false;
+        counter +=1;
+        }
     }
-    /*if (notas[counter].x < 100){
-        count = 0.8;
-        notas[counter].scale.x = Math.sin(count)
-        notas[counter].scale.y = Math.sin(count)
-        notas[counter].rotation += 0.01
-    }*/
-    notas[i].x -= level;
+	notas[i].x -= level;
   }
+      for (var i=0; i<posiciones2.length; i++){
+        var nota = notas2[i];
+        if (counter2 < posiciones2.length){
+            if (notas2[counter2].x < 55 ) {
+                notas2[counter2].visible = false;
+                counter2 +=1;
+            }
+        }
+      notas2[i].x -= level;
+      }
+    if(counter2===posiciones2.length && counter === posiciones.length){ 
+        console.log("Fin del juego");
+    }
   requestAnimationFrame(animate);
-
   renderer.render(stage);
+    
 }
 
 function makeNoteBigger() {
@@ -202,15 +215,15 @@ function metronomo() {
 function izq() {
   "use strict";
   var synth = new Tone.MembraneSynth().toMaster();
-  synth.triggerAttackRelease("C1","8n");
-  puntaje();
+  synth.triggerAttackRelease("A3","8n");
+  puntaje(false);
 }
 
 function der() {
   "use strict";
   var synth = new Tone.MembraneSynth().toMaster();
   synth.triggerAttackRelease("C1","8n");
-  puntaje();
+  puntaje(true);
 }
 function s(Event) {
   "use strict";
@@ -221,26 +234,49 @@ function s(Event) {
     der();
   }
 }
-function puntaje() {
+function puntaje(mano) {
   "use strict";
-  if (notas[counter].x <= 110 - (level*3) && notas[counter].x > 65) {
-    var puntaje = document.getElementById('Score').innerHTML - (-100);
-    document.getElementById('Score').innerHTML = puntaje;
-    animateRotation();
-    notasTocadas[counter]=1;
+//true = derecha, false = izquierda
+  if(mano === true){
+      if (notas[counter].x <= 110 - (level*3) && notas[counter].x > 65) {
+        var puntaje = document.getElementById('Score').innerHTML - (-100);
+        document.getElementById('Score').innerHTML = puntaje;
+        animateRotation(mano);
+        notasTocadas[counter]=1;
 
-  } else {
-    var puntaje = document.getElementById('Score').innerHTML - 100;
-    document.getElementById('Score').innerHTML = puntaje;
+      } else {
+        var puntaje = document.getElementById('Score').innerHTML - 100;
+        document.getElementById('Score').innerHTML = puntaje;    
+      }
+  }
+  else if (mano === false){
+      if (notas2[counter2].x <= 110 - (level*3) && notas2[counter2].x > 65) {
+        var puntaje = document.getElementById('Score').innerHTML - (-100);
+        document.getElementById('Score').innerHTML = puntaje;
+        animateRotation(mano);
+        notasTocadas2[counter2]=1;
+
+      } else {
+        var puntaje = document.getElementById('Score').innerHTML - 100;
+        document.getElementById('Score').innerHTML = puntaje;    
+      }
   }
 }
 
-function animateRotation() {
+function animateRotation(mano) {
   "use strict";
+    //true = derecha, false = izquierda
   count = 0.6;
+  if(mano === true){
   notas[counter].scale.x = Math.sin(count)
   notas[counter].scale.y = Math.sin(count)
   notas[counter].rotation += 0.75
-  //requestAnimationFrame(animateRotation);
+  }
+  else if(mano === false){
+  notas2[counter2].scale.x = Math.sin(count)
+  notas2[counter2].scale.y = Math.sin(count)
+  notas2[counter2].rotation += 0.75   
+  }
+  //requestAnimationFrame(animateRotation);    
   renderer.render(stage);
 }
