@@ -226,15 +226,19 @@ function metronomo() {
 
 function izq() {
   "use strict";
-  var synth = new Tone.MembraneSynth().toMaster();
-  synth.triggerAttackRelease("A3","8n");
+  var campana = new Howl({
+  src: ['audios/campanaHTML.mp3']
+  });
+  campana.play();
   puntaje(false);
 }
 
 function der() {
   "use strict";
-  var synth = new Tone.MembraneSynth().toMaster();
-  synth.triggerAttackRelease("C1","8n");
+  var redo = new Howl({
+  src: ['audios/redoblanteHTML.mp3']
+  });
+  redo.play();
   puntaje(true);
 }
 function s(Event) {

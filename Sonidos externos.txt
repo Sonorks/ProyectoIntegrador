@@ -1,0 +1,12 @@
+se agrega el recurso al HTML:
+
+<audio id="sonido">
+	<source src="Game-Shot.mp3" type="audio/mp3">
+</audio>
+<audio id="sonido2" 
+	<source src="Game-Spawn.mp3" type="audio/mp3">
+</audio>
+
+Para el js:
+var sonido = document.getElementById("sonido");
+sonido.play();

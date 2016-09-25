@@ -4,6 +4,7 @@
     <script src="scripts.js"></script>
     <script src="js/pixi.min.js"></script>
     <script src="js/Tone.js"></script>
+    <script src="js/Howler.js"></script>
 <head>
   <meta charset="utf-8">
   <title>TARATATAPP</title>
@@ -29,7 +30,19 @@
   <center class="pixi"><div class="juego" id="canvas">
   </div></center>
     <div><center><button type="button" id = "BotonInicio" onClick="readTextFile()">JUGAR!</button></center></div>
-
+    
+<audio id="campana">
+	<source src="audios/CampanaHTML.mp3" type="audio/mp3">
+</audio>
+<audio id="cascara">
+     <source src="audios/cascaraHTML.mp3" type="audio/mp3">                 
+</audio>
+<audio id="redoblante">
+    <source src="audios/redoblanteHTML.mp3" type="audio/mp3">
+</audio>
+<audio id="jamblock">
+    <source src="audios/jamblockHTML.mp3" type="audio/mp3">
+</audio>
 
 </body>
 </html>
