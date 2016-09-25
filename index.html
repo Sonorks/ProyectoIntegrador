@@ -1,25 +1,24 @@
 <!-- <!DOCTYPE html> -->
 <html>
-    <link rel="stylesheet" href="style.css">
-    <script src="scripts.js"></script>
-    <script src="js/pixi.min.js"></script>
-    <script src="js/Tone.js"></script>
-    <script src="js/Howler.js"></script>
+<link rel="stylesheet" href="style.css">
+<script src="scripts.js"></script>
+<script src="js/pixi.min.js"></script>
+<script src="js/Tone.js"></script>
 <head>
   <meta charset="utf-8">
   <title>TARATATAPP</title>
 
   <!--<style>
   body {
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    background-image: url(fondo2.jpg);
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
-  }
-  </style> -->
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  background-image: url(fondo2.jpg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+}
+</style> -->
 </head>
 <body  onfocus="s()" onkeyup="s()">
   <div class="botones">
@@ -27,22 +26,12 @@
     <center> </center><b></b><b></b>
     <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
   </div>
-  <center class="pixi"><div class="juego" id="canvas">
-  </div></center>
-    <div><center><button type="button" id = "BotonInicio" onClick="readTextFile()">JUGAR!</button></center></div>
-    
-<audio id="campana">
-	<source src="audios/CampanaHTML.mp3" type="audio/mp3">
-</audio>
-<audio id="cascara">
-     <source src="audios/cascaraHTML.mp3" type="audio/mp3">                 
-</audio>
-<audio id="redoblante">
-    <source src="audios/redoblanteHTML.mp3" type="audio/mp3">
-</audio>
-<audio id="jamblock">
-    <source src="audios/jamblockHTML.mp3" type="audio/mp3">
-</audio>
+    <center class="pixi">
+      <div class="juego" id="canvas">
+      </div>
+    </center>
+  <div><center><button type="button" id = "BotonInicio" onClick="readTextFile()">JUGAR!</button></center></div>
+
 
 </body>
 </html>
