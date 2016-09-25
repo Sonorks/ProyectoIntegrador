@@ -8,6 +8,14 @@
 /*MACROS*/
 var PI_NUMBER = 3.14159265359;
 var PI_MEDIOS = PI_NUMBER/2;
+var Y_FIRST_PENT = 30;
+var Y_FIRST_SPACE_1 = 40; /**Posición del primer espacio del pentagrama 1*/
+var Y_FIRST_SPACE_2 = 170; /**Posición del primer espacio del pentagrama 2*/
+var HEIGHT_PENT = 100;
+var GAP_FROM_PENTS = 30;/**Espacion qye hay entre pentagrama 1 y 2*/
+var Y_SECOND_PENT = Y_FIRST_PENT+HEIGHT_PENT+GAP_FROM_PENTS;
+var HEIGHT_NOTE = 50;
+var HEIGHT_PENT_SPACE = 20; /**Altura del espacio del pentagrama*/
 //Constantes
 var counter=0;
 var counter2=0;
@@ -19,11 +27,12 @@ var pent;
 //Nivel de dificultad
 var level=4;
 var notas = [];
-var notas2 = []; 
+var notas2 = [];
 var notasTocadas = [];
 var notasTocadas2 = [];
 var count = 0;
 var posiciones2  = [900,1250,1300,1350,1650,2000,2050,2450,2950,3200];
+
 function readTextFile(file)
 {
     var file = "./cancion.txt";
@@ -44,8 +53,8 @@ function readTextFile(file)
     iniciarPixi();
 }
 function iniciarPixi(){
-  
-  //readTextFile();   
+
+  //readTextFile();
   renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
@@ -53,36 +62,47 @@ function iniciarPixi(){
   graphics = new PIXI.Graphics();
   //Crea las notas
   for (var i=0; i<posiciones.length; i++){
-    var a_quarter = makeQuarterNote();
-    a_quarter.y = 110;
+    var a_quarter = semiCorchea();
+
+    a_quarter.y = Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE*2);
     a_quarter.x = posiciones[i];
-       //Si se requiere voltear
-    a_quarter.rotation = PI_NUMBER;
-    setCenterPivot(a_quarter);
+    //Si se requiere rotar
+    rotate(a_quarter);
     notas.push(a_quarter);
     stage.addChild(a_quarter);
   }
 
   for (var i=0; i<posiciones2.length; i++){
     var a_quarter = makeQuarterNote();
-    a_quarter.y = 80;
+    a_quarter.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE;
     a_quarter.x = posiciones2[i];
-       //Si se requiere voltear
-    a_quarter.rotation = PI_NUMBER;
-    setCenterPivot(a_quarter);
+    //Si se requiere voltear
+    rotate(a_quarter);
     notas2.push(a_quarter);
     stage.addChild(a_quarter);
   }
 
   pent = makePentagram();
-  graphics.drawRect(100,70,20,200);
+  pent.y = Y_FIRST_PENT;
+  var pent2= makePentagram();
+  pent2.y = Y_SECOND_PENT;
+  graphics.drawRect(100,0,20,290);
   stage.addChild(graphics);
   stage.addChild(pent);
+  stage.addChild(pent2);
   //comienza la animacion
   animate();
 
   document.getElementById("BotonInicio").displayObject= false;
   document.getElementById("BotonInicio").disabled = true;
+}
+
+function rotate(note){
+  setCenterPivot(note);
+  note.rotation = PI_NUMBER;
+  //arregla desfase.
+  note.y = note.y+30;
+
 }
 
 function setCenterPivot(graphic){
@@ -91,28 +111,21 @@ function setCenterPivot(graphic){
   var mitad_y = graphic.height/2;
   var mitad_x = graphic.width/2;
   graphic.pivot = new PIXI.Point(mitad_x,mitad_y);
+  console.log("pivot = " + graphic.pivot);
+  console.log("mitad_y = " + mitad_y);
+  console.log("mitad_x = " + mitad_x);
 }
 
 function makePentagram(){
   var pentagram = new PIXI.Graphics();
   // set a line style again
-  pentagram.lineStyle(2, 0x000000, 0.5);
+  pentagram.lineStyle(2, 0x000000,1);
   //start drawing
-  pentagram.moveTo(0,100);
-  pentagram.lineTo(1000,100);
-  pentagram.moveTo(0,120);
-  pentagram.lineTo(1000,120);
-  pentagram.moveTo(0,140);
-  pentagram.lineTo(1000,140);
-  pentagram.moveTo(0,160);
-  pentagram.lineTo(1000,160);
-  pentagram.moveTo(0,180);
-  pentagram.lineTo(1000,180);
-  pentagram.moveTo(1,100);
-  pentagram.lineTo(1,180);
-  pentagram.moveTo(1000,100);
-  pentagram.lineTo(1000,180);
-  pentagram.drawRect(30,90,20,100);
+  pentagram.drawRect(0,10,1000,20);
+  pentagram.drawRect(0,30,1000,20);
+  pentagram.drawRect(0,50,1000,20);
+  pentagram.drawRect(0,70,1000,20);
+  pentagram.drawRect(30,0,20,100);
   return pentagram;
 }
 
@@ -124,8 +137,8 @@ function makeQuarterNote(){
   a_quarter.beginFill(0x000000, 1);
   // draw a second shape
   a_quarter.moveTo(11,0);
-  a_quarter.lineTo(11,50);
-  a_quarter.drawCircle(5,50,6);
+  a_quarter.lineTo(11,HEIGHT_NOTE);
+  a_quarter.drawCircle(5,HEIGHT_NOTE,5);
   a_quarter.endFill();
   //a_quarter.width = 40;
   //a_quarter.height = 50;
@@ -138,10 +151,10 @@ function quarterNoteX(){
   note.lineStyle(5, 0x000000, 1);
   note.beginFill(0x000000, 1);
   note.moveTo(20,0);
-  note.lineTo(20,50);
+  note.lineTo(20,HEIGHT_NOTE);
   note.lineStyle(3,0x000000,1);
   note.lineTo(0,70);
-  note.moveTo(0,50);
+  note.moveTo(0,HEIGHT_NOTE);
   note.lineTo(20,70);
   note.endFill();
   return note;
@@ -175,7 +188,7 @@ function animate() {
         if (notas[counter].x < 55) {
           if(notasTocadas[counter] != 1){
               var puntaje = document.getElementById('Score').innerHTML - 200;
-              document.getElementById('Score').innerHTML = puntaje; 
+              document.getElementById('Score').innerHTML = puntaje;
           }
         notas[counter].visible = false;
         counter +=1;
@@ -193,12 +206,12 @@ function animate() {
         }
       notas2[i].x -= level;
       }
-    if(counter2===posiciones2.length && counter === posiciones.length){ 
+    if(counter2===posiciones2.length && counter === posiciones.length){
         console.log("Fin del juego");
     }
   requestAnimationFrame(animate);
   renderer.render(stage);
-    
+
 }
 
 function makeNoteBigger() {
@@ -258,7 +271,7 @@ function puntaje(mano) {
 
       } else {
         var puntaje = document.getElementById('Score').innerHTML - 100;
-        document.getElementById('Score').innerHTML = puntaje;    
+        document.getElementById('Score').innerHTML = puntaje;
       }
   }
   else if (mano === false){
@@ -270,7 +283,7 @@ function puntaje(mano) {
 
       } else {
         var puntaje = document.getElementById('Score').innerHTML - 100;
-        document.getElementById('Score').innerHTML = puntaje;    
+        document.getElementById('Score').innerHTML = puntaje;
       }
   }
 }
@@ -287,8 +300,8 @@ function animateRotation(mano) {
   else if(mano === false){
   notas2[counter2].scale.x = Math.sin(count)
   notas2[counter2].scale.y = Math.sin(count)
-  notas2[counter2].rotation += 0.75   
+  notas2[counter2].rotation += 0.75
   }
-  //requestAnimationFrame(animateRotation);    
+  //requestAnimationFrame(animateRotation);
   renderer.render(stage);
 }
