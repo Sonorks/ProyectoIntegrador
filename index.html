@@ -21,9 +21,9 @@
 }
 </style> -->
 </head>
-<body  onfocus="s()" onkeyup="s()">
+<body  onfocus="s()" onkeydown="s()">
   <div class="botones">
-    <center><button type="button" onClick="metronomo()">Metronomo</button></center>
+    <center><button type="button" class="boton" onClick="metronomo()">Metronomo</button></center>
     <center> </center><b></b><b></b>
     <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
   </div>
@@ -31,7 +31,7 @@
       <div class="juego" id="canvas">
       </div>
     </center>
-  <div><center><button type="button" id = "BotonInicio" onClick="readTextFile()">JUGAR!</button></center></div>
+  <div><center><button type="button" class ="boton" id = "BotonInicio" onClick="readTextFile()">JUGAR!</button></center></div>
 
 
 </body>

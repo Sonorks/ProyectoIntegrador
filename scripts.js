@@ -25,19 +25,24 @@ var stage;
 var graphics;
 var pent;
 //Nivel de dificultad
-var level=4;
+var level=3;
 var notas = [];
 var notas2 = [];
 var notasTocadas = [];
 var notasTocadas2 = [];
 var count = 0;
-var posiciones2  = [900,1250,1300,1350,1650,2000,2050,2450,2950,3200];
+var posiciones2  = [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
+var posiciones = [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
+//Timbal Latino Derecha:[700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
+//Timbal Latino Izquierda: [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
 
 function readTextFile(file)
 {
-    var file = "./cancion.txt";
+    file = "./cancion.txt";
+    /*
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET",file,false);
+    rawFile.setRequestHeader('Content-Type','text/plain')
     rawFile.onreadystatechange = function ()
     {
         if(rawFile.readyState === 4)
@@ -49,9 +54,11 @@ function readTextFile(file)
             }
         }
     }
-    rawFile.send(null);
+
+    rawFile.send(null);*/
     iniciarPixi();
 }
+
 function iniciarPixi(){
 
   //readTextFile();
@@ -62,7 +69,7 @@ function iniciarPixi(){
   graphics = new PIXI.Graphics();
   //Crea las notas
   for (var i=0; i<posiciones.length; i++){
-    var a_quarter = semiCorchea();
+    var a_quarter = makeQuarterNote();
 
     a_quarter.y = Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE*2);
     a_quarter.x = posiciones[i];
@@ -239,19 +246,19 @@ function metronomo() {
 
 function izq() {
   "use strict";
-  var campana = new Howl({
-  src: ['audios/campanaHTML.mp3']
+  var cascara = new Howl({
+  src: ['audios/cascaraHTML.mp3']
   });
-  campana.play();
+  cascara.play();
   puntaje(false);
 }
 
 function der() {
   "use strict";
-  var redo = new Howl({
-  src: ['audios/redoblanteHTML.mp3']
+  var campana = new Howl({
+  src: ['audios/campanaHTML.mp3']
   });
-  redo.play();
+  campana.play();
   puntaje(true);
 }
 function s(Event) {
@@ -267,7 +274,7 @@ function puntaje(mano) {
   "use strict";
 //true = derecha, false = izquierda
   if(mano === true){
-      if (notas[counter].x <= 110 - (level*3) && notas[counter].x > 65) {
+      if (notas[counter].x <= 130 - (level*3) && notas[counter].x > 85) {
         var puntaje = document.getElementById('Score').innerHTML - (-100);
         document.getElementById('Score').innerHTML = puntaje;
         animateRotation(mano);
@@ -279,7 +286,7 @@ function puntaje(mano) {
       }
   }
   else if (mano === false){
-      if (notas2[counter2].x <= 110 - (level*3) && notas2[counter2].x > 65) {
+      if (notas2[counter2].x <= 130 - (level*3) && notas2[counter2].x > 85) {
         var puntaje = document.getElementById('Score').innerHTML - (-100);
         document.getElementById('Score').innerHTML = puntaje;
         animateRotation(mano);
