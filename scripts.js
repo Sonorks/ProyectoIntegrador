@@ -25,23 +25,21 @@ var stage;
 var graphics;
 var pent;
 //Nivel de dificultad
-var level=3;
+var level=4;
 var notas = [];
 var notas2 = [];
 var notasTocadas = [];
 var notasTocadas2 = [];
 var count = 0;
-var posiciones2  = [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
-var posiciones = [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
-//Timbal Latino Derecha:[700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
-//Timbal Latino Izquierda: [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
+var añadiduras = [];
+var posiciones2  =[];//= [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
+var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
 
 function readTextFile(file)
 {
-    file = "./cancion.txt";
-    /*
+    file1 = "./canciones/timbal1.txt";
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET",file,false);
+    rawFile.open("GET",file1,false);
     rawFile.setRequestHeader('Content-Type','text/plain')
     rawFile.onreadystatechange = function ()
     {
@@ -54,8 +52,23 @@ function readTextFile(file)
             }
         }
     }
-
-    rawFile.send(null);*/
+    rawFile.send(null);
+    file2 = "./canciones/timbal2.txt";
+    var rawFile2 = new XMLHttpRequest();
+    rawFile2.open("GET",file2,false);
+    rawFile2.setRequestHeader('Content-Type','text/plain')
+    rawFile2.onreadystatechange = function ()
+    {
+        if(rawFile2.readyState === 4)
+        {
+            if(rawFile2.status === 200 || rawFile2.status == 0)
+            {
+                var allText = rawFile2.responseText;
+                posiciones2 = allText.split(",");
+            }
+        }
+    }
+    rawFile2.send(null);
     iniciarPixi();
 }
 
@@ -69,24 +82,38 @@ function iniciarPixi(){
   graphics = new PIXI.Graphics();
   //Crea las notas
   for (var i=0; i<posiciones.length; i++){
-    var a_quarter = makeQuarterNote();
-
-    a_quarter.y = Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE*2);
-    a_quarter.x = posiciones[i];
-    //Si se requiere rotar
-    rotate(a_quarter);
-    notas.push(a_quarter);
-    stage.addChild(a_quarter);
+   var negra = makeQuarterNote();
+    if(posiciones[i+1]-posiciones[i] === 50){
+        semi = semiCorchea(posiciones[i]);
+        semi.y = Y_FIRST_SPACE_1 +(HEIGHT_PENT_SPACE);
+        semi.x = posiciones[i];
+        //Si se requiere voltear
+        //rotate(a_quarter);
+        añadiduras.push(semi);
+        stage.addChild(semi);
+    }
+    negra.y = Y_FIRST_SPACE_1+HEIGHT_PENT_SPACE;
+    negra.x=posiciones[i];
+    notas.push(negra);
+    stage.addChild(negra);
   }
 
   for (var i=0; i<posiciones2.length; i++){
-    var a_quarter = makeQuarterNote();
-    a_quarter.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE;
-    a_quarter.x = posiciones2[i];
-    //Si se requiere voltear
-    rotate(a_quarter);
-    notas2.push(a_quarter);
-    stage.addChild(a_quarter);
+    var negra = makeQuarterNote();
+    if(posiciones2[i+1]-posiciones2[i] === 50){
+        semi = semiCorchea(posiciones2[i]);
+        semi.y = Y_FIRST_SPACE_2+(HEIGHT_PENT_SPACE);
+        semi.x = posiciones2[i];
+        //Si se requiere voltear
+        //rotate(a_quarter);
+        añadiduras.push(semi);
+        stage.addChild(semi);
+    }
+    negra.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE;
+    negra.x=posiciones2[i];
+    notas2.push(negra);
+    stage.addChild(negra);
+    
   }
 
   pent = makePentagram();
@@ -171,18 +198,13 @@ function semiCorchea(){
   var note = new PIXI.Graphics();
   note.lineStyle(5, 0x000000, 1);
   note.beginFill(0x000000, 1);
-  note.moveTo(11,0);
-  note.lineTo(41,0);
+  note.moveTo(0,0);
+  note.lineTo(50,0);
   note.endFill();
   var semiQuaver = new PIXI.Graphics();
   //la semecorchea esta hecha de dos negras unidas
   var qNote = makeQuarterNote();
-  qNote2=qNote.clone();
-  qNote2.x=31;
-  semiQuaver.addChild(qNote);
   semiQuaver.addChild(note);
-  semiQuaver.addChild(qNote2);
-
   return semiQuaver;
 }
 
@@ -207,12 +229,22 @@ function animate() {
         var nota = notas2[i];
         if (counter2 < posiciones2.length){
             if (notas2[counter2].x < 55 ) {
+                if(notasTocadas2[counter2] != 1){
+                    var puntaje = document.getElementById('Score').innerHTML - 200;
+                    document.getElementById('Score').innerHTML = puntaje;
+                }
                 notas2[counter2].visible = false;
                 counter2 +=1;
             }
         }
       notas2[i].x -= level;
       }
+    for(var j =0; j<añadiduras.length; j++){
+        if(añadiduras[j].x <55){
+            añadiduras[j].visible = false;
+        }
+        añadiduras[j].x -= level;
+    }
     if(counter2===posiciones2.length && counter === posiciones.length){
         console.log("Fin del juego");
     }
