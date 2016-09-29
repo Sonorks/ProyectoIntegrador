@@ -29,19 +29,21 @@ var stage;
 var graphics;
 var pent;
 //Nivel de dificultad
-var level=4;
+var level=3;
 var notas = [];
 var notas2 = [];
 var notasTocadas = [];
 var notasTocadas2 = [];
 var count = 0;
 var añadiduras = [];
+var partituras = [];
+var posicion=700;
 var posiciones2  =[];//= [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
 var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
 
 function readTextFile(file)
 {
-    file1 = "./canciones/timbal1.txt";
+    /*file1 = "./canciones/prueba.txt";
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET",file1,false);
     rawFile.setRequestHeader('Content-Type','text/plain')
@@ -52,12 +54,12 @@ function readTextFile(file)
             if(rawFile.status === 200 || rawFile.status == 0)
             {
                 var allText = rawFile.responseText;
-                posiciones = allText.split(",");
+                partituras = allText.split(",");
             }
         }
     }
     rawFile.send(null);
-    file2 = "./canciones/timbal2.txt";
+    /*file2 = "./canciones/timbal2.txt";
     var rawFile2 = new XMLHttpRequest();
     rawFile2.open("GET",file2,false);
     rawFile2.setRequestHeader('Content-Type','text/plain')
@@ -72,12 +74,12 @@ function readTextFile(file)
             }
         }
     }
-    rawFile2.send(null);
+    rawFile2.send(null);*/
     iniciarPixi();
 }
 
 function iniciarPixi(){
-
+  partituras=['n','n','sc1','sc1','sc1','n','n'];
   //readTextFile();
   renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
   canvas = document.getElementById('canvas');
@@ -85,8 +87,8 @@ function iniciarPixi(){
   stage = new PIXI.Container();
   graphics = new PIXI.Graphics();
   //Crea las notas
-  for (var i=0; i<posiciones.length; i++){
-   var negra = makeQuarterNote();
+  for (var i=0; i<partituras.length; i++){
+   /*var negra = makeQuarterNote();
    NOTE_HEIGHT = negra.height;
     if(posiciones[i+1]-posiciones[i] === 50){
         semi = semiCorchea(posiciones[i]);
@@ -98,10 +100,45 @@ function iniciarPixi(){
     negra.y = NOTE_IN_DO;
     negra.x=posiciones[i];
     notas.push(negra);
-    stage.addChild(negra);
+    stage.addChild(negra);*/
+      switch(partituras[i]){
+          case 'n':
+              if (partituras[i-1]==='sc1'){
+                  dibujarNegra(50);
+              }
+              else{
+                  dibujarNegra(100);    
+              }
+              break;
+          case 'c':
+              dibujarCorchea();
+              break;
+          case 'b':
+              dibujarBlanca();
+              break;
+          case 'sc1':
+              if (partituras[i-1]==='sc1'){
+                 dibujarSemiCorchea1(50);
+              }
+              else{
+                 dibujarSemiCorchea1(100);    
+              }
+              break;
+          case 'sc2':
+              if (partituras[i-1]==='sc1'){
+                 dibujarSemiCorchea2(0);
+              }
+              else{
+                 dibujarSemiCorchea2(50);    
+              }
+              break;
+          default:
+              console.log("Caracter: "+partituras[i]+" no especificado.")
+      }
+      
   }
 
-  for (var i=0; i<posiciones2.length; i++){
+  /*for (var i=0; i<posiciones2.length; i++){
     var negra = makeQuarterNote();
     if(posiciones2[i+1]-posiciones2[i] === 50){
         semi = semiCorchea(posiciones2[i]);
@@ -116,8 +153,8 @@ function iniciarPixi(){
     negra.x=posiciones2[i];
     notas2.push(negra);
     stage.addChild(negra);
-    
-  }
+    */
+  
 
   pent = makePentagram();
   pent.y = Y_FIRST_PENT;
@@ -167,6 +204,21 @@ function makePentagram(){
 }
 
 //Este metodo hace el dibujo de la cuarta
+function dibujarNegra(aumento){
+    var negra = new PIXI.Graphics();
+    negra.lineStyle(5,0x000000,1);
+    negra.beginFill(0x000000,1);
+    negra.moveTo(11,0);
+    negra.lineTo(11,HEIGHT_NOTE);
+    negra.drawCircle(5,HEIGHT_NOTE,5);
+    negra.endFill();
+    QUARTER_NOTE_HEIGHT = negra.height;
+    posicion=posicion+aumento;
+    negra.x = posicion;
+    negra.y = Y_FIRST_SPACE_1;
+    notas.push(negra);
+    stage.addChild(negra);
+}
 function makeQuarterNote(){
   var a_quarter = new PIXI.Graphics();
   // set a fill and line style again
@@ -196,27 +248,56 @@ function quarterNoteX(){
   return note;
 }
 
-function semiCorchea(){
+function dibujarSemiCorchea1(aumento){
   var note = new PIXI.Graphics();
   note.lineStyle(5, 0x000000, 1);
   note.beginFill(0x000000, 1);
-  note.moveTo(0,0);
-  note.lineTo(50,0);
+  note.moveTo(11,0);
+  note.lineTo(60,0);
   note.endFill();
-  var semiQuaver = new PIXI.Graphics();
-  //la semecorchea esta hecha de dos negras unidas
-  var qNote = makeQuarterNote();
-  semiQuaver.addChild(note);
-  return semiQuaver;
+  //la semecorchea esta hecha de dos negras unidas 
+  dibujarNegra(aumento);
+  note.y = Y_FIRST_SPACE_1;
+  note.x = posicion;
+  añadiduras.push(note);
+  stage.addChild(note);
+  dibujarNegra(50);
+  //return semiQuaver;
+}
+function dibujarSemiCorchea2(aumento){
+  var note = new PIXI.Graphics();
+  note.lineStyle(5, 0x000000, 1);
+  note.beginFill(0x000000, 1);
+  note.moveTo(11,0);
+  note.lineTo(60,0);
+  note.endFill();
+  //la semecorchea esta hecha de dos negras unidas 
+  if(aumento===0){ //Si le presede una sc1
+    note.y = Y_FIRST_SPACE_1;
+    note.x = posicion;
+    añadiduras.push(note);
+    stage.addChild(note);
+    dibujarNegra(50);
+  }
+  else{
+    dibujarNegra(aumento);
+    note.y = Y_FIRST_SPACE_1;
+    note.x = posicion;
+    añadiduras.push(note);
+    stage.addChild(note);
+    dibujarNegra(50);
+    }
+  
+  //return semiQuaver;
 }
 
 
 function animate() {
   "use strict";
-  for (var i=0; i<posiciones.length; i++){
-    var nota = notas[i];
-    if (counter < posiciones.length){
+  for (var i=0; i<notas.length; i++){
+    if (counter < notas.length){
         if (notas[counter].x < 55) {
+            console.log(counter);
           if(notasTocadas[counter] != 1){
               var puntaje = document.getElementById('Score').innerHTML - 200;
               document.getElementById('Score').innerHTML = puntaje;
@@ -226,8 +307,8 @@ function animate() {
         }
     }
 	notas[i].x -= level;
-  }
-      for (var i=0; i<posiciones2.length; i++){
+}
+      /*for (var i=0; i<posiciones2.length; i++){
         var nota = notas2[i];
         if (counter2 < posiciones2.length){
             if (notas2[counter2].x < 55 ) {
@@ -240,14 +321,14 @@ function animate() {
             }
         }
       notas2[i].x -= level;
-      }
+      }*/
     for(var j =0; j<añadiduras.length; j++){
         if(añadiduras[j].x <55){
-            añadiduras[j].visible = false;
+            //añadiduras[j].visible = false;
         }
         añadiduras[j].x -= level;
     }
-    if(counter2===posiciones2.length && counter === posiciones.length){
+    if(counter2===posiciones2.length && counter === notas.length){
         console.log("Fin del juego");
     }
   requestAnimationFrame(animate);
