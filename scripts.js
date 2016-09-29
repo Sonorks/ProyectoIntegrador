@@ -16,6 +16,10 @@ var GAP_FROM_PENTS = 30;/**Espacion qye hay entre pentagrama 1 y 2*/
 var Y_SECOND_PENT = Y_FIRST_PENT+HEIGHT_PENT+GAP_FROM_PENTS;
 var HEIGHT_NOTE = 50;
 var HEIGHT_PENT_SPACE = 20; /**Altura del espacio del pentagrama*/
+var NOTE_HEIGHT;
+var DO_SPACE = Y_FIRST_PENT+HEIGHT_PENT_SPACE*3; /**Posición del espacio DO, cuarta linea de arriba a abajo*/
+var NOTE_IN_DO = DO_SPACE-NOTE_HEIGHT;
+var PENT_DISTANCE = Y_FIRST_SPACE_2-Y_FIRST_SPACE_1; /**Espacio entre espacios de los pentagrmas*/
 //Constantes
 var counter=0;
 var counter2=0;
@@ -83,16 +87,15 @@ function iniciarPixi(){
   //Crea las notas
   for (var i=0; i<posiciones.length; i++){
    var negra = makeQuarterNote();
+   NOTE_HEIGHT = negra.height;
     if(posiciones[i+1]-posiciones[i] === 50){
         semi = semiCorchea(posiciones[i]);
-        semi.y = Y_FIRST_SPACE_1 +(HEIGHT_PENT_SPACE);
+        semi.y = NOTE_IN_DO;
         semi.x = posiciones[i];
-        //Si se requiere voltear
-        //rotate(a_quarter);
         añadiduras.push(semi);
         stage.addChild(semi);
     }
-    negra.y = Y_FIRST_SPACE_1+HEIGHT_PENT_SPACE;
+    negra.y = NOTE_IN_DO;
     negra.x=posiciones[i];
     notas.push(negra);
     stage.addChild(negra);
@@ -105,7 +108,7 @@ function iniciarPixi(){
         semi.y = Y_FIRST_SPACE_2+(HEIGHT_PENT_SPACE);
         semi.x = posiciones2[i];
         //Si se requiere voltear
-        //rotate(a_quarter);
+        rotate(a_quarter);
         añadiduras.push(semi);
         stage.addChild(semi);
     }
@@ -174,8 +177,7 @@ function makeQuarterNote(){
   a_quarter.lineTo(11,HEIGHT_NOTE);
   a_quarter.drawCircle(5,HEIGHT_NOTE,5);
   a_quarter.endFill();
-  //a_quarter.width = 40;
-  //a_quarter.height = 50;
+  QUARTER_NOTE_HEIGHT = a_quarter.height;
   return a_quarter;
 }
 
@@ -253,19 +255,6 @@ function animate() {
 
 }
 
-function makeNoteBigger() {
-  "use strict";
-  a_quarter.width = 60;
-  a_quarter.height = 70;
-  renderer.render(stage);
-}
-
-function makeNoteSmaller() {
-  "use strict";
-  a_quarter.width = 30;
-  a_quarter.height = 35;
-  renderer.render(stage);
-}
 function metronomo() {
   "use strict";
      var synth = new Tone.Synth().toMaster();
