@@ -29,7 +29,7 @@ var stage;
 var graphics;
 var pent;
 //Nivel de dificultad
-var level=1;
+var level=4;
 var notas = [];
 var notas2 = [];
 var notasTocadas = [];
@@ -46,7 +46,7 @@ var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,
 
 function readTextFile(file)
 {
-    file1 = "./canciones/porrochocoano2.txt";
+    file1 = "./canciones/currulao1.txt";
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET",file1,false);
     rawFile.setRequestHeader('Content-Type','text/plain')
@@ -62,7 +62,7 @@ function readTextFile(file)
         }
     }
     rawFile.send(null);
-    file2 = "./canciones/porrochocoano2.txt";
+    file2 = "./canciones/currulao2.txt";
     var rawFile2 = new XMLHttpRequest();
     rawFile2.open("GET",file2,false);
     rawFile2.setRequestHeader('Content-Type','text/plain')
@@ -92,21 +92,10 @@ function iniciarPixi(){
   for (var i=0; i<partituras.length; i++){
       switch(partituras[i]){
           case 'n':
-              if (partituras[i-1]==='sc1' || partituras[i-1]==='sc' || partituras[i-1]==='sc1x' || partituras[i-1]==='scx'){
-                  dibujarNegra(50,1);
-              }
-              else{
-                  dibujarNegra(100,1);
-                  console.log(i);
-              }
+              dibujarNegra(100,1,1);
               break;
           case 'nx':
-              if (partituras[i-1]==='sc1' || partituras[i-1]==='sc' || partituras[i-1]==='sc1x' || partituras[i-1]==='scx'){
-                  quarterNoteX(50,1);
-              }
-              else{
-                  quarterNoteX(100,1);
-              }
+              quarterNoteX(100,1,1);
               break;
           case 'c':
               dibujarCorchea();
@@ -115,48 +104,37 @@ function iniciarPixi(){
               dibujarBlanca();
               break;
           case 'sc':
-              dibujarNegra(50,1);
+              dibujarNegra(50,1,1);
               break;
           case 'scx':
-              quarterNoteX(50,1);
+              quarterNoteX(50,1,1);
           case 'sc1':
-              if (partituras[i-1]==='sc1' || partituras[i-1]==='sc1x'){
-                 dibujarSemiCorchea1(50,1,1);
-              }
-              else{
-                 dibujarSemiCorchea1(100,1,1);
-              }
+              dibujarSemiCorchea1(50,1,1,1);
               break;
           case 'sc1x':
-              if (partituras[i-1]==='sc1' || partituras[i-1]==='sc' || partituras[i-1]==='sc1x' || partituras[i-1]==='scx'){
-                  dibujarSemiCorchea1(50,1,2);
-              }
-              else{
-                  dibujarSemiCorchea1(100,1,2);
-              }
+              dibujarSemiCorchea1(50,1,2,1);
               break;
           case 'sc2':
               if (partituras[i-1]==='sc1' || partituras[i-1]==='sc2' || partituras[i-1]==='sc1x' || partituras[i-1]==='sc2x'){
-                 dibujarSemiCorchea2(0,1,1);
+                 dibujarSemiCorchea2(0,1,1,1);
               }
               else{
-                 dibujarSemiCorchea2(50,1,1);
+                 dibujarSemiCorchea2(50,1,1,1);
               }
               break;
           case 'sc2x':
               if (partituras[i-1]==='sc1' || partituras[i-1]==='sc' || partituras[i-1]==='sc1x' || partituras[i-1]==='scx'){
-                  dibujarSemiCorchea2(50,1,2);
+                  dibujarSemiCorchea2(0,1,2,1);
               }
               else{
-                  dibujarSemiCorchea2(100,1,2);
+                  dibujarSemiCorchea2(50,1,2,1);
               }
               break;
           case 'sn':
               posicion+=100;
               break;
           case 'ssc':
-              posicion+=50;
-              console.log(": "+posicion);
+              dibujaSilencioCorchea(50,1);
               break;
           case 'sb':
               posicion+=200;
@@ -170,20 +148,10 @@ function iniciarPixi(){
   for (var i=0; i<partituras2.length; i++){
         switch(partituras2[i]){
           case 'n':
-              if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='scx'){
-                  dibujarNegra(50,2);
-              }
-              else{
-                  dibujarNegra(100,2);
-              }
+              dibujarNegra(100,2,1);
               break;
           case 'nx':
-              if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='scx'){
-                  quarterNoteX(50,2);
-              }
-              else{
-                  quarterNoteX(100,2);
-              }
+              quarterNoteX(100,2,1);
               break;
           case 'c':
               dibujarCorchea();
@@ -192,47 +160,37 @@ function iniciarPixi(){
               dibujarBlanca();
               break;
           case 'sc':
-              dibujarNegra(50); //dibujar SemiCorchea
+              dibujarNegra(50,2,1); //dibujar SemiCorchea
               break;
           case 'scx':
-              quarterNoteX(50); //dibujar SemiCorcheaX
+              quarterNoteX(50,2,1); //dibujar SemiCorcheaX
           case 'sc1':
-              if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc1x'){
-                 dibujarSemiCorchea1(50,2,1);
-              }
-              else{
-                 dibujarSemiCorchea1(100,2,1);
-              }
+              dibujarSemiCorchea1(50,2,1,1);
               break;
           case 'sc1x':
-              if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='scx'){
-                  dibujarSemiCorchea1(50,2,2);
-              }
-              else{
-                  dibujarSemiCorchea1(100,2,2);
-              }
+              dibujarSemiCorchea1(50,2,2,1);
               break;
           case 'sc2':
               if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc2' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='sc2x'){
-                 dibujarSemiCorchea2(0,2,1);
+                 dibujarSemiCorchea2(0,2,1,1);
               }
               else{
-                 dibujarSemiCorchea2(50,2,1);
+                 dibujarSemiCorchea2(50,2,1,1);
               }
               break;
           case 'sc2x':
               if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='scx'){
-                  dibujarSemiCorchea2(50,2,2);
+                  dibujarSemiCorchea2(50,2,2,1);
               }
               else{
-                  dibujarSemiCorchea2(100,2,2);
+                  dibujarSemiCorchea2(100,2,2,1);
               }
               break;
           case 'sn':
               posicion2+=100;
               break;
           case 'ssc':
-              posicion2+=50;
+              dibujaSilencioCorchea(50,2);
               break;
           case 'sb':
               posicion2+=200;
@@ -288,7 +246,7 @@ function makePentagram(){
 }
 
 //Este metodo hace el dibujo de la cuarta
-function dibujarNegra(aumento,mano){
+function dibujarNegra(aumento,mano,rotar){
     var negra = new PIXI.Graphics();
     negra.lineStyle(5,0x000000,1);
     negra.beginFill(0x000000,1);
@@ -298,16 +256,21 @@ function dibujarNegra(aumento,mano){
     negra.endFill();
     QUARTER_NOTE_HEIGHT = negra.height;
     if(mano === 1){
-        posicion=posicion+aumento;
         negra.x = posicion;
         negra.y = Y_FIRST_SPACE_1;
+        posicion=posicion+aumento;
+        if(rotar === 1){
+            rotate(negra);
+        }
         notas.push(negra);
     }
     else if (mano === 2){
-        posicion2=posicion2+aumento;
         negra.x=posicion2;
         negra.y=Y_FIRST_SPACE_2;
-        rotate(negra);
+        posicion2=posicion2+aumento;
+        if(rotar === 1){
+            rotate(negra);
+        }
         notas2.push(negra);
     }
     stage.addChild(negra);
@@ -327,7 +290,7 @@ function makeQuarterNote(){
 }
 
 //Dibuja silencio de corchea.
-function dibujaSilencioCorchea(){
+function dibujaSilencioCorchea(aumento,mano){
 //arc(cx, cy, radius, startAngle, endAngle, anticlockwise)
   var silencioCorchea = new PIXI.Graphics()
           .beginFill(0x000000)
@@ -336,11 +299,23 @@ function dibujaSilencioCorchea(){
           .endFill()
           .arc(10, 5, 10, 3.14, 0.6,true)
           .lineTo(10,40);
-  return silencioCorchea;
+    if(mano === 1){
+        silencioCorchea.x = posicion;
+        silencioCorchea.y = Y_FIRST_SPACE_1+5;
+        posicion = posicion + aumento;
+        añadiduras.push(silencioCorchea);
+    }
+    else if (mano === 2){
+        silencioCorchea.x = posicion2;
+        silencioCorchea.y = Y_FIRST_SPACE_2+5;
+        posicion = posicion + aumento;
+        añadiduras.push(silencioCorchea);
+    }
+ stage.addChild(silencioCorchea);
 }
 
 
-function quarterNoteX(aumento,mano){
+function quarterNoteX(aumento,mano,rotar){
   var note = new PIXI.Graphics();
   //set a fill and line style again
   note.lineStyle(5, 0x000000, 1);
@@ -356,46 +331,56 @@ function quarterNoteX(aumento,mano){
   //note = dibujaSilencioCorchea();
 
     if(mano === 1){
-        posicion=posicion+aumento;
         note.x = posicion;
         note.y = Y_FIRST_SPACE_1;
+        posicion=posicion+aumento;
+        if(rotar === 1){
+            rotate(note);
+        }
         notas.push(note);
     }
     else if (mano === 2){
-        posicion2=posicion2+aumento;
         note.x=posicion2;
         note.y=Y_FIRST_SPACE_2;
-        rotate(note);
+        posicion2=posicion2+aumento;
+        if(rotar === 1){
+            rotate(note);
+        }
         notas2.push(note);
     }
     stage.addChild(note);
 }
 
-function dibujarSemiCorchea1(aumento,mano,tipo){
+function dibujarSemiCorchea1(aumento,mano,tipo,rotar){
   var note = new PIXI.Graphics();
   note.lineStyle(5, 0x000000, 1);
   note.beginFill(0x000000, 1);
-  note.moveTo(11,0);
-  note.lineTo(60,0);
+  if(rotar === 1){
+    note.moveTo(0,0);
+    note.lineTo(50,0);    
+  }
+  else{
+    note.moveTo(10,0);
+    note.lineTo(60,0);  
+  }
   note.endFill();
   //la semecorchea esta hecha de dos negras unidas
   if(tipo === 1){
-      dibujarNegra(aumento,mano);
       if(mano === 1){
         note.y = Y_FIRST_SPACE_1;
         note.x = posicion;
       }
       else if(mano === 2){
         note.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
-        note.x = posicion2-10;
+        note.x = posicion2;
         //rotate(note);
       }
+      dibujarNegra(aumento,mano,rotar);
       añadiduras.push(note);
       stage.addChild(note);
-      dibujarNegra(50,mano);
+      dibujarNegra(50,mano,rotar);
   }
   else if (tipo === 2){
-      quarterNoteX(aumento,mano);
       if(mano === 1){
         note.y = Y_FIRST_SPACE_1;
         note.x = posicion;
@@ -405,80 +390,86 @@ function dibujarSemiCorchea1(aumento,mano,tipo){
         note.x = posicion2-10;
         //rotate(note);
       }
+      quarterNoteX(aumento,mano,rotar);
       añadiduras.push(note);
       stage.addChild(note);
-      quarterNoteX(50,mano);
+      quarterNoteX(50,mano,rotar);
   }
   //return semiQuaver;
 }
 
-5
-
-function dibujarSemiCorchea2(aumento,mano,tipo){
-
+function dibujarSemiCorchea2(aumento,mano,tipo,rotar){
   var note = new PIXI.Graphics();
   note.lineStyle(5, 0x000000, 1);
   note.beginFill(0x000000, 1);
-  note.moveTo(11,0);
-  note.lineTo(60,0);
+  if(rotar === 1){
+    note.moveTo(0,0);
+    note.lineTo(50,0);    
+  }
+  else{
+    note.moveTo(10,0);
+    note.lineTo(60,0);  
+  }
   note.endFill();
   //la semecorchea esta hecha de dos negras unidas
   if(tipo === 1){
       if(aumento===0){ //Si le precede una sc1
         if(mano === 1){
         note.y = Y_FIRST_SPACE_1;
-        note.x = posicion;
+        note.x = posicion-50;
         }
         else if (mano === 2){
           note.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
-          note.x = posicion2-10;
+          note.x = posicion2-50;
         }
         añadiduras.push(note);
         stage.addChild(note);
-        dibujarNegra(50,mano);
+        dibujarNegra(50,mano,rotar);
       }
       else{
-        dibujarNegra(aumento,mano);
+        //posicion -=50;
         if(mano === 1){
           note.y = Y_FIRST_SPACE_1;
           note.x = posicion;
         }
         else if( mano === 2){
           note.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
-          note.x = posicion2-10;
+          note.x = posicion2;
         }
+        dibujarNegra(aumento,mano,rotar);
         añadiduras.push(note);
         stage.addChild(note);
-        dibujarNegra(50,mano);
+        dibujarNegra(100,mano,rotar);
         }
   }
   else if(tipo === 2){
       if(aumento===0){ //Si le precede una sc1
         if(mano === 1){
         note.y = Y_FIRST_SPACE_1;
-        note.x = posicion;
+        note.x = posicion-50;
         }
         else if (mano === 2){
           note.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
-          note.x = posicion2-10;
+          note.x = posicion2-50;
         }
         añadiduras.push(note);
         stage.addChild(note);
-        quarterNoteX(50,mano);
+        quarterNoteX(50,mano,rotar);
       }
       else{
-        quarterNoteX(aumento,mano);
+        posicion -=50;
+        quarterNoteX(aumento,mano,rotar);
         if(mano === 1){
           note.y = Y_FIRST_SPACE_1;
           note.x = posicion;
         }
         else if( mano === 2){
           note.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
-          note.x = posicion2-10;
+          note.x = posicion2;
         }
         añadiduras.push(note);
         stage.addChild(note);
-        quarterNoteX(50,mano);
+        quarterNoteX(100,mano,rotar);
         }
   }
 
