@@ -286,17 +286,16 @@ function dibujarNegra(aumento,mano,rotar,prueba){
     negra.lineTo(11,HEIGHT_NOTE);
     negra.drawCircle(5,HEIGHT_NOTE,5);    
     negra.endFill();
-    /*if (prueba === 1){
-      var redoble = dibujarRedoble();
-    }
-    */
-    var redoble = dibujarRedoble();
+    //var redoble = dibujarRedoble();
     QUARTER_NOTE_HEIGHT = negra.height;
     if(mano === 1){
         negra.x = posicion;
         negra.y = Y_FIRST_SPACE_1;
-        redoble.x = posicion;
-        redoble.y = Y_FIRST_SPACE_1;
+        if (prueba === 1){
+            var redoble = dibujarRedoble();
+            redoble.x = posicion;
+            redoble.y = Y_FIRST_SPACE_1;
+        }
         posicion=posicion+aumento;
         if(rotar === 1){
             rotate(negra);
@@ -306,20 +305,21 @@ function dibujarNegra(aumento,mano,rotar,prueba){
     else if (mano === 2){
         negra.x=posicion2;
         negra.y=Y_FIRST_SPACE_2;
+        if (prueba === 1){
+            var redoble = dibujarRedoble();
+            redoble.x = posicion2;
+            redoble.y = Y_FIRST_SPACE_2;
+        }
         posicion2=posicion2+aumento;
         if(rotar === 1){
             rotate(negra);
         }
         notas2.push(negra);
     }
-    /*
     if (prueba === 1){
-      notas.push(redoble);
+      añadiduras.push(redoble);
       stage.addChild(redoble);
     }
-    */
-    notas.push(redoble);
-    stage.addChild(redoble);
     stage.addChild(negra);
 }
 function makeQuarterNote(){
