@@ -29,7 +29,7 @@ var stage;
 var graphics;
 var pent;
 //Nivel de dificultad
-var level=4;
+var level=2;
 var notas = [];
 var notas2 = [];
 var notasTocadas = [];
@@ -62,7 +62,7 @@ function readTextFile(file)
         }
     }
     rawFile.send(null);
-    file2 = "./canciones/currulao2.txt";
+    file2 = "./canciones/currulao5.txt";
     var rawFile2 = new XMLHttpRequest();
     rawFile2.open("GET",file2,false);
     rawFile2.setRequestHeader('Content-Type','text/plain')
@@ -355,7 +355,7 @@ function dibujaSilencioCorchea(aumento,mano){
     else if (mano === 2){
         silencioCorchea.x = posicion2;
         silencioCorchea.y = Y_FIRST_SPACE_2+5;
-        posicion = posicion + aumento;
+        posicion2 = posicion2 + aumento;
         añadiduras.push(silencioCorchea);
     }
  stage.addChild(silencioCorchea);
