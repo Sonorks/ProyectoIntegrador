@@ -92,8 +92,11 @@ function iniciarPixi(){
   for (var i=0; i<partituras.length; i++){
       switch(partituras[i]){
           case 'n':
-              dibujarNegra(100,1,1);
+              dibujarNegra(100,1,1,0);
               break;
+          case 'nr':
+              dibujarNegra(100,1,1,1);
+              break;    
           case 'nx':
               quarterNoteX(100,1,1);
               break;
@@ -104,7 +107,10 @@ function iniciarPixi(){
               dibujarBlanca();
               break;
           case 'sc':
-              dibujarNegra(50,1,1);
+              dibujarNegra(50,1,1,0);
+              break;
+          case 'scr':
+              dibujarNegra(50,1,1,1);
               break;
           case 'scx':
               quarterNoteX(50,1,1);
@@ -148,7 +154,10 @@ function iniciarPixi(){
   for (var i=0; i<partituras2.length; i++){
         switch(partituras2[i]){
           case 'n':
-              dibujarNegra(100,2,1);
+              dibujarNegra(100,2,1,0);
+              break;
+          case 'nr':
+              dibujarNegra(100,2,1,1);
               break;
           case 'nx':
               quarterNoteX(100,2,1);
@@ -160,7 +169,10 @@ function iniciarPixi(){
               dibujarBlanca();
               break;
           case 'sc':
-              dibujarNegra(50,2,1); //dibujar SemiCorchea
+              dibujarNegra(50,2,1,0); //dibujar SemiCorchea
+              break;
+          case 'scr':
+              dibujarNegra(50,2,1,1); //dibujar SemiCorchea
               break;
           case 'scx':
               quarterNoteX(50,2,1); //dibujar SemiCorcheaX
@@ -245,19 +257,46 @@ function makePentagram(){
   return pentagram;
 }
 
+function dibujarRedoble(){
+  var redoble = new PIXI.Graphics();
+  redoble.lineStyle(2, 0x000000, 1);
+  redoble.beginFill(0x000000, 1);
+  redoble.moveTo(12,25);
+  redoble.lineTo(-15,25);
+  redoble.moveTo(12,30);
+  redoble.lineTo(-15,30);
+  redoble.moveTo(12,35);
+  redoble.lineTo(-15,35);
+  redoble.endFill();
+  redoble.rotation -= 0.15;
+  /* **Lineas necesarias para que el método funcione al ser llamada**
+  var redoble = dibujarRedoble(); //Antes de darle posicion a la nota
+  notas.push(redoble); //Al final del metodo
+  stage.addChild(redoble); //Al final del metodo
+  */
+  return redoble;
+}
+
 //Este metodo hace el dibujo de la cuarta
-function dibujarNegra(aumento,mano,rotar){
+function dibujarNegra(aumento,mano,rotar,prueba){
     var negra = new PIXI.Graphics();
     negra.lineStyle(5,0x000000,1);
     negra.beginFill(0x000000,1);
     negra.moveTo(11,0);
     negra.lineTo(11,HEIGHT_NOTE);
-    negra.drawCircle(5,HEIGHT_NOTE,5);
+    negra.drawCircle(5,HEIGHT_NOTE,5);    
     negra.endFill();
+    /*if (prueba === 1){
+      var redoble = dibujarRedoble();
+    }
+    */
+    var redoble = dibujarRedoble();
     QUARTER_NOTE_HEIGHT = negra.height;
     if(mano === 1){
         negra.x = posicion;
         negra.y = Y_FIRST_SPACE_1;
+        redoble.x = posicion;
+        redoble.y = Y_FIRST_SPACE_1;
         posicion=posicion+aumento;
         if(rotar === 1){
             rotate(negra);
@@ -273,6 +312,14 @@ function dibujarNegra(aumento,mano,rotar){
         }
         notas2.push(negra);
     }
+    /*
+    if (prueba === 1){
+      notas.push(redoble);
+      stage.addChild(redoble);
+    }
+    */
+    notas.push(redoble);
+    stage.addChild(redoble);
     stage.addChild(negra);
 }
 function makeQuarterNote(){
@@ -364,6 +411,7 @@ function dibujarSemiCorchea1(aumento,mano,tipo,rotar){
     note.lineTo(60,0);  
   }
   note.endFill();
+  
   //la semecorchea esta hecha de dos negras unidas
   if(tipo === 1){
       if(mano === 1){
@@ -375,10 +423,10 @@ function dibujarSemiCorchea1(aumento,mano,tipo,rotar){
         note.x = posicion2;
         //rotate(note);
       }
-      dibujarNegra(aumento,mano,rotar);
+      dibujarNegra(aumento,mano,rotar,0);
       añadiduras.push(note);
       stage.addChild(note);
-      dibujarNegra(50,mano,rotar);
+      dibujarNegra(50,mano,rotar,0);
   }
   else if (tipo === 2){
       if(mano === 1){
@@ -424,7 +472,7 @@ function dibujarSemiCorchea2(aumento,mano,tipo,rotar){
         }
         añadiduras.push(note);
         stage.addChild(note);
-        dibujarNegra(50,mano,rotar);
+        dibujarNegra(50,mano,rotar,0);
       }
       else{
         //posicion -=50;
@@ -436,10 +484,10 @@ function dibujarSemiCorchea2(aumento,mano,tipo,rotar){
           note.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
           note.x = posicion2;
         }
-        dibujarNegra(aumento,mano,rotar);
+        dibujarNegra(aumento,mano,rotar,0);
         añadiduras.push(note);
         stage.addChild(note);
-        dibujarNegra(100,mano,rotar);
+        dibujarNegra(100,mano,rotar,0);
         }
   }
   else if(tipo === 2){
