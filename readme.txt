@@ -7,6 +7,10 @@ Para escribir canciones utilizar la siguiente notación:
 -scx = semicorchea cerrada
 -sc1 = semicorchea posterior
 -sc1x= semicorchea posterior cerrada
+-sc1d= semicorchea posterior con doble linea
+-sc1r= semicorchea posterior con redoble en la primera
+-sc2r= semicorchea posterior con redoble en la segunda
+-sc1r2r= semicorchea posterior con redoble en ambas
 -sc2 = semicorchea anterior
 -sc2x= semicorchea anterior cerrada
 -ssc = silencio de semicorchea
