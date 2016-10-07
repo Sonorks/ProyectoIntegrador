@@ -1,1 +1,1 @@
-scr,sn,sc
+psc,pc,

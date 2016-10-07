@@ -46,7 +46,7 @@ var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
-    file1 = "./canciones/currulao1.txt"; //Directorio del archivo de ritmos para el pentagrama superior
+    file1 = "./canciones/pruebas.txt"; //Directorio del archivo de ritmos para el pentagrama superior
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET",file1,false);
     rawFile.setRequestHeader('Content-Type','text/plain')
@@ -62,7 +62,7 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
         }
     }
     rawFile.send(null);
-    file2 = "./canciones/currulao2.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
+    file2 = "./canciones/pruebas.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
     var rawFile2 = new XMLHttpRequest();
     rawFile2.open("GET",file2,false);
     rawFile2.setRequestHeader('Content-Type','text/plain')
@@ -73,7 +73,8 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
             if(rawFile2.status === 200 || rawFile2.status == 0)
             {
                 var allText = rawFile2.responseText;
-                partituras2 = allText.split(","); //En el archivo las notas estan separadas por comas (,)
+                partituras2 = "";
+                //partituras2 = allText.split(","); //En el archivo las notas estan separadas por comas (,)
             }
         }
     }
@@ -123,6 +124,12 @@ function iniciarPixi(){
               break;
           case 'sb':
               posicion+=200;
+              break;
+          case 'pc':
+              procesarCorchea(4,1,0,0);
+              break;
+          case 'psc':
+              procesarSemiCorchea(4,1,0,0);
               break;
           //A la verga todo preprocesamiento de la hilera del usuario para transformar las corcheas unidas en figuras propias de la graficada
           //AQUI HAY ERRORES CON LAS NOTACIONES DE LAS CORCHEAS: SE PROPONE LEER LA NOTA QUE SIGUE (I+1) Y SI ES CORCHEA DIBUJAR LA BARRA HORIZONTAL.
@@ -194,6 +201,9 @@ function iniciarPixi(){
               break;
           case 'sb':
               posicion2+=200;
+          case 'pc':
+              procesarCorchea(4,1,0);
+              break;
           //A la verga todo preprocesamiento de la hilera del usuario para transformar las corcheas unidas en figuras propias de la graficada
           //AQUI HAY ERRORES CON LAS NOTACIONES DE LAS CORCHEAS: SE PROPONE LEER LA NOTA QUE SIGUE (I+1) Y SI ES CORCHEA DIBUJAR LA BARRA HORIZONTAL.
           //PARA LA ULTIMA SE PUEDE LEER (I-1) PARA DIBUJAR UNA NEGRA EN LUGAR DE LA CORCHEA COMO TAL
@@ -273,9 +283,9 @@ function setCenterPivot(graphic){
   var mitad_y = graphic.height/2;
   var mitad_x = graphic.width/2;
   graphic.pivot = new PIXI.Point(mitad_x,mitad_y);
-  console.log("pivot = " + graphic.pivot);
-  console.log("mitad_y = " + mitad_y);
-  console.log("mitad_x = " + mitad_x);
+  //console.log("pivot = " + graphic.pivot);
+  //console.log("mitad_y = " + mitad_y);
+  //console.log("mitad_x = " + mitad_x);
 }
 
 function makePentagram(){
@@ -311,6 +321,73 @@ function dibujarRedoble(){
   return redoble;
 }
 
+
+function procesarSemiCorchea(cant,mano,rotar,redoblar){
+  if(cant === 1){
+    dibujarSemiCorchea(25,mano,rotar,redoblar); //Falta dibujar esta monda
+  }
+  else{
+    dibujarNegra(25,mano,rotar,redoblar);
+    for(i = 1 ; i < cant; i++){
+      var barra = new PIXI.Graphics();
+      barra.lineStyle(5, 0x000000, 1);
+      barra.beginFill(0x000000, 1);
+      if(rotar === 1){
+        barra.moveTo(0,0);
+        barra.lineTo(25,0);    
+      }
+      else{
+        barra.moveTo(10,0);
+        barra.lineTo(35,0);  
+      }
+      barra.endFill();
+      if(mano === 1){
+        barra.y = Y_FIRST_SPACE_1;
+        barra.x = posicion-25; //la barra se dibuja desde la nota anterior
+        }
+        else if (mano === 2){
+          barra.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
+          barra.x = posicion2-50; // la barra se dibuja desde la nota anterior
+        }
+        añadiduras.push(barra);
+        stage.addChild(barra);
+      dibujarNegra(25,mano,rotar,redoblar);
+    }
+  }
+}
+function procesarCorchea(cant,mano,rotar,redoblar){
+  if(cant === 1){
+    dibujarCorchea(50,mano,rotar,redoblar);
+  }
+  else{
+    dibujarNegra(50,mano,rotar,redoblar);
+    for(i = 1 ; i < cant; i++){
+      var barra = new PIXI.Graphics();
+      barra.lineStyle(5, 0x000000, 1);
+      barra.beginFill(0x000000, 1);
+      if(rotar === 1){
+        barra.moveTo(0,0);
+        barra.lineTo(50,0);    
+      }
+      else{
+        barra.moveTo(10,0);
+        barra.lineTo(60,0);  
+      }
+      barra.endFill();
+      if(mano === 1){
+        barra.y = Y_FIRST_SPACE_1;
+        barra.x = posicion-50; //la barra se dibuja desde la nota anterior
+        }
+        else if (mano === 2){
+          barra.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
+          barra.x = posicion2-50; // la barra se dibuja desde la nota anterior
+        }
+        añadiduras.push(barra);
+        stage.addChild(barra);
+      dibujarNegra(50,mano,rotar,redoblar);
+    }
+  }
+}
 //Este metodo hace el dibujo de la cuarta
 function dibujarCorchea(aumento,mano,rotar,redoblar){
     //Se dibuja la corchea
