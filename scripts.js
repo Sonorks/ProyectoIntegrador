@@ -44,9 +44,9 @@ var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,
 
 
 
-function readTextFile(file)
+function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
-    file1 = "./canciones/pruebas.txt";
+    file1 = "./canciones/currulao1.txt"; //Directorio del archivo de ritmos para el pentagrama superior
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET",file1,false);
     rawFile.setRequestHeader('Content-Type','text/plain')
@@ -57,12 +57,12 @@ function readTextFile(file)
             if(rawFile.status === 200 || rawFile.status == 0)
             {
                 var allText = rawFile.responseText;
-                partituras = allText.split(",");
+                partituras = allText.split(","); //En el archivo las notas estan separadas por comas (,)
             }
         }
     }
     rawFile.send(null);
-    file2 = "./canciones/pruebas.txt";
+    file2 = "./canciones/currulao2.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
     var rawFile2 = new XMLHttpRequest();
     rawFile2.open("GET",file2,false);
     rawFile2.setRequestHeader('Content-Type','text/plain')
@@ -73,12 +73,12 @@ function readTextFile(file)
             if(rawFile2.status === 200 || rawFile2.status == 0)
             {
                 var allText = rawFile2.responseText;
-                partituras2 = allText.split(",");
+                partituras2 = allText.split(","); //En el archivo las notas estan separadas por comas (,)
             }
         }
     }
     rawFile2.send(null);
-    iniciarPixi();
+    iniciarPixi(); //Una vez leidos los archivos empiezan las animaciones
 }
 
 function iniciarPixi(){
@@ -92,7 +92,7 @@ function iniciarPixi(){
   for (var i=0; i<partituras.length; i++){
       switch(partituras[i]){
           case 'n':
-              dibujarNegra(100,1,1,0);
+              dibujarNegra(100,1,1,0); //(TiempoDeLaNota,Mano(Derecha=pentagrama superior, Izquierda=Pentagrama inferior,Rotar,Redoble (1=con redoble, 0=sin))
               break;
           case 'nr':
               dibujarNegra(100,1,1,1);
@@ -113,8 +113,20 @@ function iniciarPixi(){
               }
               break;
           case 'b':
-              dibujarBlanca();
+              dibujarBlanca(); //No esta dibujada jijijojo
               break;
+          case 'sn':
+              posicion+=100;
+              break;
+          case 'ssc':
+              dibujaSilencioCorchea(50,1);
+              break;
+          case 'sb':
+              posicion+=200;
+              break;
+          //A la verga todo preprocesamiento de la hilera del usuario para transformar las corcheas unidas en figuras propias de la graficada
+          //AQUI HAY ERRORES CON LAS NOTACIONES DE LAS CORCHEAS: SE PROPONE LEER LA NOTA QUE SIGUE (I+1) Y SI ES CORCHEA DIBUJAR LA BARRA HORIZONTAL.
+          //PARA LA ULTIMA SE PUEDE LEER (I-1) PARA DIBUJAR UNA NEGRA EN LUGAR DE LA CORCHEA COMO TAL
           case 'sc1r':
               dibujarSemiCorchea1(50,1,1,0,1,0,0);
               break;
@@ -154,15 +166,6 @@ function iniciarPixi(){
                   dibujarSemiCorchea2(50,1,2,1,0,0,0);
               }
               break;
-          case 'sn':
-              posicion+=100;
-              break;
-          case 'ssc':
-              dibujaSilencioCorchea(50,1);
-              break;
-          case 'sb':
-              posicion+=200;
-              break;
           default:
               console.log("Caracter: "+partituras[i]+" no especificado. "+i);
       }
@@ -183,6 +186,17 @@ function iniciarPixi(){
           case 'b':
               dibujarBlanca();
               break;
+          case 'sn':
+              posicion2+=100;
+              break;
+          case 'ssc':
+              dibujaSilencioCorchea(50,2);
+              break;
+          case 'sb':
+              posicion2+=200;
+          //A la verga todo preprocesamiento de la hilera del usuario para transformar las corcheas unidas en figuras propias de la graficada
+          //AQUI HAY ERRORES CON LAS NOTACIONES DE LAS CORCHEAS: SE PROPONE LEER LA NOTA QUE SIGUE (I+1) Y SI ES CORCHEA DIBUJAR LA BARRA HORIZONTAL.
+          //PARA LA ULTIMA SE PUEDE LEER (I-1) PARA DIBUJAR UNA NEGRA EN LUGAR DE LA CORCHEA COMO TAL
           case 'sc1d':
               dibujarSemiCorchea1(50,2,1,0,0,0,1);//dibujarSemiCorchea1(aumento,mano,tipo,rotar,redoble1,redoble2,doble);
               break;
@@ -225,14 +239,7 @@ function iniciarPixi(){
                   dibujarSemiCorchea2(100,2,2,1,0,0,0);
               }
               break;
-          case 'sn':
-              posicion2+=100;
-              break;
-          case 'ssc':
-              dibujaSilencioCorchea(50,2);
-              break;
-          case 'sb':
-              posicion2+=200;
+          
           default:
               console.log("Caracter: "+partituras2[i]+" no especificado. "+i);
       }
@@ -306,6 +313,7 @@ function dibujarRedoble(){
 
 //Este metodo hace el dibujo de la cuarta
 function dibujarCorchea(aumento,mano,rotar,redoblar){
+    //Se dibuja la corchea
     var corchea = new PIXI.Graphics();
     corchea.lineStyle(5,0x000000,1);
     corchea.beginFill(0x000000,1);
@@ -317,6 +325,7 @@ function dibujarCorchea(aumento,mano,rotar,redoblar){
     //var redoble = dibujarRedoble();
     QUARTER_NOTE_HEIGHT = corchea.height;
     if(mano === 1){
+      //se posiciona la corchea en el pentagrama adecuado
         corchea.x = posicion;
         corchea.y = Y_FIRST_SPACE_1;
         if (redoblar === 1){
@@ -324,18 +333,18 @@ function dibujarCorchea(aumento,mano,rotar,redoblar){
             redoble.x = posicion;
             redoble.y = Y_FIRST_SPACE_1;
         }
-        posicion=posicion+aumento;
+        posicion=posicion+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
         if(rotar === 1){
             rotate(corchea);
-            corchea.arc(3, 9, 7, 0, 3.5,true);
-            //corchea.arc(17, 12, 7, 0, 4,true);
+            corchea.arc(3, 9, 7, 0, 3.5,true);//Esto hay que arreglarlo: Es la colita de la corchea xd
         }
         else{
-            corchea.arc(17, 12, 7, 0, 4,true);
+            corchea.arc(17, 12, 7, 0, 4,true);//Esto hay que arreglarlo: Es la colita de la corchea xd
         }
-        notas.push(corchea);
+        notas.push(corchea);//Se añade la nota al vector de notas
     }
     else if (mano === 2){
+      //se posiciona la corchea en el pentagrama adecuado
         corchea.x=posicion2;
         corchea.y=Y_FIRST_SPACE_2;
         if (redoblar === 1){
@@ -343,7 +352,7 @@ function dibujarCorchea(aumento,mano,rotar,redoblar){
             redoble.x = posicion2;
             redoble.y = Y_FIRST_SPACE_2;
         }
-        posicion2=posicion2+aumento;
+        posicion2=posicion2+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
         if(rotar === 1){
             rotate(corchea);
             corchea.arc(3, 9, 7, 0, 3.5,true);
@@ -351,15 +360,16 @@ function dibujarCorchea(aumento,mano,rotar,redoblar){
         else{
             corchea.arc(17, 12, 7, 0, 4,true);
         }
-        notas2.push(corchea);
+        notas2.push(corchea);//Se añade la nota al vector de notas
     }
     if (redoblar === 1){
-      añadiduras.push(redoble);
+      añadiduras.push(redoble); //En caso de que se indique que la nota lleva redoble, se agrega el redoble al vector de añadiduras
       stage.addChild(redoble);
     }
-    stage.addChild(corchea);
+    stage.addChild(corchea); //Se agrega la corchea a la parte visual
 }
-function dibujarNegra(aumento,mano,rotar,prueba){
+function dibujarNegra(aumento,mano,rotar,redoblar){
+  //Se dibuja la afrodecendiente 
     var negra = new PIXI.Graphics();
     negra.lineStyle(5,0x000000,1);
     negra.beginFill(0x000000,1);
@@ -370,51 +380,43 @@ function dibujarNegra(aumento,mano,rotar,prueba){
     //var redoble = dibujarRedoble();
     QUARTER_NOTE_HEIGHT = negra.height;
     if(mano === 1){
+      //se posiciona la afrodecendiente en las posiciones que corresponde
         negra.x = posicion;
         negra.y = Y_FIRST_SPACE_1;
-        if (prueba === 1){
+        if (redoblar === 1){
+          //Si se indica que hay que redoblar, se agrega el redoble
             var redoble = dibujarRedoble();
             redoble.x = posicion;
             redoble.y = Y_FIRST_SPACE_1;
         }
         posicion=posicion+aumento;
         if(rotar === 1){
-            rotate(negra);
+            rotate(negra); //Si se indica la rotacion, se rota
         }
-        notas.push(negra);
+        notas.push(negra); //Se agrega la afrodecendiente al vector de notas adecuadas
     }
     else if (mano === 2){
+      //se posiciona la afrodecendiente en las posiciones que corresponde
         negra.x=posicion2;
         negra.y=Y_FIRST_SPACE_2;
-        if (prueba === 1){
+        if (redoblar === 1){//Si se indica que hay que redoblar, se agrega el redoble
             var redoble = dibujarRedoble();
             redoble.x = posicion2;
             redoble.y = Y_FIRST_SPACE_2;
         }
         posicion2=posicion2+aumento;
         if(rotar === 1){
-            rotate(negra);
+            rotate(negra);//Si se indica la rotacion, se rota
         }
-        notas2.push(negra);
+        notas2.push(negra); //Se agrega la afrodecendiente al vector de notas adecuadas
     }
-    if (prueba === 1){
+    if (redoblar === 1){
+      //si tiene redoble, se agrega el redoble al vector de añadiduras para que se pueda animar
       añadiduras.push(redoble);
       stage.addChild(redoble);
     }
+    //se agrega la afrodecendiente a la parte visual
     stage.addChild(negra);
-}
-function makeQuarterNote(){
-  var a_quarter = new PIXI.Graphics();
-  // set a fill and line style again
-  a_quarter.lineStyle(5, 0x000000, 1);
-  a_quarter.beginFill(0x000000, 1);
-  // draw a second shape
-  a_quarter.moveTo(11,0);
-  a_quarter.lineTo(11,HEIGHT_NOTE);
-  a_quarter.drawCircle(5,HEIGHT_NOTE,5);
-  a_quarter.endFill();
-  QUARTER_NOTE_HEIGHT = a_quarter.height;
-  return a_quarter;
 }
 
 //Dibuja silencio de corchea.
@@ -428,17 +430,20 @@ function dibujaSilencioCorchea(aumento,mano){
           .arc(10, 5, 10, 3.14, 0.6,true)
           .lineTo(10,40);
     if(mano === 1){
+      //Se posiciona en el pentagrama superior
         silencioCorchea.x = posicion;
         silencioCorchea.y = Y_FIRST_SPACE_1+5;
         posicion = posicion + aumento;
         añadiduras.push(silencioCorchea);
     }
     else if (mano === 2){
+      //Se posiciona en el pentagrama inferior
         silencioCorchea.x = posicion2;
         silencioCorchea.y = Y_FIRST_SPACE_2+5;
         posicion2 = posicion2 + aumento;
         añadiduras.push(silencioCorchea);
     }
+    //Se agrega al escenario
  stage.addChild(silencioCorchea);
 }
 
@@ -647,7 +652,7 @@ function animate() {
         counter +=1;
         }
     }
-	notas[i].x -= level;
+  notas[i].x -= level;
 }
     for (var i=0; i<notas2.length; i++){
         if (counter2 < notas2.length){
