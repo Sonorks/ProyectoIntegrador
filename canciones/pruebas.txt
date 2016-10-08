@@ -1,1 +1,1 @@
-psc,pc,
+n,n,c,cr,c,cr,n,n,

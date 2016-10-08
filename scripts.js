@@ -41,7 +41,7 @@ var posicion=700;
 var posicion2 = 700;
 var posiciones2  =[];//= [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
 var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
-
+var ritmo1=[];
 
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
@@ -79,11 +79,50 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
         }
     }
     rawFile2.send(null);
+    //procesarDatos();
     iniciarPixi(); //Una vez leidos los archivos empiezan las animaciones
 }
-
+function encontrarConsecutivos(partitura,pos,nota){
+  var cant = pos;
+  while (partitura[cant]===nota || partitura[cant]===nota+'r'){
+      cant++;
+  }
+  return (cant - pos);
+}
+function redoblesDeConsecutivos(partituras,pos,nota,cant){
+  var redobles = [];
+  cant = cant + pos;
+  var i = 0;
+  while(pos<cant){
+    if(partituras[pos] === nota+'r'){
+      redobles[i]=1;
+      i++;
+    }
+    else if(partituras[pos] === nota){
+      redobles[i]=0;
+      i++;
+    }
+    pos++;
+  }
+  return redobles;
+}
+function procesarDatos(){
+  var j = 0;
+  for (i = 0 ; i <partituras.length; i++){
+    if (partituras[i] === 'c'){
+      var consecutivos = encontrarConsecutivos(partituras,i,'c');
+      i = i+consecutivos-1;
+      ritmo1[j] = ('c'+consecutivos);
+    }
+    else{
+      ritmo1[j]=partituras[i];
+      j++;
+    }
+  }
+}
 function iniciarPixi(){
   //readTextFile();
+  var cantidad;
   renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
@@ -93,7 +132,7 @@ function iniciarPixi(){
   for (var i=0; i<partituras.length; i++){
       switch(partituras[i]){
           case 'n':
-              dibujarNegra(100,1,1,0); //(TiempoDeLaNota,Mano(Derecha=pentagrama superior, Izquierda=Pentagrama inferior,Rotar,Redoble (1=con redoble, 0=sin))
+              dibujarNegra(100,1,1,0); //(TiempoDeLaNota,Mano(Derecha=pentagrama superior, Izquierda=Pentagrama inferior),Rotar,Redoble (1=con redoble, 0=sin))
               break;
           case 'nr':
               dibujarNegra(100,1,1,1);
@@ -101,17 +140,15 @@ function iniciarPixi(){
           case 'nx':
               quarterNoteX(100,1,1);
               break;
-          case 'sc1d':
-              dibujarSemiCorchea1(50,1,1,0,0,0,1);//dibujarSemiCorchea1(aumento,mano,tipo,rotar,redoble1,redoble2,doble);
+          case 'c':
+              cantidad = encontrarConsecutivos(partituras,i,'c');
+              procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
+              i=i+cantidad-1;
               break;
-          case 'sc2d':
-              if (partituras[i-1]==='sc1' || partituras[i-1]==='sc2' || partituras[i-1]==='sc1x' || partituras[i-1]==='sc2x' || partituras[i-1]=== 'sc1d'){
-                 dibujarSemiCorchea2(0,1,1,0,0,0,1);//dibujarSemiCorchea1(aumento,mano,tipo,rotar,redoble1,redoble2,doble);
-              break;
-              }
-              else{
-                 dibujarSemiCorchea2(50,1,1,0,0,0,1);
-              }
+          case 'sc':
+              cantidad = encontrarConsecutivos(partituras,i,'sc');
+              procesarCorchea(cantidad,1,0,redoblesDeConsecutivos);
+              i=i+cantidad-1;
               break;
           case 'b':
               dibujarBlanca(); //No esta dibujada jijijojo
@@ -134,45 +171,6 @@ function iniciarPixi(){
           //A la verga todo preprocesamiento de la hilera del usuario para transformar las corcheas unidas en figuras propias de la graficada
           //AQUI HAY ERRORES CON LAS NOTACIONES DE LAS CORCHEAS: SE PROPONE LEER LA NOTA QUE SIGUE (I+1) Y SI ES CORCHEA DIBUJAR LA BARRA HORIZONTAL.
           //PARA LA ULTIMA SE PUEDE LEER (I-1) PARA DIBUJAR UNA NEGRA EN LUGAR DE LA CORCHEA COMO TAL
-          case 'sc1r':
-              dibujarSemiCorchea1(50,1,1,0,1,0,0);
-              break;
-          case 'sc1r2r':
-              dibujarSemiCorchea1(50,1,1,0,1,1,0);
-              break;
-          case 'sc2r':
-              dibujarSemiCorchea1(50,1,1,0,0,1,0);
-              break;
-          case 'sc':
-              dibujarCorchea(50,1,1,0); //aumento,mano,rotar,redoble
-              break;
-          case 'scr':
-              dibujarCorchea(50,1,1,1);
-              break;
-          case 'scx':
-              quarterNoteX(50,1,1);
-          case 'sc1':
-              dibujarSemiCorchea1(50,1,1,1,0,0);
-              break;
-          case 'sc1x':
-              dibujarSemiCorchea1(50,1,2,1,0,0);
-              break;
-          case 'sc2':
-              if (partituras[i-1]==='sc1' || partituras[i-1]==='sc2' || partituras[i-1]==='sc1x' || partituras[i-1]==='sc2x' || partituras[i-1]=== 'sc1d'){
-                 dibujarSemiCorchea2(0,1,1,1,0,0,0);
-              }
-              else{
-                 dibujarSemiCorchea2(50,1,1,1,0,0,0);
-              }
-              break;
-          case 'sc2x':
-              if (partituras[i-1]==='sc1' || partituras[i-1]==='sc' || partituras[i-1]==='sc1x' || partituras[i-1]==='scx' || partituras[i-1]=== 'sc1d'){
-                  dibujarSemiCorchea2(0,1,2,1,0,0,0);
-              }
-              else{
-                  dibujarSemiCorchea2(50,1,2,1,0,0,0);
-              }
-              break;
           default:
               console.log("Caracter: "+partituras[i]+" no especificado. "+i);
       }
@@ -193,6 +191,16 @@ function iniciarPixi(){
           case 'b':
               dibujarBlanca();
               break;
+          case 'c':
+              cantidad = encontrarConsecutivos(partituras2,i,'c');
+              procesarCorchea(cantidad,1,0,0);
+              i=i+cantidad-1;
+              break;
+          case 'sc':
+              cantidad = encontrarConsecutivos(partituras2,i,'sc');
+              procesarCorchea(cantidad,1,0,0);
+              i=i+cantidad-1;
+              break;
           case 'sn':
               posicion2+=100;
               break;
@@ -204,52 +212,6 @@ function iniciarPixi(){
           case 'pc':
               procesarCorchea(4,1,0);
               break;
-          //A la verga todo preprocesamiento de la hilera del usuario para transformar las corcheas unidas en figuras propias de la graficada
-          //AQUI HAY ERRORES CON LAS NOTACIONES DE LAS CORCHEAS: SE PROPONE LEER LA NOTA QUE SIGUE (I+1) Y SI ES CORCHEA DIBUJAR LA BARRA HORIZONTAL.
-          //PARA LA ULTIMA SE PUEDE LEER (I-1) PARA DIBUJAR UNA NEGRA EN LUGAR DE LA CORCHEA COMO TAL
-          case 'sc1d':
-              dibujarSemiCorchea1(50,2,1,0,0,0,1);//dibujarSemiCorchea1(aumento,mano,tipo,rotar,redoble1,redoble2,doble);
-              break;
-          case 'sc2d':
-              if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc2' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='sc2x' || partituras2[i-1]=== 'sc1d'){
-                 dibujarSemiCorchea2(0,2,1,1,0,0,1);//dibujarSemiCorchea1(aumento,mano,tipo,rotar,redoble1,redoble2,doble);
-              break;
-              }
-              else{
-                 dibujarSemiCorchea2(50,2,1,1,0,0,1);
-              }
-              break;
-          case 'sc':
-              dibujarCorchea(50,2,1,0); //dibujar SemiCorchea
-              break;
-          case 'scr':
-              dibujarCorchea(50,2,1,1); //dibujar SemiCorchea
-              break;
-          case 'scx':
-              quarterNoteX(50,2,1); //dibujar SemiCorcheaX
-          case 'sc1':
-              dibujarSemiCorchea1(50,2,1,1);
-              break;
-          case 'sc1x':
-              dibujarSemiCorchea1(50,2,2,1);
-              break;
-          case 'sc2':
-              if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc2' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='sc2x'){
-                 dibujarSemiCorchea2(0,2,1,1,0,0,0);
-              }
-              else{
-                 dibujarSemiCorchea2(50,2,1,1,0,0,0);
-              }
-              break;
-          case 'sc2x':
-              if (partituras2[i-1]==='sc1' || partituras2[i-1]==='sc' || partituras2[i-1]==='sc1x' || partituras2[i-1]==='scx'){
-                  dibujarSemiCorchea2(50,2,2,1,0,0,0);
-              }
-              else{
-                  dibujarSemiCorchea2(100,2,2,1,0,0,0);
-              }
-              break;
-          
           default:
               console.log("Caracter: "+partituras2[i]+" no especificado. "+i);
       }
@@ -356,11 +318,16 @@ function procesarSemiCorchea(cant,mano,rotar,redoblar){
   }
 }
 function procesarCorchea(cant,mano,rotar,redoblar){
+  console.log("Longitud:"+redoblar.length);
+  console.log("Cantidad:"+cant);
+  for(var k = 0 ; k<redoblar.length; k++){
+    console.log("szte: "+redoblar[k]);
+  }
   if(cant === 1){
-    dibujarCorchea(50,mano,rotar,redoblar);
+    dibujarCorchea(50,mano,rotar,redoblar[0]);
   }
   else{
-    dibujarNegra(50,mano,rotar,redoblar);
+    dibujarNegra(50,mano,rotar,redoblar[0]);
     for(i = 1 ; i < cant; i++){
       var barra = new PIXI.Graphics();
       barra.lineStyle(5, 0x000000, 1);
@@ -384,7 +351,8 @@ function procesarCorchea(cant,mano,rotar,redoblar){
         }
         añadiduras.push(barra);
         stage.addChild(barra);
-      dibujarNegra(50,mano,rotar,redoblar);
+        console.log("red:"+redoblar[i]);
+      dibujarNegra(50,mano,rotar,redoblar[i]);
     }
   }
 }
