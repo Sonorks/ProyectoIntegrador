@@ -142,10 +142,22 @@ function iniciarPixi(){
               break;
           case 'c':
               cantidad = encontrarConsecutivos(partituras,i,'c');
+               if(partituras[i-1]==='sc' || partituras[i-1]==='scr'){
+                posicion -=25;
+                notas[i-1].x = -10;
+                dibujarNegra(25,1,0,0);
+                unirCorcheaSemiCorchea(25,1,0);
+              }
               procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
               i=i+cantidad-1;
               break;
           case 'sc':
+              if(partituras[i-1]==='c' || partituras[i-1]==='cr'){
+                posicion -=50;
+                notas[i-1].x = -10;
+                dibujarNegra(50,1,0,0);
+                unirCorcheaSemiCorchea(50,1,0);
+              }
               cantidad = encontrarConsecutivos(partituras,i,'sc');
               procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
               i=i+cantidad-1;
@@ -256,7 +268,38 @@ function makePentagram(){
   pentagram.drawRect(30,0,20,100);
   return pentagram;
 }
-
+function unirCorcheaSemiCorchea(aumento,mano,rotar){
+  var barra = new PIXI.Graphics();
+  barra.lineStyle(5, 0x000000, 1);
+  barra.beginFill(0x000000, 1);
+  barra.endFill();
+  if(mano === 1){
+    barra.y = Y_FIRST_SPACE_1;
+    barra.x = posicion-aumento; //la barra se dibuja desde la nota anterior
+    if(rotar === 1){
+      barra.moveTo(0,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
+      barra.lineTo(50,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));    
+      }
+    else{
+        barra.moveTo(10,0);
+        barra.lineTo(60,0);  
+      }
+    }
+  else if (mano === 2){
+    barra.y = Y_FIRST_SPACE_2+HEIGHT_PENT_SPACE*3;
+    barra.x = posicion2-aumento; // la barra se dibuja desde la nota anterior
+    if(rotar === 1){
+      barra.moveTo(0,0);
+      barra.lineTo(50,0);    
+    }
+    else{
+      barra.moveTo(10,-HEIGHT_PENT_SPACE*3);
+      barra.lineTo(60,-HEIGHT_PENT_SPACE*3);  
+    }
+  }
+  añadiduras.push(barra);
+  stage.addChild(barra);
+}
 function dibujarRedoble(){
   var redoble = new PIXI.Graphics();
   redoble.lineStyle(2, 0x000000, 1);
@@ -481,6 +524,7 @@ function dibujarNegra(aumento,mano,rotar,redoblar){
     }
     //se agrega la afrodecendiente a la parte visual
     stage.addChild(negra);
+    return negra;
 }
 
 //Dibuja silencio de corchea.

@@ -1,1 +1,1 @@
-n,n,c,cr,c,cr,n,n,sc,sc,sc,scr
+n,n,sc,c,sc,sc,scr
