@@ -285,11 +285,11 @@ function unirCorcheaSemiCorchea(aumento,mano,rotar){
     barra.x = posicion-aumento; //la barra se dibuja desde la nota anterior
     if(rotar === 1){
       barra.moveTo(0,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
-      barra.lineTo(50,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));    
+      barra.lineTo(50,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
       }
     else{
         barra.moveTo(10,0);
-        barra.lineTo(60,0);  
+        barra.lineTo(60,0);
       }
     }
   else if (mano === 2){
@@ -297,11 +297,11 @@ function unirCorcheaSemiCorchea(aumento,mano,rotar){
     barra.x = posicion2-aumento; // la barra se dibuja desde la nota anterior
     if(rotar === 1){
       barra.moveTo(0,0);
-      barra.lineTo(50,0);    
+      barra.lineTo(50,0);
     }
     else{
       barra.moveTo(10,-HEIGHT_PENT_SPACE*3);
-      barra.lineTo(60,-HEIGHT_PENT_SPACE*3);  
+      barra.lineTo(60,-HEIGHT_PENT_SPACE*3);
     }
   }
   añadiduras.push(barra);
