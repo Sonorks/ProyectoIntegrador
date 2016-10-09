@@ -1,1 +1,1 @@
-c,b,sc,c,b,c,b,sc,b,sc,sc,ssc,ssc,sq,sc,c,sc,sq,ssc,n,sc,b,sc,n,sc,sc,n,sc,n,c,cr,c,cr,n,n,sc,sc,sc,scr,n,sc,n,n,n,sc,c,sc,sc,scr
+c,b,sc,c,b,c,b,sc,b,sc,sc,ssc,ssc,sq
