@@ -20,6 +20,7 @@ var NOTE_HEIGHT;
 var DO_SPACE = Y_FIRST_PENT+HEIGHT_PENT_SPACE*3; /**Posición del espacio DO, cuarta linea de arriba a abajo*/
 var NOTE_IN_DO = DO_SPACE-NOTE_HEIGHT;
 var PENT_DISTANCE = Y_FIRST_SPACE_2-Y_FIRST_SPACE_1; /**Espacio entre espacios de los pentagrmas*/
+var GROSOR_DE_LINEA =3;
 //Constantes
 var counter=0;
 var counter2=0;
@@ -29,7 +30,7 @@ var stage;
 var graphics;
 var pent;
 //Nivel de dificultad
-var level=2;
+var level=1;
 var notas = [];
 var notas2 = [];
 var notasTocadas = [];
@@ -106,6 +107,7 @@ function redoblesDeConsecutivos(partituras,pos,nota,cant){
   }
   return redobles;
 }
+
 function procesarDatos(){
   var j = 0;
   for (i = 0 ; i <partituras.length; i++){
@@ -128,15 +130,24 @@ function iniciarPixi(){
   canvas.appendChild(renderer.view);
   stage = new PIXI.Container();
   graphics = new PIXI.Graphics();
+  //Dibuja pentagrama
+  pent = makePentagram();
+  pent.y = Y_FIRST_PENT;
+  var pent2= makePentagram();
+  pent2.y = Y_SECOND_PENT;
+  graphics.drawRect(100,0,20,290);
+  stage.addChild(pent);
+  stage.addChild(pent2);
+  stage.addChild(graphics);
   //Crea las notas
   for (var i=0; i<partituras.length; i++){
       switch(partituras[i]){
           case 'n':
-              dibujarNegra(100,1,1,0); //(TiempoDeLaNota,Mano(Derecha=pentagrama superior, Izquierda=Pentagrama inferior),Rotar,Redoble (1=con redoble, 0=sin))
+              dibujarNegra(100,1,0,0);
               break;
           case 'nr':
-              dibujarNegra(100,1,1,1);
-              break;    
+              dibujarNegra(100,1,0,1);
+              break;
           case 'nx':
               quarterNoteX(100,1,1);
               break;
@@ -151,13 +162,16 @@ function iniciarPixi(){
               i=i+cantidad-1;
               break;
           case 'b':
-              dibujarBlanca(); //No esta dibujada jijijojo
+              dibujarBlanca(50,1,0,0);
               break;
           case 'sn':
               posicion+=100;
               break;
-          case 'ssc':
+          case 'sq':
               dibujaSilencioCorchea(50,1);
+              break;
+          case 'ssc':
+              dibujaSilencioSemiCorchea(25,1);
               break;
           case 'sb':
               posicion+=200;
@@ -183,7 +197,7 @@ function iniciarPixi(){
               quarterNoteX(100,2,1);
               break;
           case 'b':
-              dibujarBlanca();
+              dibujarBlanca(50,2,1,0);
               break;
           case 'c':
               cantidad = encontrarConsecutivos(partituras2,i,'c');
@@ -198,8 +212,11 @@ function iniciarPixi(){
           case 'sn':
               posicion2+=100;
               break;
-          case 'ssc':
+          case 'sq':
               dibujaSilencioCorchea(50,2);
+              break;
+          case 'ssc':
+              dibujaSilencioSemiCorchea(25,2);
               break;
           case 'sb':
               posicion2+=200;
@@ -210,14 +227,7 @@ function iniciarPixi(){
               console.log("Caracter: "+partituras2[i]+" no especificado. "+i);
       }
   }
-  pent = makePentagram();
-  pent.y = Y_FIRST_PENT;
-  var pent2= makePentagram();
-  pent2.y = Y_SECOND_PENT;
-  graphics.drawRect(100,0,20,290);
-  stage.addChild(graphics);
-  stage.addChild(pent);
-  stage.addChild(pent2);
+
   //comienza la animacion
   animate();
 
@@ -239,15 +249,12 @@ function setCenterPivot(graphic){
   var mitad_y = graphic.height/2;
   var mitad_x = graphic.width/2;
   graphic.pivot = new PIXI.Point(mitad_x,mitad_y);
-  //console.log("pivot = " + graphic.pivot);
-  //console.log("mitad_y = " + mitad_y);
-  //console.log("mitad_x = " + mitad_x);
 }
 
 function makePentagram(){
   var pentagram = new PIXI.Graphics();
   // set a line style again
-  pentagram.lineStyle(2, 0x000000,1);
+  pentagram.lineStyle(2, 0x282828 ,0.7);
   //start drawing
   pentagram.drawRect(0,10,1000,20);
   pentagram.drawRect(0,30,1000,20);
@@ -259,7 +266,7 @@ function makePentagram(){
 
 function dibujarRedoble(){
   var redoble = new PIXI.Graphics();
-  redoble.lineStyle(2, 0x000000, 1);
+  redoble.lineStyle(GROSOR_DE_LINEA, 0x000000, 1);
   redoble.beginFill(0x000000, 1);
   redoble.moveTo(12,25);
   redoble.lineTo(-15,25);
@@ -280,13 +287,13 @@ function dibujarRedoble(){
 
 function procesarSemiCorchea(cant,mano,rotar,redoblar){
   if(cant === 1){
-    dibujarSemiCorchea(25,mano,rotar,redoblar[0]); //Falta dibujar esta monda
+    dibujarSemiCorchea(25,mano,rotar,redoblar[0]);
   }
   else{
     dibujarNegra(25,mano,rotar,redoblar[0]);
     for(i = 1 ; i < cant; i++){
       var barra = new PIXI.Graphics();
-      barra.lineStyle(5, 0x000000, 1);
+      barra.lineStyle(GROSOR_DE_LINEA, 0x000000, 1);
       barra.beginFill(0x000000, 1);
       barra.endFill();
       var barra2 = barra;
@@ -299,13 +306,13 @@ function procesarSemiCorchea(cant,mano,rotar,redoblar){
           barra.moveTo(0,Y_FIRST_SPACE_1+HEIGHT_PENT_SPACE);
           barra.lineTo(25,Y_FIRST_SPACE_1+HEIGHT_PENT_SPACE);
           barra2.moveTo(0,Y_FIRST_SPACE_1+HEIGHT_PENT_SPACE-8);
-          barra2.lineTo(25,Y_FIRST_SPACE_1+HEIGHT_PENT_SPACE-8);   
+          barra2.lineTo(25,Y_FIRST_SPACE_1+HEIGHT_PENT_SPACE-8);
         }
         else{
           barra.moveTo(10,0);
-          barra.lineTo(35,0); 
+          barra.lineTo(35,0);
           barra2.moveTo(10,8);
-          barra2.lineTo(35,8);  
+          barra2.lineTo(35,8);
         }
       }
       else if (mano === 2){
@@ -315,15 +322,15 @@ function procesarSemiCorchea(cant,mano,rotar,redoblar){
         barra.x = posicion2-25; // la barra se dibuja desde la nota anterior
         if(rotar === 1){
           barra2.moveTo(0,HEIGHT_PENT_SPACE*3-8);
-          barra2.lineTo(25,HEIGHT_PENT_SPACE*3-8); 
+          barra2.lineTo(25,HEIGHT_PENT_SPACE*3-8);
           barra.moveTo(0,HEIGHT_PENT_SPACE*3);
-          barra.lineTo(25,HEIGHT_PENT_SPACE*3);    
+          barra.lineTo(25,HEIGHT_PENT_SPACE*3);
         }
         else{
           barra2.moveTo(10,8);
-          barra2.lineTo(35,8); 
+          barra2.lineTo(35,8);
           barra.moveTo(10,0);
-          barra.lineTo(35,0);  
+          barra.lineTo(35,0);
         }
       }
       añadiduras.push(barra);
@@ -334,6 +341,81 @@ function procesarSemiCorchea(cant,mano,rotar,redoblar){
     }
   }
 }
+//dibujarSemiCorchea(25,mano,rotar,redoblar[0]); //Falta dibujar esta monda
+function dibujarSemiCorchea(tiempo,mano,rotar,redoblar){
+  var sc_container = new PIXI.Container();
+  var sc = new PIXI.Graphics()
+        .lineStyle(GROSOR_DE_LINEA, 0x000000, 1)
+        .moveTo(11,0)
+        .lineTo(11,50)
+        .moveTo(11,0)
+        .bezierCurveTo(10,25,35,15,25,35)
+        .moveTo(11,20)
+        .bezierCurveTo(20,35,35,25,25,45)
+  sc_container.addChild(sc);
+  var _ellipse = ellipse(1);
+  _ellipse.x=13;
+  _ellipse.y=55;
+  _ellipse.rotation=2.8;
+  sc_container.addChild(_ellipse);
+  if(mano === 1){
+      sc_container.x = posicion;
+      sc_container.y = Y_FIRST_SPACE_1;
+      if (redoblar === 1){
+        //Si se indica que hay que redoblar, se agrega el redoble
+          var redoble = dibujarRedoble();
+          redoble.x = posicion;
+          redoble.y = Y_FIRST_SPACE_1;
+      }
+      posicion=posicion+sc_container.width+tiempo;
+      if(rotar === 1){
+          rotate(sc_container);
+      }
+      notas.push(sc_container);
+  }
+  else if (mano === 2){
+      var sc_container = semicorcheaRotada();
+      sc_container.x=posicion2;
+      sc_container.y=Y_FIRST_SPACE_2+5;
+      if (redoblar === 1){//Si se indica que hay que redoblar, se agrega el redoble
+          var redoble = dibujarRedoble();
+          redoble.x = posicion2;
+          redoble.y = Y_FIRST_SPACE_2;
+      }
+      posicion2=posicion2+sc_container.width+tiempo;
+      //No es necesario rotar esto, cuando mano es 2, todo se debe rotar
+      // if(rotar === 1){
+      //     rotate(sc_container);
+      // }
+      notas2.push(sc_container);
+  }
+  if (redoblar === 1){
+    //si tiene redoble, se agrega el redoble al vector de añadiduras para que se pueda animar
+    añadiduras.push(redoble);
+    stage.addChild(redoble);
+  }
+  stage.addChild(sc_container);
+
+}
+
+function semicorcheaRotada(){
+  var sc_container = new PIXI.Container();
+  var semicorchea_rotada = new PIXI.Graphics()
+        .lineStyle(GROSOR_DE_LINEA,0x000000,1)
+        .moveTo(11,0)
+        .lineTo(11,50)
+        .bezierCurveTo(15,35,40,40,25,20)
+        .moveTo(11,40)
+        .bezierCurveTo(15,25,40,30,25,10);
+  sc_container.addChild(semicorchea_rotada);
+  var _ellipse = ellipse(1);
+  _ellipse.x=9;
+  _ellipse.y=-4;
+  _ellipse.rotation=-0.25;
+  sc_container.addChild(_ellipse);
+  return sc_container;
+}
+
 function procesarCorchea(cant,mano,rotar,redoblar){
   if(cant === 1){
     dibujarCorchea(50,mano,rotar,redoblar[0]);
@@ -342,7 +424,7 @@ function procesarCorchea(cant,mano,rotar,redoblar){
     dibujarNegra(50,mano,rotar,redoblar[0]);
     for(i = 1 ; i < cant; i++){
       var barra = new PIXI.Graphics();
-      barra.lineStyle(5, 0x000000, 1);
+      barra.lineStyle(GROSOR_DE_LINEA, 0x000000, 1);
       barra.beginFill(0x000000, 1);
       barra.endFill();
       if(mano === 1){
@@ -350,11 +432,11 @@ function procesarCorchea(cant,mano,rotar,redoblar){
         barra.x = posicion-50; //la barra se dibuja desde la nota anterior
         if(rotar === 1){
           barra.moveTo(0,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
-          barra.lineTo(50,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));    
+          barra.lineTo(50,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
           }
         else{
             barra.moveTo(10,0);
-            barra.lineTo(60,0);  
+            barra.lineTo(60,0);
           }
         }
       else if (mano === 2){
@@ -362,11 +444,11 @@ function procesarCorchea(cant,mano,rotar,redoblar){
         barra.x = posicion2-50; // la barra se dibuja desde la nota anterior
         if(rotar === 1){
           barra.moveTo(0,0);
-          barra.lineTo(50,0);    
+          barra.lineTo(50,0);
         }
         else{
           barra.moveTo(10,-HEIGHT_PENT_SPACE*3);
-          barra.lineTo(60,-HEIGHT_PENT_SPACE*3);  
+          barra.lineTo(60,-HEIGHT_PENT_SPACE*3);
         }
       }
       añadiduras.push(barra);
@@ -378,71 +460,80 @@ function procesarCorchea(cant,mano,rotar,redoblar){
 //Este metodo hace el dibujo de la cuarta
 function dibujarCorchea(aumento,mano,rotar,redoblar){
     //Se dibuja la corchea
-    var corchea = new PIXI.Graphics();
-    corchea.lineStyle(5,0x000000,1);
-    corchea.beginFill(0x000000,1);
-    corchea.moveTo(11,0);
-    corchea.lineTo(11,HEIGHT_NOTE);
-    corchea.drawCircle(5,HEIGHT_NOTE,5);    
-    corchea.endFill();
-    //corchea.arc(3, 12, 7, 0, 2,true);
-    //var redoble = dibujarRedoble();
-    QUARTER_NOTE_HEIGHT = corchea.height;
+    var c_container = new PIXI.Container();
+    var corchea = new PIXI.Graphics()
+          .lineStyle(GROSOR_DE_LINEA, 0x000000, 1)
+          .moveTo(11,0)
+          .lineTo(11,50)
+          .moveTo(11,0)
+          .bezierCurveTo(10,25,35,15,25,35);
+    c_container.addChild(corchea);
+    var _ellipse = ellipse(1);
+    _ellipse.x=13;
+    _ellipse.y=55;
+    _ellipse.rotation=2.8;
+    c_container.addChild(_ellipse);
+
     if(mano === 1){
       //se posiciona la corchea en el pentagrama adecuado
-        corchea.x = posicion;
-        corchea.y = Y_FIRST_SPACE_1;
+        c_container.x = posicion;
+        c_container.y = Y_FIRST_SPACE_1;
         if (redoblar === 1){
             var redoble = dibujarRedoble();
             redoble.x = posicion;
             redoble.y = Y_FIRST_SPACE_1;
         }
-        posicion=posicion+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
-        if(rotar === 1){
-            rotate(corchea);
-            corchea.arc(3, 9, 7, 0, 3.5,true);//Esto hay que arreglarlo: Es la colita de la corchea xd
-        }
-        else{
-            corchea.arc(17, 12, 7, 0, 4,true);//Esto hay que arreglarlo: Es la colita de la corchea xd
-        }
-        notas.push(corchea);//Se añade la nota al vector de notas
+        posicion=posicion+c_container.width+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
+        notas.push(c_container);//Se añade la nota al vector de notas
     }
     else if (mano === 2){
-      //se posiciona la corchea en el pentagrama adecuado
-        corchea.x=posicion2;
-        corchea.y=Y_FIRST_SPACE_2;
+      //se posiciona la c_container en el pentagrama adecuado
+        var c_container = corcheaRotada();
+        c_container.x=posicion2;
+        c_container.y=Y_FIRST_SPACE_2;
         if (redoblar === 1){
             var redoble = dibujarRedoble();
             redoble.x = posicion2;
             redoble.y = Y_FIRST_SPACE_2;
         }
-        posicion2=posicion2+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
-        if(rotar === 1){
-            rotate(corchea);
-            corchea.arc(3, 9, 7, 0, 3.5,true);
-        }
-        else{
-            corchea.arc(17, 12, 7, 0, 4,true);
-        }
-        notas2.push(corchea);//Se añade la nota al vector de notas
+        posicion2=posicion2+c_container.width+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
+
+        notas2.push(c_container);//Se añade la nota al vector de notas
     }
     if (redoblar === 1){
       añadiduras.push(redoble); //En caso de que se indique que la nota lleva redoble, se agrega el redoble al vector de añadiduras
       stage.addChild(redoble);
     }
-    stage.addChild(corchea); //Se agrega la corchea a la parte visual
+
+
+    stage.addChild(c_container); //Se agrega la corchea a la parte visual
 }
+
+function corcheaRotada(){
+  var c_container = new PIXI.Container();
+  var corchea_rotada = new PIXI.Graphics()
+        .lineStyle(GROSOR_DE_LINEA,0x000000,1)
+        .moveTo(11,0)
+        .lineTo(11,50)
+        .bezierCurveTo(15,35,40,40,25,20)
+  c_container.addChild(corchea_rotada);
+  var _ellipse = ellipse(1);
+  _ellipse.x=9;
+  _ellipse.y=-4;
+  _ellipse.rotation=-0.25;
+  c_container.addChild(_ellipse);
+  return c_container;
+}
+
 function dibujarNegra(aumento,mano,rotar,redoblar){
-  //Se dibuja la afrodecendiente 
-    var negra = new PIXI.Graphics();
-    negra.lineStyle(5,0x000000,1);
-    negra.beginFill(0x000000,1);
-    negra.moveTo(11,0);
-    negra.lineTo(11,HEIGHT_NOTE);
-    negra.drawCircle(5,HEIGHT_NOTE,5);    
-    negra.endFill();
+    var negra = new PIXI.Container();
+    negra.addChild(plica());
+    var _ellipse = ellipse(1);
+    _ellipse.x=13;
+    _ellipse.y=55;
+    _ellipse.rotation=2.8;
+    negra.addChild(_ellipse);
     //var redoble = dibujarRedoble();
-    QUARTER_NOTE_HEIGHT = negra.height;
     if(mano === 1){
       //se posiciona la afrodecendiente en las posiciones que corresponde
         negra.x = posicion;
@@ -482,13 +573,81 @@ function dibujarNegra(aumento,mano,rotar,redoblar){
     //se agrega la afrodecendiente a la parte visual
     stage.addChild(negra);
 }
+//ellipse
+function ellipse(esRellena){
+    var ellipse = new PIXI.Graphics()
+            .lineStyle(GROSOR_DE_LINEA,0x000000,1);
+    if(esRellena===1){
+      ellipse.beginFill(0x000000);
+    }
+    ellipse.drawEllipse(8,8,8,4);
+    return ellipse;
+}
+
+//plica
+function plica(){
+  var plica = new PIXI.Graphics()
+      .lineStyle(GROSOR_DE_LINEA, 0x000000, 1)
+      .moveTo(11,0)
+      .lineTo(11,50)
+      .endFill();
+  return plica;
+}
+
+function dibujarBlanca(aumento,mano,rotar,redoblar){
+  //Se dibuja la afrodecendiente
+  var blanca = new PIXI.Container();
+
+  blanca.addChild(plica());
+  var _ellipse = ellipse();
+  _ellipse.x=13;
+  _ellipse.y=55;
+  _ellipse.rotation=2.8;
+  blanca.addChild(_ellipse);
+    if(mano === 1){
+        blanca.x = posicion;
+        blanca.y = Y_FIRST_SPACE_1;
+        if (redoblar === 1){
+          //Si se indica que hay que redoblar, se agrega el redoble
+            var redoble = dibujarRedoble();
+            redoble.x = posicion;
+            redoble.y = Y_FIRST_SPACE_1;
+        }
+        posicion=posicion+aumento;
+        if(rotar === 1){
+            rotate(blanca); //Si se indica la rotacion, se rota
+        }
+        notas.push(blanca); //Se agrega la afrodecendiente al vector de notas adecuadas
+    }
+    else if (mano === 2){
+      //se posiciona la afrodecendiente en las posiciones que corresponde
+        blanca.x=posicion2;
+        blanca.y=Y_FIRST_SPACE_2;
+        if (redoblar === 1){//Si se indica que hay que redoblar, se agrega el redoble
+            var redoble = dibujarRedoble();
+            redoble.x = posicion2;
+            redoble.y = Y_FIRST_SPACE_2;
+        }
+        posicion2=posicion2+aumento;
+        if(rotar === 1){
+            rotate(blanca);//Si se indica la rotacion, se rota
+        }
+        notas2.push(blanca);
+    }
+    if (redoblar === 1){
+      //si tiene redoble, se agrega el redoble al vector de añadiduras para que se pueda animar
+      añadiduras.push(redoble);
+      stage.addChild(redoble);
+    }
+    stage.addChild(blanca);
+}
 
 //Dibuja silencio de corchea.
 function dibujaSilencioCorchea(aumento,mano){
 //arc(cx, cy, radius, startAngle, endAngle, anticlockwise)
   var silencioCorchea = new PIXI.Graphics()
           .beginFill(0x000000)
-          .lineStyle(4, 0x000000, 1)
+          .lineStyle(GROSOR_DE_LINEA, 0x000000, 1)
           .drawCircle(5, 5,4)
           .endFill()
           .arc(10, 5, 10, 3.14, 0.6,true)
@@ -497,29 +656,60 @@ function dibujaSilencioCorchea(aumento,mano){
       //Se posiciona en el pentagrama superior
         silencioCorchea.x = posicion;
         silencioCorchea.y = Y_FIRST_SPACE_1+5;
-        posicion = posicion + aumento;
+        posicion = posicion + silencioCorchea.width + aumento;
         añadiduras.push(silencioCorchea);
     }
     else if (mano === 2){
       //Se posiciona en el pentagrama inferior
         silencioCorchea.x = posicion2;
         silencioCorchea.y = Y_FIRST_SPACE_2+5;
-        posicion2 = posicion2 + aumento;
+        posicion2 = posicion2 + silencioCorchea.width + aumento;
         añadiduras.push(silencioCorchea);
     }
     //Se agrega al escenario
  stage.addChild(silencioCorchea);
 }
 
+//Dibuja silencio de corchea.
+function dibujaSilencioSemiCorchea(aumento,mano){
+//arc(cx, cy, radius, startAngle, endAngle, anticlockwise)
+    var ssc = new PIXI.Graphics()
+        .beginFill(0x000000)
+        .lineStyle(GROSOR_DE_LINEA, 0x000000, 1)
+        .drawCircle(4, 5,3)
+        .endFill()
+        .arc(10,5,10,3.14,0.6,true)
+        .lineTo(10,40)
+        .beginFill(0x000000)
+        .drawCircle(0, 18,3)
+        .endFill()
+        .arc(6,18,10,3.14,0.6,true);
+    if(mano === 1){
+      //Se posiciona en el pentagrama superior
+        ssc.x = posicion;
+        ssc.y = Y_FIRST_SPACE_1+5;
+        posicion = posicion + ssc.width + aumento;
+        añadiduras.push(ssc);
+    }
+    else if (mano === 2){
+      //Se posiciona en el pentagrama inferior
+        ssc.x = posicion2;
+        ssc.y = Y_FIRST_SPACE_2+5;
+        posicion2 = posicion2 + ssc.width + aumento;
+        añadiduras.push(ssc);
+    }
+    //Se agrega al escenario
+ stage.addChild(ssc);
+}
 
 function quarterNoteX(aumento,mano,rotar){
   var note = new PIXI.Graphics();
   //set a fill and line style again
-  note.lineStyle(5, 0x000000, 1);
+  note.lineStyle(GROSOR_DE_LINEA, 0x000000, 1);
   note.beginFill(0x000000, 1);
   note.moveTo(11,0);
   note.lineTo(11,HEIGHT_NOTE-5);
-  note.lineStyle(3,0x000000,1);
+  note.lineStyle(GROSOR_DE_LINEA,0x000000,1);
   note.lineTo(0,HEIGHT_NOTE+5);
   note.moveTo(0,HEIGHT_NOTE-5);
   note.lineTo(11,HEIGHT_NOTE+5);

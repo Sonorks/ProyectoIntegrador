@@ -1,4 +1,4 @@
-Para escribir canciones utilizar la siguiente notación:
+Para escribir canciones utilizar la siguiente notaciï¿½n:
 -n = negra
 -nx = negra cerrada (con x)
 -b = blanca
@@ -14,8 +14,10 @@ Para escribir canciones utilizar la siguiente notación:
 -sc2 = semicorchea anterior
 -sc2x= semicorchea anterior cerrada
 -ssc = silencio de semicorchea
+-sq= silencio de corchea
 -sn = silencio de negra
 -sb = silencio de blanca
+-c = corchea
 
 Separar cada nota con comas (,)
 EJ: n,nx,sc1,ssc
