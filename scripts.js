@@ -63,7 +63,7 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
         }
     }
     rawFile.send(null);
-    file2 = "./canciones/porrochocoano2.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
+    file2 = "./canciones/porrochocoano3.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
     var rawFile2 = new XMLHttpRequest();
     rawFile2.open("GET",file2,false);
     rawFile2.setRequestHeader('Content-Type','text/plain')
