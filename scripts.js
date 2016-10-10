@@ -152,29 +152,55 @@ function iniciarPixi(){
               quarterNoteX(100,1,1);
               break;
           case 'c':
+              var union = false;
               cantidad = encontrarConsecutivos(partituras,i,'c');
-               if(partituras[i-1]==='sc' || partituras[i-1]==='scr'){
-                posicion -=25;
-                notas[i-1].x = -10;
-                dibujarNegra(25,1,0,0);
-                unirCorcheaSemiCorchea(25,1,0);
+              if(partituras[i-1]==='sc' || partituras[i-1]==='scr'){
+                if(partituras[i-2]==='sc'|| partituras[i-2]==='scr'){
+                  console.log("Hay que unir");
+                  posicion -=25;
+                  notas[i-1].x = -10;
+                  dibujarNegra(25,1,0,0);
+                  unirCorcheaSemiCorchea(25,1,0);
+                  union = true;
+                }
               }
-              procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
-              i=i+cantidad-1;
+              if (cantidad>1){
+                procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
+                i=i+cantidad-1;
+              }
+              else if(union === true){
+                dibujarNegra(50,1,0,0);
+              }
+              else if(union === false){
+                procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
+              }
               break;
           case 'sc':
-              if(partituras[i-1]==='c' || partituras[i-1]==='cr'){
-                posicion -=50;
-                notas[i-1].x = -10;
-                dibujarNegra(50,1,0,0);
-                unirCorcheaSemiCorchea(50,1,0);
-              }
+              var union = false;
               cantidad = encontrarConsecutivos(partituras,i,'sc');
-              procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
-              i=i+cantidad-1;
+              if(partituras[i-1]==='c' || partituras[i-1]==='cr'){
+                if(partituras[i-2]==='c'|| partituras[i-2]==='cr'){
+                  console.log("Hay que unir");
+                  posicion -=50;
+                  notas[i-1].x = -10;
+                  dibujarNegra(50,1,0,0);
+                  unirCorcheaSemiCorchea(50,1,0);
+                  union = true;
+                }
+              }
+              if(cantidad > 1){
+                procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
+                i=i+cantidad-1;
+              }
+              else if(union === true){
+                dibujarNegra(25,1,0,0);
+              }
+              else if(union === false){
+                procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
+              }
               break;
           case 'b':
-              dibujarBlanca(50,1,0,0);
+              dibujarBlanca(200,1,0,0);
               break;
           case 'sn':
               posicion+=100;
@@ -188,9 +214,6 @@ function iniciarPixi(){
           case 'sb':
               posicion+=200;
               break;
-          //A la verga todo preprocesamiento de la hilera del usuario para transformar las corcheas unidas en figuras propias de la graficada
-          //AQUI HAY ERRORES CON LAS NOTACIONES DE LAS CORCHEAS: SE PROPONE LEER LA NOTA QUE SIGUE (I+1) Y SI ES CORCHEA DIBUJAR LA BARRA HORIZONTAL.
-          //PARA LA ULTIMA SE PUEDE LEER (I-1) PARA DIBUJAR UNA NEGRA EN LUGAR DE LA CORCHEA COMO TAL
           default:
               console.log("Caracter: "+partituras[i]+" no especificado. "+i);
       }
@@ -209,17 +232,55 @@ function iniciarPixi(){
               quarterNoteX(100,2,1);
               break;
           case 'b':
-              dibujarBlanca(50,2,1,0);
+              dibujarBlanca(200,2,1,0);
               break;
           case 'c':
+              var union = false;
               cantidad = encontrarConsecutivos(partituras2,i,'c');
-              procesarCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'c',cantidad));
-              i=i+cantidad-1;
+              if(partituras2[i-1]==='sc' || partituras2[i-1]==='scr'){
+                if(partituras2[i-2]==='sc'|| partituras2[i-2]==='scr'){
+                  console.log("Hay que unir");
+                  posicion2 -=25;
+                  notas2[i-1].x = -10;
+                  dibujarNegra(25,2,1,0);
+                  unirCorcheaSemiCorchea(25,2,1);
+                  union = true;
+                }
+              }
+              if (cantidad>1){
+                procesarCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'c',cantidad));
+                i=i+cantidad-1;
+              }
+              else if(union === true){
+                dibujarNegra(50,2,1,0);
+              }
+              else if(union === false){
+                procesarCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'c',cantidad));
+              }
               break;
           case 'sc':
+              var union = false;
               cantidad = encontrarConsecutivos(partituras2,i,'sc');
-              procesarSemiCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'sc',cantidad));
-              i=i+cantidad-1;
+              if(partituras2[i-1]==='c' || partituras2[i-1]==='cr'){
+                if(partituras2[i-2]==='c'|| partituras2[i-2]==='cr'){
+                  console.log("Hay que unir");
+                  posicion2 -=50;
+                  notas[i-1].x = -10;
+                  dibujarNegra(50,2,1,0);
+                  unirCorcheaSemiCorchea(50,2,1);
+                  union = true;
+                }
+              }
+              if(cantidad > 1){
+                procesarSemiCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'sc',cantidad));
+                i=i+cantidad-1;
+              }
+              else if(union === true){
+                dibujarNegra(25,2,1,0);
+              }
+              else if(union === false){
+                procesarSemiCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'sc',cantidad));
+              }
               break;
           case 'sn':
               posicion2+=100;
@@ -232,9 +293,6 @@ function iniciarPixi(){
               break;
           case 'sb':
               posicion2+=200;
-          case 'pc':
-              procesarCorchea(4,1,0);
-              break;
           default:
               console.log("Caracter: "+partituras2[i]+" no especificado. "+i);
       }
@@ -285,11 +343,11 @@ function unirCorcheaSemiCorchea(aumento,mano,rotar){
     barra.x = posicion-aumento; //la barra se dibuja desde la nota anterior
     if(rotar === 1){
       barra.moveTo(0,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
-      barra.lineTo(50,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
+      barra.lineTo(aumento,Y_FIRST_SPACE_1+(HEIGHT_PENT_SPACE));
       }
     else{
         barra.moveTo(10,0);
-        barra.lineTo(60,0);
+        barra.lineTo(aumento + 10,0);
       }
     }
   else if (mano === 2){
@@ -297,11 +355,11 @@ function unirCorcheaSemiCorchea(aumento,mano,rotar){
     barra.x = posicion2-aumento; // la barra se dibuja desde la nota anterior
     if(rotar === 1){
       barra.moveTo(0,0);
-      barra.lineTo(50,0);
+      barra.lineTo(aumento,0);
     }
     else{
       barra.moveTo(10,-HEIGHT_PENT_SPACE*3);
-      barra.lineTo(60,-HEIGHT_PENT_SPACE*3);
+      barra.lineTo(aumento+10,-HEIGHT_PENT_SPACE*3);
     }
   }
   añadiduras.push(barra);
@@ -410,7 +468,7 @@ function dibujarSemiCorchea(tiempo,mano,rotar,redoblar){
           redoble.x = posicion;
           redoble.y = Y_FIRST_SPACE_1;
       }
-      posicion=posicion+sc_container.width+tiempo;
+      posicion=posicion+tiempo;
       if(rotar === 1){
           rotate(sc_container);
       }
@@ -425,7 +483,7 @@ function dibujarSemiCorchea(tiempo,mano,rotar,redoblar){
           redoble.x = posicion2;
           redoble.y = Y_FIRST_SPACE_2;
       }
-      posicion2=posicion2+sc_container.width+tiempo;
+      posicion2=posicion2+tiempo;
       //No es necesario rotar esto, cuando mano es 2, todo se debe rotar
       // if(rotar === 1){
       //     rotate(sc_container);
@@ -526,7 +584,7 @@ function dibujarCorchea(aumento,mano,rotar,redoblar){
             redoble.x = posicion;
             redoble.y = Y_FIRST_SPACE_1;
         }
-        posicion=posicion+c_container.width+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
+        posicion=posicion+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
         notas.push(c_container);//Se añade la nota al vector de notas
     }
     else if (mano === 2){
@@ -539,7 +597,7 @@ function dibujarCorchea(aumento,mano,rotar,redoblar){
             redoble.x = posicion2;
             redoble.y = Y_FIRST_SPACE_2;
         }
-        posicion2=posicion2+c_container.width+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
+        posicion2=posicion2+aumento;//se avanza en la posicion del pentagrama adecuado el tiempo que dura la nota
 
         notas2.push(c_container);//Se añade la nota al vector de notas
     }
