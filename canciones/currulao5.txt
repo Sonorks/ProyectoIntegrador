@@ -1,1 +1,1 @@
-n,sc1,n,sc1,n,sc1,n,sc1,n,sc1,n,sc1,n,sc1,n,sc1
+c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c
