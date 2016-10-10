@@ -47,7 +47,7 @@ var ritmo1=[];
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
-    file1 = "./canciones/pruebas.txt"; //Directorio del archivo de ritmos para el pentagrama superior
+    file1 = "./canciones/currulao3.txt"; //Directorio del archivo de ritmos para el pentagrama superior
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET",file1,false);
     rawFile.setRequestHeader('Content-Type','text/plain')
@@ -63,7 +63,7 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
         }
     }
     rawFile.send(null);
-    file2 = "./canciones/pruebas.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
+    file2 = "./canciones/currulao3.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
     var rawFile2 = new XMLHttpRequest();
     rawFile2.open("GET",file2,false);
     rawFile2.setRequestHeader('Content-Type','text/plain')
@@ -155,11 +155,17 @@ function iniciarPixi(){
               var union = false;
               cantidad = encontrarConsecutivos(partituras,i,'c');
               if(partituras[i-1]==='sc' || partituras[i-1]==='scr'){
-                if(partituras[i-2]==='sc'|| partituras[i-2]==='scr'){
-                  console.log("Hay que unir");
+                if(partituras[i-2]==='sc'){
                   posicion -=25;
                   notas[i-1].x = -10;
                   dibujarNegra(25,1,0,0);
+                  unirCorcheaSemiCorchea(25,1,0);
+                  union = true;
+                }
+                else if (partituras[i-2]==='scr'){
+                  posicion -=25;
+                  notas[i-1].x = -10;
+                  dibujarNegra(25,1,0,1);
                   unirCorcheaSemiCorchea(25,1,0);
                   union = true;
                 }
@@ -209,10 +215,17 @@ function iniciarPixi(){
               var union = false;
               cantidad = encontrarConsecutivos(partituras,i,'sc');
               if(partituras[i-1]==='c' || partituras[i-1]==='cr'){
-                if(partituras[i-2]==='c'|| partituras[i-2]==='cr'){
+                if(partituras[i-2]==='c'){
                   posicion -=50;
                   notas[i-1].x = -10;
                   dibujarNegra(50,1,0,0);
+                  unirCorcheaSemiCorchea(50,1,0);
+                  union = true;
+                }
+                else if(partituras[i-2]==='cr'){
+                  posicion -=50;
+                  notas[i-1].x = -10;
+                  dibujarNegra(50,1,0,1);
                   unirCorcheaSemiCorchea(50,1,0);
                   union = true;
                 }
@@ -297,11 +310,19 @@ function iniciarPixi(){
               var union = false;
               cantidad = encontrarConsecutivos(partituras2,i,'c');
               if(partituras2[i-1]==='sc' || partituras2[i-1]==='scr'){
-                if(partituras2[i-2]==='sc'|| partituras2[i-2]==='scr'){
+                if(partituras2[i-2]==='sc'){
                   console.log("Hay que unir");
                   posicion2 -=25;
                   notas2[i-1].x = -10;
                   dibujarNegra(25,2,1,0);
+                  unirCorcheaSemiCorchea(25,2,1);
+                  union = true;
+                }
+                if(partituras2[i-2]==='scr'){
+                  console.log("Hay que unir");
+                  posicion2 -=25;
+                  notas2[i-1].x = -10;
+                  dibujarNegra(25,2,1,1);
                   unirCorcheaSemiCorchea(25,2,1);
                   union = true;
                 }
@@ -351,10 +372,16 @@ function iniciarPixi(){
               var union = false;
               cantidad = encontrarConsecutivos(partituras2,i,'sc');
               if(partituras2[i-1]==='c' || partituras2[i-1]==='cr'){
-                if(partituras2[i-2]==='c'|| partituras2[i-2]==='cr'){
-                  console.log("Hay que unir");
+                if(partituras2[i-2]==='c'){
                   posicion2 -=50;
-                  notas[i-1].x = -10;
+                  notas2[i-1].x = -10;
+                  dibujarNegra(50,2,1,0);
+                  unirCorcheaSemiCorchea(50,2,1);
+                  union = true;
+                }
+                else if(partituras2[i-2]==='cr'){
+                  posicion2 -=50;
+                  notas2[i-1].x = -10;
                   dibujarNegra(50,2,1,0);
                   unirCorcheaSemiCorchea(50,2,1);
                   union = true;
@@ -454,7 +481,7 @@ function makePentagram(){
 }
 function unirCorcheaSemiCorchea(aumento,mano,rotar){
   var barra = new PIXI.Graphics();
-  barra.lineStyle(5, 0x000000, 1);
+  barra.lineStyle(GROSOR_DE_LINEA, 0x000000, 1);
   barra.beginFill(0x000000, 1);
   barra.endFill();
   if(mano === 1){
