@@ -5,6 +5,7 @@ Para escribir canciones utilizar la siguiente notaci�n:
 -bx = blanca cerrada (con x)
 -sc = semicorchea
 -scx = semicorchea cerrada
+-scxr = semicorchea cerrada con redoble
 -sc1 = semicorchea posterior
 -sc1x= semicorchea posterior cerrada
 -sc1d= semicorchea posterior con doble linea
@@ -13,11 +14,14 @@ Para escribir canciones utilizar la siguiente notaci�n:
 -sc1r2r= semicorchea posterior con redoble en ambas
 -sc2 = semicorchea anterior
 -sc2x= semicorchea anterior cerrada
+
 -ssc = silencio de semicorchea
 -sq= silencio de corchea
 -sn = silencio de negra
 -sb = silencio de blanca
 -c = corchea
+-cx = corchea cerrada
+-cxr = corchea cerrada con redoble
 
 Separar cada nota con comas (,)
 EJ: n,nx,sc1,ssc

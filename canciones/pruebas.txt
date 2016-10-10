@@ -1,1 +1,1 @@
-c,b,cr,sc,scr,c,b,c,b,sc,b,sc,sc,ssc,ssc,sq
+cx,scx,n,cx,cx,n,scx,scx,n,scx,scx,cx,n,cx,cx,scx,n,scxr,cxr,n,cxr,cx,n,scxr,scx,n
