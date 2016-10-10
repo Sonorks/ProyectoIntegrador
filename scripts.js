@@ -47,7 +47,7 @@ var ritmo1=[];
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
-    file1 = "./canciones/porrochocoano1.txt"; //Directorio del archivo de ritmos para el pentagrama superior
+    file1 = "./canciones/porrochocoano2.txt"; //Directorio del archivo de ritmos para el pentagrama superior
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET",file1,false);
     rawFile.setRequestHeader('Content-Type','text/plain')
@@ -904,14 +904,14 @@ function dibujaSilencioCorchea(aumento,mano){
       //Se posiciona en el pentagrama superior
         silencioCorchea.x = posicion;
         silencioCorchea.y = Y_FIRST_SPACE_1+5;
-        posicion = posicion + silencioCorchea.width + aumento;
+        posicion = posicion  + aumento;
         añadiduras.push(silencioCorchea);
     }
     else if (mano === 2){
       //Se posiciona en el pentagrama inferior
         silencioCorchea.x = posicion2;
         silencioCorchea.y = Y_FIRST_SPACE_2+5;
-        posicion2 = posicion2 + silencioCorchea.width + aumento;
+        posicion2 = posicion2  + aumento;
         añadiduras.push(silencioCorchea);
     }
     //Se agrega al escenario
