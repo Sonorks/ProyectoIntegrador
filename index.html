@@ -12,7 +12,7 @@
 <body  onfocus="s()" onkeydown="s()">
   <div class="botones">
     <center><button type="button" class="boton" onClick="metronomo()">Metronomo</button></center>
-    <div align="center" id="divSelect" style.display = "block";>
+    <div align="center" id="divSelect" style.display = "block">
       <select id="select1">
         <option value="porrochocoano1" > Porro Chocoano 1 </option>
         <option value="porrochocoano2" > Porro Chocoano 2 </option>
@@ -39,8 +39,17 @@
         <option value="pruebas" > Pruebas </option>
       </select>
     </div>
+<div align=center id="divMetrica">
+  <span align="center" style="display:inline-block">
+        <label for="numMetrica">Subdivisiones (num):</label>
+        <input class="metricInput" type="number" id="numMetrica">
+  </span>
+  <span align="center" style="display:inline-block">
+        <label for="denoMetrica">Pulso (denominador):</label>
+        <input class="metricInput" type="number" id="denoMetrica">
+  </span>
+</div>
   <div>
-    <center> </center><b></b><b></b>
     <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
   </div>
     <center class="pixi">

@@ -22,6 +22,13 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.5;
 }
 
+label {
+    color: azure;
+    font-size: 18;
+    margin: 10;
+    display: block;
+}
+
 h2 {
     margin-top: 1.3em;
 }
@@ -51,5 +58,9 @@ b, strong {
 .BotonRedondeado{
     border-radius: 15px;
     background-color: aquamarine;
-    padding: 20px; 
+    padding: 20px;
+}
+
+.metricInput{
+    width: 60;
 }
