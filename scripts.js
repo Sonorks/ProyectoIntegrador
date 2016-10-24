@@ -43,6 +43,13 @@ var posicion2 = 700;
 var posiciones2  =[];//= [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
 var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
 var ritmo1=[];
+var compas1=0;
+var compas2=0;
+var valor_redonda = 1;
+var valor_blanca = 0.5;
+var valor_negra = 0.25;
+var valor_corchea = 0.125;
+var valor_semicorchea = 0.0625;
 
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
@@ -51,7 +58,7 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
   var song2 = document.getElementById("select2").value;
   var numMetrica = document.getElementById("numMetrica").value;
   var denMetrica = document.getElementById("denoMetrica").value;
-  file1 = "./canciones/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
+    file1 = "./canciones/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET",file1,false);
   rawFile.setRequestHeader('Content-Type','text/plain')
@@ -157,6 +164,8 @@ function iniciarPixi(numMetrica,denMetrica){
   document.getElementById('divSelect').style.display = "none";
   document.getElementById('divMetrica').style.display = "none";
   var cantidad;
+  var metrica = numMetrica/denMetrica;
+  console.log("Metrica será de : "+ metrica);
   renderer = PIXI.autoDetectRenderer(1000, 300, {transparent: true});
   canvas = document.getElementById('canvas');
   canvas.appendChild(renderer.view);
@@ -178,12 +187,27 @@ function iniciarPixi(numMetrica,denMetrica){
     switch(partituras[i]){
       case 'n':
       dibujarNegra(100,1,0,0);
+      compas1 = compas1 + valor_negra;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'nr':
       dibujarNegra(100,1,0,1);
+      compas1 = compas1 + valor_negra;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'nx':
       quarterNoteX(100,1,1);
+      compas1 = compas1 + valor_negra;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'c':
       var union = false;
@@ -227,6 +251,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
+      }
+      compas1 = compas1 + valor_corchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
       }
       break;
       case 'cx':
@@ -272,6 +301,11 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'cx',cantidad));
       }
+      compas1 = compas1 + valor_corchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'cr':
       var union = false;
@@ -315,6 +349,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
+      }
+      compas1 = compas1 + valor_corchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
       }
       break;
       case 'cxr':
@@ -360,6 +399,11 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'cx',cantidad));
       }
+      compas1 = compas1 + valor_corchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'sc':
       var union = false;
@@ -403,6 +447,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
+      }
+      compas1 = compas1 + valor_semicorchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
       }
       break;
       case 'scx':
@@ -448,6 +497,11 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarSemiCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
       }
+      compas1 = compas1 + valor_semicorchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'scr':
       var union = false;
@@ -491,6 +545,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
+      }
+      compas1 = compas1 + valor_semicorchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
       }
       break;
       case 'scxr':
@@ -536,21 +595,51 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarSemiCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'scx',cantidad));
       }
+      compas1 = compas1 + valor_semicorchea*cantidad.length;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'b':
       dibujarBlanca(200,1,0,0);
+      compas1 = compas1 + valor_blanca;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'sn':
       posicion+=100;
+      compas1 = compas1 + valor_negra;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'sq':
       dibujaSilencioCorchea(50,1);
+      compas1 = compas1 + valor_corchea;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'ssc':
       dibujaSilencioSemiCorchea(25,1);
+      compas1 = compas1 + valor_semicorchea;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       case 'sb':
       posicion+=200;
+      compas1 = compas1 + valor_blanca;
+      if(compas1 >= metrica){
+        dibujarBarra(1);
+        compas1 = 0;
+      }
       break;
       default:
       console.log("Caracter: "+partituras[i]+" no especificado. "+i);
@@ -562,15 +651,35 @@ function iniciarPixi(numMetrica,denMetrica){
     switch(partituras2[i]){
       case 'n':
       dibujarNegra(100,2,1,0);
+      compas2 = compas2 + valor_negra;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'nr':
       dibujarNegra(100,2,1,1);
+      compas2 = compas2 + valor_negra;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'nx':
       quarterNoteX(100,2,1);
+      compas2 = compas2 + valor_negra;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'b':
       dibujarBlanca(200,2,1,0);
+      compas2 = compas2 + valor_blanca;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'c':
       var union = false;
@@ -614,6 +723,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'c',cantidad));
+      }
+      compas2 = compas2 + valor_corchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
       }
       break;
       case 'cx':
@@ -659,6 +773,11 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'cx',cantidad));
       }
+      compas2 = compas2 + valor_corchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'cr':
       var union = false;
@@ -702,6 +821,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarCorchea(cantidad,2,0,redoblesDeConsecutivos(partituras2,i,'c',cantidad));
+      }
+      compas2 = compas2 + valor_corchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
       }
       break;
       case 'cxr':
@@ -747,6 +871,11 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'cx',cantidad));
       }
+      compas2 = compas2 + valor_corchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'sc':
       var union = false;
@@ -790,6 +919,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarSemiCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'sc',cantidad));
+      }
+      compas2 = compas2 + valor_semicorchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
       }
       break;
       case 'scx':
@@ -835,6 +969,11 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarSemiCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'scx',cantidad));
       }
+      compas2 = compas2 + valor_semicorchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'scr':
       var union = false;
@@ -878,6 +1017,11 @@ function iniciarPixi(numMetrica,denMetrica){
       }
       else if(union === false){
         procesarSemiCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'sc',cantidad));
+      }
+      compas2 = compas2 + valor_semicorchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
       }
       break;
       case 'scxr':
@@ -923,18 +1067,43 @@ function iniciarPixi(numMetrica,denMetrica){
       else if(union === false){
         procesarSemiCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'scx',cantidad));
       }
+      compas2 = compas2 + valor_semicorchea*cantidad.length;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'sn':
       posicion2+=100;
+      compas2 = compas2 + valor_negra;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'sq':
       dibujaSilencioCorchea(50,2);
+      compas2 = compas2 + valor_corchea;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'ssc':
       dibujaSilencioSemiCorchea(25,2);
+      compas2 = compas2 + valor_semicorchea;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       break;
       case 'sb':
       posicion2+=200;
+      compas2 = compas2 + valor_blanca;
+      if(compas2 >= metrica){
+        dibujarBarra(2);
+        compas2 = 0;
+      }
       default:
       console.log("Caracter: "+partituras2[i]+" no especificado. "+i);
     }
@@ -1027,6 +1196,28 @@ function dibujarRedoble(){
   return redoble;
 }
 
+function dibujarBarra(mano){
+  var barra = new PIXI.Graphics();
+  barra.lineStyle(GROSOR_DE_LINEA, 0x000000, 1);
+  barra.beginFill(0x000000, 1);
+  barra.moveTo(0,Y_FIRST_PENT);
+  barra.lineTo(0,130);
+  barra.endFill();
+  
+  if(mano === 1){
+    barra.y = Y_FIRST_PENT-20;
+    barra.x = posicion;
+    posicion = posicion +20;
+
+  }
+  else if (mano === 2){
+    barra.y = Y_SECOND_PENT-20;
+    barra.x = posicion2;
+    posicion2 = posicion2 + 20;  
+  }
+  añadiduras.push(barra);
+  stage.addChild(barra);
+}
 
 function procesarSemiCorchea(notas,mano,rotar,redoblar){
   cant = notas.length;
