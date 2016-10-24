@@ -90,14 +90,21 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
 }
 function encontrarConsecutivos(partitura,pos,nota){
   var cant = pos;
+  var notas = [];
   while (partitura[cant]===nota || partitura[cant]===nota+'r' || partitura[cant]===nota+'x' || partitura[cant]===nota+'xr'){
+    if (partitura[cant] === nota+'x' || partitura[cant] === nota+'xr'){
+      notas[cant-pos]=1;
+    }
+    else{
+      notas[cant-pos]=0;
+    }
     cant++;
   }
-  return (cant - pos);
+  return notas;
 }
-function redoblesDeConsecutivos(partituras,pos,nota,cant){
+function redoblesDeConsecutivos(partituras,pos,nota,cantidad){
   var redobles = [];
-  cant = cant + pos;
+  cant = cantidad.length + pos;
   var i = 0;
   while(pos<cant){
     if(partituras[pos] === nota+'r' || partituras[pos] === nota+'xr'){
@@ -211,9 +218,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(50,1,0,0);
@@ -255,9 +262,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'cx',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(50,1,0,0);
@@ -299,9 +306,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'c',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(50,1,0,1);
@@ -343,9 +350,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'cx',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(50,1,0,1);
@@ -387,9 +394,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(25,1,0,0);
@@ -431,9 +438,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(25,1,0,0);
@@ -475,9 +482,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorchea(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'sc',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(25,1,0,1);
@@ -519,9 +526,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorcheaCerrada(cantidad,1,0,redoblesDeConsecutivos(partituras,i,'scx',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(25,1,0,1);
@@ -598,9 +605,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'c',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(50,2,1,0);
@@ -642,9 +649,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'cx',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(50,2,1,0);
@@ -686,9 +693,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorchea(cantidad,2,0,redoblesDeConsecutivos(partituras2,i,'c',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(50,2,1,1);
@@ -730,9 +737,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if (cantidad>1){
+      if (cantidad.length>1){
         procesarCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'cx',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(50,2,1,1);
@@ -774,9 +781,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'sc',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(25,2,1,0);
@@ -818,9 +825,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'scx',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(25,2,1,0);
@@ -862,9 +869,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorchea(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'sc',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         dibujarNegra(25,2,1,1);
@@ -906,9 +913,9 @@ function iniciarPixi(numMetrica,denMetrica){
           union = true;
         }
       }
-      if(cantidad > 1){
+      if(cantidad.length>1){
         procesarSemiCorcheaCerrada(cantidad,2,1,redoblesDeConsecutivos(partituras2,i,'scx',cantidad));
-        i=i+cantidad-1;
+        i=i+cantidad.length-1;
       }
       else if(union === true){
         quarterNoteX(25,2,1,1);
@@ -1021,9 +1028,15 @@ function dibujarRedoble(){
 }
 
 
-function procesarSemiCorchea(cant,mano,rotar,redoblar){
+function procesarSemiCorchea(notas,mano,rotar,redoblar){
+  cant = notas.length;
   if(cant === 1){
-    dibujarSemiCorchea(25,mano,rotar,redoblar[0]);
+    if(notas[0]===0){
+      dibujarSemiCorchea(25,mano,rotar,redoblar[0]);
+    }
+    else{
+      dibujarSemiCorcheaCerrada(25,mano,rotar,redoblar[0]);
+    }
   }
   else{
     dibujarNegra(25,mano,rotar,redoblar[0]);
@@ -1073,14 +1086,25 @@ function procesarSemiCorchea(cant,mano,rotar,redoblar){
       //añadiduras.push(barra2);
       stage.addChild(barra2);
       stage.addChild(barra);
-      dibujarNegra(25,mano,rotar,redoblar[i]);
+      if(notas[i]===0){
+        dibujarNegra(25,mano,rotar,redoblar[i]);
+      }
+      else{
+        quarterNoteX(25,mano,rotar,redoblar[i]);
+      }
     }
   }
 }
 
-function procesarSemiCorcheaCerrada(cant,mano,rotar,redoblar){
+function procesarSemiCorcheaCerrada(notas,mano,rotar,redoblar){
+  cant = notas.length;
   if(cant === 1){
-    dibujarSemiCorcheaCerrada(25,mano,rotar,redoblar[0]);
+    if (notas[0]===1){
+      dibujarSemiCorcheaCerrada(25,mano,rotar,redoblar[0]);
+    }
+    else{
+      dibujarSemiCorchea(25,mano,rotar,redoblar[0]);
+    }
   }
   else{
     quarterNoteX(25,mano,rotar,redoblar[0]);
@@ -1130,7 +1154,12 @@ function procesarSemiCorcheaCerrada(cant,mano,rotar,redoblar){
       //añadiduras.push(barra2);
       stage.addChild(barra2);
       stage.addChild(barra);
-      quarterNoteX(25,mano,rotar,redoblar[i]);
+      if(notas[i]===1){
+        quarterNoteX(25,mano,rotar,redoblar[i]);
+      }
+      else{
+        dibujarNegra(25,mano,rotar,redoblar[i]);
+      }
     }
   }
 }
@@ -1282,9 +1311,15 @@ function semicorcheaCerradaRotada(){
   return sc_container;
 }
 
-function procesarCorchea(cant,mano,rotar,redoblar){
+function procesarCorchea(notas,mano,rotar,redoblar){
+  var cant = notas.length;
   if(cant === 1){
-    dibujarCorchea(50,mano,rotar,redoblar[0]);
+    if(notas[0]===1){
+      dibujarCorcheaCerrada(50,mano,rotar,redoblar[0]);
+    }
+    else{
+      dibujarCorchea(50,mano,rotar,redoblar[0]);
+    }
   }
   else{
     dibujarNegra(50,mano,rotar,redoblar[0]);
@@ -1319,14 +1354,25 @@ function procesarCorchea(cant,mano,rotar,redoblar){
       }
       añadiduras.push(barra);
       stage.addChild(barra);
-      dibujarNegra(50,mano,rotar,redoblar[i]);
+      if(notas[i]===1){
+        quarterNoteX(50,mano,rotar,redoblar[i]);
+      }
+      else{
+        dibujarNegra(50,mano,rotar,redoblar[i]);
+      }
     }
   }
 }
 
-function procesarCorcheaCerrada(cant,mano,rotar,redoblar){
+function procesarCorcheaCerrada(notas,mano,rotar,redoblar){
+  var cant = notas.length
   if(cant === 1){
-    dibujarCorcheaCerrada(50,mano,rotar,redoblar[0]);
+    if(notas[0]===1){
+      dibujarCorcheaCerrada(50,mano,rotar,redoblar[0]);
+    }
+    else{
+      dibujarCorchea(50,mano,rotar,redoblar[0]);
+    }
   }
   else{
     quarterNoteX(50,mano,rotar,redoblar[0]);
@@ -1361,7 +1407,12 @@ function procesarCorcheaCerrada(cant,mano,rotar,redoblar){
       }
       añadiduras.push(barra);
       stage.addChild(barra);
-      quarterNoteX(50,mano,rotar,redoblar[i]);
+      if(notas[i] === 1){
+        quarterNoteX(50,mano,rotar,redoblar[i]);
+      }
+      else{
+        dibujarNegra(50,mano,rotar,redoblar[i]);
+      }
     }
   }
 }
