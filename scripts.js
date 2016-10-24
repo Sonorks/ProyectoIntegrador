@@ -1,13 +1,5 @@
-/*global alert: false */
-/*global HTMLAudioElement: false */
-/*global Event: false */
-/*global console: false */
-/*global Tone:false */
-/*global requestAnimationFrame: false */
-// Autodetect and create the renderer
 /*MACROS*/
-var PI_NUMBER = 3.14159265359;
-var PI_MEDIOS = PI_NUMBER/2;
+var PI_MEDIOS = Math.PI/2;
 var Y_FIRST_PENT = 30;
 var Y_FIRST_SPACE_1 = 40; /**Posición del primer espacio del pentagrama 1*/
 var Y_FIRST_SPACE_2 = 170; /**Posición del primer espacio del pentagrama 2*/
@@ -21,6 +13,10 @@ var DO_SPACE = Y_FIRST_PENT+HEIGHT_PENT_SPACE*3; /**Posición del espacio DO, cu
 var NOTE_IN_DO = DO_SPACE-NOTE_HEIGHT;
 var PENT_DISTANCE = Y_FIRST_SPACE_2-Y_FIRST_SPACE_1; /**Espacio entre espacios de los pentagrmas*/
 var GROSOR_DE_LINEA =3;
+/**
+* el espacio en pixeles al que equivale el tiempo de una negra
+*/
+var ESPACIO_NEGRA = 100;
 //Constantes
 var counter=0;
 var counter2=0;
@@ -1118,7 +1114,7 @@ function iniciarPixi(numMetrica,denMetrica){
 
 function rotate(note){
   setCenterPivot(note);
-  note.rotation = PI_NUMBER;
+  note.rotation = Math.PI;
   //arregla desfase.
   note.y = note.y+30;
 
@@ -1812,7 +1808,6 @@ function plica(){
 }
 
 function dibujarBlanca(aumento,mano,rotar,redoblar){
-  //Se dibuja la afrodecendiente
   var blanca = new PIXI.Container();
 
   blanca.addChild(plica());
@@ -1861,7 +1856,6 @@ function dibujarBlanca(aumento,mano,rotar,redoblar){
 
 //Dibuja silencio de corchea.
 function dibujaSilencioCorchea(aumento,mano){
-  //arc(cx, cy, radius, startAngle, endAngle, anticlockwise)
   var silencioCorchea = new PIXI.Graphics()
   .beginFill(0x000000)
   .lineStyle(GROSOR_DE_LINEA, 0x000000, 1)
@@ -2009,6 +2003,7 @@ function animate() {
   }
   requestAnimationFrame(animate);
   renderer.render(stage);
+
 
 }
 
