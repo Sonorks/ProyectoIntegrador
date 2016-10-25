@@ -5,12 +5,12 @@
   <title>Taratatapp! Aprende Música Jugando</title>
 </head>
 <body>
-<img id="banner" src="img/Fondos/taratatapp_banner.jpg" alt="Banner Image"/>
+<img id="banner" style="height: 300px" src="img/Fondos/Fondobanner.jpg" alt="Banner Image"/>
   <div id="loginForm">
-    <form id="login">
+    <form id="login" action="index.html">
       <p>¿Como te llamas?:<p>
       <input type="text" id="name"><br>
-      <button class="boton" onclick="openPage()">Iniciar</button>
+      <input type="submit" value="Inicio" class="boton"/>
     </form>
   </div>
   <div id="instrucciones">
@@ -35,7 +35,7 @@
   </div>
   <script type="text/javascript">
   	function openPage(){
-  		window.open("index.html");
+  		href.location="index.html";
   	}
   </script>
 

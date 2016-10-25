@@ -159,6 +159,7 @@ function iniciarPixi(numMetrica,denMetrica){
   //readTextFile();
   document.getElementById('divSelect').style.display = "none";
   document.getElementById('divMetrica').style.display = "none";
+  document.getElementById('divRegion').style.display = "none";
   var cantidad;
   var metrica = numMetrica/denMetrica;
   console.log("Metrica será de : "+ metrica);
