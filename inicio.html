@@ -7,10 +7,10 @@
 <body>
 <img id="banner" style="height: 300px" src="img/Fondos/Fondobanner.jpg" alt="Banner Image"/>
   <div id="loginForm">
-    <form id="login" action="modo.html">
+    <form id="login">
       <p>¿Como te llamas?:<p>
-      <input type="text" id="name"><br>
-      <input type="submit" value="Inicio" class="boton"/>
+      <input type="text" id="username"><br>
+      <input type="button" value="Inicio" class="boton" onclick="openPage()" />
     </form>
   </div>
   <div id="instrucciones">
@@ -35,7 +35,8 @@
   </div>
   <script type="text/javascript">
   	function openPage(){
-  		href.location="index.html";
+      localStorage.setItem("usuario",document.getElementById("username").value);
+  		location.href="modo.html";
   	}
   </script>
 

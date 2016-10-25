@@ -10,8 +10,10 @@
   <img id="bannerNivel" style= 'width:100%' src="img/Fondos/CostaPacifica.jpg" alt="Banner Image"/>
 </head>
 <body  onfocus="s()" onkeydown="s()">
-  <div id="nivelDiv" style="float:left;width:30%;font-family=;font-Family: sans-serif;font-size: larger;text-align:left;text-align:center;">
-    Nivel:
+  <div id="infoCont" style="float:left;width:30%;font-family=;font-Family: sans-serif;font-size: larger;text-align:left;text-align:center;">
+    <h2 id="usuarioLbl">Hola </h2>
+    <h2 id="nivelLbl">Nivel: </h2>
+    <h2 id="regionLbl">Región: </h2>
   </div>
   <div style="float:left;width:30%;height:200px;">
     <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
@@ -53,7 +55,9 @@
     var region;
     window.onload = function() {
         //toma los valores recibidos en modo.html
-        document.getElementById("nivelDiv").innerHTML += localStorage.getItem("nivel");
+        document.getElementById("nivelLbl").innerHTML += localStorage.getItem("nivel");
+        document.getElementById("regionLbl").innerHTML += localStorage.getItem("region");
+        document.getElementById("usuarioLbl").innerHTML += localStorage.getItem("usuario");
         region = localStorage.getItem("region");
     }
   </script>

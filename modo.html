@@ -7,11 +7,11 @@
 <body>
   <img id="banner" style="height: 300px" src="img/Fondos/Fondobanner.jpg" alt="Banner Image"/>
   <div align="center" style="display:block;">
-    <div style="float:left;width: 30%;font-family=;font-Family: sans-serif;font-size: x-large;text-align:right;">
+    <div style="float:left;width: 30%;font-family=;font-Family: sans-serif;font-size: x-large;text-align:right;font-weight: bold;">
       Regiones
     </div>
     <div id="regiones" style="width:50%;">
-      <input id="costa_pacifica" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
+      <input name="Costa Pacifica" id="costa_pacifica" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
       <input id="costa_caribe" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/costa_caribe.jpg"/>
       <input id="andina" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/andina.jpg"/>
       <input id="llanera" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/llanera.jpg"/>
@@ -37,8 +37,8 @@
     }
 
     //se llama cuando se toca alguna region y guarda el nombre de la region
-    function getRegion(idRegion){
-      region = idRegion;
+    function getRegion(nameRegion){
+      region = nameRegion;
     }
   </script>
 
