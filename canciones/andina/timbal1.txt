@@ -1,0 +1,1 @@
+nx,nx,sc1,ssc,sc,nx,sc2,ssc,sc,ssc,sc,nx,nx,sc1,ssc,sc,nx,sc2,ssc,sc,ssc,sc,nx,nx,sc1,sc2,sc2,sc1,sc2,nx,sc2,nx,nx,sc1,sc2,sc2,sc1,sc2,nx,sc2

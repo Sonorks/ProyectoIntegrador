@@ -9,8 +9,8 @@ body {
     background-size: auto;
     opacity: 100;
     background-position: center;
-    
-    
+
+
 }
 
 #banner {
@@ -84,6 +84,14 @@ input {
     width: 70%;
   float:left;
 }
+
+.botonRegion {
+  width: 120px;
+  height: 120px;
+  border-radius: 15px;
+}
+
+
 h1, h2, h3, h4, h5, h6 {
     color: azure;
     font-weight: 600;

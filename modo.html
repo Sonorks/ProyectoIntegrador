@@ -1,0 +1,47 @@
+<html>
+<link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="utf-8">
+  <title>Taratatapp! Modo de Juego</title>
+</head>
+<body>
+  <img id="banner" style="height: 300px" src="img/Fondos/Fondobanner.jpg" alt="Banner Image"/>
+  <div align="center" style="display:block;">
+    <div style="float:left;width: 30%;font-family=;font-Family: sans-serif;font-size: x-large;text-align:right;">
+      Regiones
+    </div>
+    <div id="regiones" style="width:50%;">
+      <input id="costa_pacifica" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
+      <input id="costa_caribe" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/costa_caribe.jpg"/>
+      <input id="andina" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/andina.jpg"/>
+      <input id="llanera" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/llanera.jpg"/>
+    </div>
+    <b style="font-family:sans-serif;font-size: larger;">Nivel:</b>
+    <select id="selectNivel">
+      <option value="basico" > Básico </option>
+      <option value="intermedio" > Intermedio </option>
+      <option value="dificil" > Difícil </option>
+      <option value="experto" > Experto </option>
+    </select>
+  </div>
+  <div><center><input type="button" value="Empezar" onclick="getData()" class="boton"/></center></div>
+  <script>
+
+    var region= "";
+    //se llama despues de darle al boton empezar
+    function getData(){
+      var nivel = document.getElementById("selectNivel").value;
+      localStorage.setItem("nivel",nivel);
+      localStorage.setItem("region",region);
+      location.href="juego.html";
+    }
+
+    //se llama cuando se toca alguna region y guarda el nombre de la region
+    function getRegion(idRegion){
+      region = idRegion;
+    }
+  </script>
+
+</body>
+
+</html>

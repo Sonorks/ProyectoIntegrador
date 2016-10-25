@@ -1,0 +1,64 @@
+<html>
+<link rel="stylesheet" href="style.css">
+<script src="scripts_juego.js"></script>
+<script src="js/pixi.min.js"></script>
+<script src="js/Tone.js"></script>
+<script src="js/howler.js"></script>
+<head>
+  <meta charset="utf-8">
+  <title>TARATATAPP</title>
+  <img id="bannerNivel" style= 'width:100%' src="img/Fondos/CostaPacifica.jpg" alt="Banner Image"/>
+</head>
+<body  onfocus="s()" onkeydown="s()">
+  <div id="nivelDiv" style="float:left;width:30%;font-family=;font-Family: sans-serif;font-size: larger;text-align:left;text-align:center;">
+    Nivel:
+  </div>
+  <div style="float:left;width:30%;height:200px;">
+    <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
+  </div>
+<div><center><button type="button" class="boton" onClick="metronomo()">Metronomo</button></center></div>
+  <div align="center" id="divSelect" style="display:block;float:none;">
+    <h2>Escoge canción:</h2>
+    <select id="selectSong1">
+      <option value="porrochocoano1" > Porro Chocoano 1 </option>
+      <option value="porrochocoano2" > Porro Chocoano 2 </option>
+      <option value="porrochocoano3" > Porro Chocoano 3 </option>
+      <option value="currulao1" > Currulao 1 </option>
+      <option value="currulao2" > Currulao 2 </option>
+      <option value="currulao3" > Currulao 3 </option>
+      <option value="currulao4" > Currulao 4 </option>
+      <option value="currulao5" > Currulao 5 </option>
+      <option value="currulao6" > Currulao 6 </option>
+      <option value="pruebas" > Pruebas </option>
+    </select>
+    <select id="selectSong2">
+      <option value="porrochocoano1" > Porro Chocoano 1 </option>
+      <option value="porrochocoano2" > Porro Chocoano 2 </option>
+      <option value="porrochocoano3" > Porro Chocoano 3 </option>
+      <option value="currulao1" > Currulao 1 </option>
+      <option value="currulao2" > Currulao 2 </option>
+      <option value="currulao3" > Currulao 3 </option>
+      <option value="currulao4" > Currulao 4 </option>
+      <option value="currulao5" > Currulao 5 </option>
+      <option value="currulao6" > Currulao 6 </option>
+      <option value="pruebas" > Pruebas </option>
+    </select>
+  </div>
+  <div><center><button type="button" class ="boton" id = "BotonInicio" onClick="readTextFile()">JUGAR!</button></center></div>
+  <center class="pixi">
+    <div class="juego" id="canvas">
+    </div>
+  </center>
+  <script>
+    var region;
+    window.onload = function() {
+        //toma los valores recibidos en modo.html
+        document.getElementById("nivelDiv").innerHTML += localStorage.getItem("nivel");
+        region = localStorage.getItem("region");
+    }
+  </script>
+
+
+
+</body>
+</html>
