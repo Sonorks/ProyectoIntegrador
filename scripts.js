@@ -2038,15 +2038,15 @@ function s(Event) {
   "use strict";
   var char = event.which || event.keyCode;
   if (char === 115 || char === 83) {
-    izq();
+    izq();//s
   } else if (char === 75 || char === 107) {
-    der();
+    der();//k
   }
 }
 function puntaje(mano) {
   "use strict";
   //true = derecha, false = izquierda
-  if(mano === true){
+  if(mano === true){//derecha - pentagrama de arriba
     if (notas[counter].x <= 130 - (level*3) && notas[counter].x > 85) {
       var puntaje = document.getElementById('Score').innerHTML - (-100);
       document.getElementById('Score').innerHTML = puntaje;
@@ -2058,7 +2058,7 @@ function puntaje(mano) {
       document.getElementById('Score').innerHTML = puntaje;
     }
   }
-  else if (mano === false){
+  else if (mano === false){//izquierda - pentagrama de abajo
     if (notas2[counter2].x <= 130 - (level*3) && notas2[counter2].x > 85) {
       var puntaje = document.getElementById('Score').innerHTML - (-100);
       document.getElementById('Score').innerHTML = puntaje;
