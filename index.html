@@ -11,7 +11,14 @@
 </head>
 <body  onfocus="s()" onkeydown="s()">
   <div class="botones">
-    <center><button type="button" class="boton" onClick="metronomo()">Metronomo</button></center>
+
+    <center>
+      <label for="bpm">Beats por Minuto</label>
+      <input type="range" min="0" max="330" value="92" id="bpm" step="2" oninput="outputUpdate(value)">
+      <output for="bpm" id="beats">92 bpm</output>
+      <br>
+      <button type="button" class="boton" onClick="metronomo()">Metronomo</button>
+    </center>
     <div align="center" id="divRegion" style.display = "block">
 
     <select id="selectRegion">

@@ -2013,9 +2013,15 @@ function metronomo() {
   var synth = new Tone.Synth().toMaster();
   Tone.Transport.start();
   Tone.Transport.scheduleRepeat(function (time) {
-    synth.triggerAttackRelease("B1","8n");
-  }, "0.48");
+    synth.triggerAttackRelease("A2","4n");
+  }, "180");
 
+//Tone.Transport.bpm.rampTo(240, 4);
+
+}
+
+function outputUpdate(vol) {
+  document.querySelector("#beats").value = vol+" bpm";
 }
 
 function izq() {
