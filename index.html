@@ -11,8 +11,14 @@
 </head>
 <body  onfocus="s()" onkeydown="s()">
   <div class="botones">
-
     <center>
+      <select id="selectNota" >
+          <option value="2n"> Blanca </option>
+          <option value="4n"> Negra </option>
+          <option value="8n"> Corchea </option>
+          <option value="16n"> Semicorchea </option>
+          <option value="32n"> Fusa </option>
+      </select>
       <label for="bpm">Beats por Minuto</label>
       <input type="range" min="0" max="330" value="92" id="bpm" step="2" oninput="outputUpdate(value)">
       <output for="bpm" id="beats">92 bpm</output>

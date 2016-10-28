@@ -48,8 +48,7 @@ var valor_corchea = 0.125;
 var valor_semicorchea = 0.0625;
 
 
-function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
-{
+function readTextFile(file){ //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
   var song1 = document.getElementById("select1").value;
   var song2 = document.getElementById("select2").value;
   var numMetrica = document.getElementById("numMetrica").value;
@@ -1200,7 +1199,7 @@ function dibujarBarra(mano){
   barra.moveTo(0,Y_FIRST_PENT);
   barra.lineTo(0,130);
   barra.endFill();
-  
+
   if(mano === 1){
     barra.y = Y_FIRST_PENT-20;
     barra.x = posicion;
@@ -1210,7 +1209,7 @@ function dibujarBarra(mano){
   else if (mano === 2){
     barra.y = Y_SECOND_PENT-20;
     barra.x = posicion2;
-    posicion2 = posicion2 + 20;  
+    posicion2 = posicion2 + 20;
   }
   añadiduras.push(barra);
   stage.addChild(barra);
@@ -2007,23 +2006,63 @@ function animate() {
 
 
 }
-
+var eventId; //id del evento del metronomo
+var bpm_note = [120,60,30,15,7.5];
+var time_signature = ["2n","4n","8n","16n","32n"];
 function metronomo() {
   "use strict";
-  var synth = new Tone.Synth().toMaster();
+  var nota = document.getElementById("selectNota").value;   //tomamos valor de nota
+  var bpm = document.getElementById("bpm").value;           //tomamos valor de bpm
+  var noteHertz = getNoteHertz(nota, bpm);
+  var noteLength = getNoteLength(nota,bpm);
+  var synth = new Tone.Synth().toMaster(); //este muchacho lanza el sonido
+  Tone.Transport.clear(eventId); //elimina el metronomo previo
   Tone.Transport.start();
-  Tone.Transport.scheduleRepeat(function (time) {
-    synth.triggerAttackRelease("A2","4n");
-  }, "180");
+  eventId = Tone.Transport.scheduleRepeat(function (time) {
+    synth.triggerAttackRelease("A2",nota);
+  }, noteLength);
+  level = noteHertz; //Actualiza el nivel del juego
+}
+/**
+Obtiene la duracion exacta de la nota dado un tempo en bpm
+param note Nota o modulacion
+param bpm tempo en beats por minuto
+return noteLength Duración exacta de la nota
+*/
+function getNoteLength(note,bpm){
+  var noteLength = 1; //default value
+  for (var i = 0; i < bpm_note.length; i++) {
+    if(note===time_signature[i]){
+        noteLength = bpm_note[i]/bpm;
+        break;
+      }
+  }
+  console.log("Duracion de nota " + note + " con tempo " + bpm + ":" + noteLength);
+  return noteLength;
+}
 
-//Tone.Transport.bpm.rampTo(240, 4);
-
+/**
+Obtiene los hertz (Cuantas veces la modulacion sube y baja en un segundo) de una nota
+note dado un bpm.
+param note Nota o modulacion de la que se va a calcular
+param bpm beats por minuto ingresado por el usuario
+return noteHertz hertz de la modulacion dado el bpm
+*/
+function getNoteHertz(note,bpm){
+  var noteHertz = 1; //default value
+  for (var i = 0; i < bpm_note.length; i++) {
+    if(note===time_signature[i]){
+        noteHertz = bpm/bpm_note[i];
+        break;
+      }
+  }
+  console.log("Duracion de nota " + note + " con tempo " + bpm + ":" + noteHertz);
+  return noteHertz;
 }
 
 function outputUpdate(vol) {
   document.querySelector("#beats").value = vol+" bpm";
 }
-
 function izq() {
   "use strict";
   var cascara = new Howl({
