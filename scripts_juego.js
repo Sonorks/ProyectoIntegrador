@@ -50,12 +50,13 @@ var valor_semicorchea = 0.0625;
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
-var song1 = document.getElementById("selectSong1").value;
 var nivel = localStorage.getItem("nivel");
 var region = localStorage.getItem("region");
+var cancion = "select"+region+nivel;
+var song1 = document.getElementById(cancion).value;
   var numMetrica = 4;
   var denMetrica = 4;
-    file1 = "./canciones/"+region+"/"+nivel+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
+  file1 = "./canciones/"+region+"/"+nivel+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET",file1,false);
   rawFile.setRequestHeader('Content-Type','text/plain')
