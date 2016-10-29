@@ -2017,19 +2017,23 @@ function metronomo() {
 
 function izq() {
   "use strict";
-  var cascara = new Howl({
-    src: ['audios/cascaraHTML.mp3']
+  var ins = document.getElementById("selectInstrumento").value;
+  var ruta ="audios/"+ins+".mp3";
+  var sound = new Howl({
+    src: [ruta]
   });
-  cascara.play();
+  sound.play();
   puntaje(false);
 }
 
 function der() {
   "use strict";
-  var campana = new Howl({
-    src: ['audios/campanaHTML.mp3']
+  var ins2 = document.getElementById("selectInstrumento2").value;
+  var ruta2 ="audios/"+ins2+".mp3";
+  var sound2 = new Howl({
+    src: [ruta2]
   });
-  campana.play();
+  sound2.play();
   puntaje(true);
 }
 function s(Event) {

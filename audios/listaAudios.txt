@@ -1,0 +1,1 @@
+bombo,campana,crash,crosstick,hihat,hihat-abierto,hihat-pie,hihat-pieabierto,redoblante,redoblante-acento,redoblante-redoble,tom1,tom2,tom3

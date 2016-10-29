@@ -2,6 +2,7 @@
 	var ang = angular.module('taratatapp',[]);
 	var mostrar;
         var nivel;
+
 	ang.controller('DatosController', function(){
 		document.getElementById("nivelLbl").innerHTML += localStorage.getItem("nivel");
         document.getElementById("regionLbl").innerHTML += localStorage.getItem("region");
@@ -51,6 +52,36 @@
                         return false;
                 }
         }
+        var instrumentos;
+        FileInstruments = "./audios/listaAudios.txt"; //Directorio del archivo de audios
+          var rawFile = new XMLHttpRequest();
+          rawFile.open("GET",FileInstruments,false);
+          rawFile.setRequestHeader('Content-Type','text/plain');
+          rawFile.onreadystatechange = function ()
+          {
+            if(rawFile.readyState === 4)
+            {
+              if(rawFile.status === 200 || rawFile.status == 0)
+              {
+                var allText = rawFile.responseText;
+                instrumentos = allText.split(","); //En el archivo las notas estan separadas por comas (,)
+              }
+            }
+          };
+          rawFile.send(null);  
+
+        var sel = document.getElementById('selectInstrumento');
+        var sel2= document.getElementById('selectInstrumento2');
+        for(var i = 0; i < instrumentos.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = instrumentos[i];
+            opt.value = instrumentos[i];
+            var opt2 = document.createElement('option');
+            opt2.innerHTML = instrumentos[i];
+            opt2.value = instrumentos[i];
+            sel.appendChild(opt);
+            sel2.appendChild(opt2);
+        }
 	});
 	ang.directive('selectSong', function(){
 		return{
@@ -58,4 +89,6 @@
 			templateUrl: 'html/select.html'
 		};
 	});
+        
+        
 })();
