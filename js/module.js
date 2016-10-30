@@ -9,19 +9,22 @@
         document.getElementById("usuarioLbl").innerHTML += localStorage.getItem("usuario");
         region = localStorage.getItem("region");
         nivelSel = localStorage.getItem("nivel");
-        console.log(region);
-        console.log(nivelSel);
+        var banner = document.getElementById("bannerNivel");
         if(region==='Costa_pacifica'){
         	mostrar="1";
+                banner.src="img/Fondos/CostaPacifica.jpg"
         }
         else if(region==='Costa_caribe'){
         	mostrar="2";
+                banner.src="img/Fondos/CostaCaribe.jpg"
         }
         else if(region==='Andina'){
         	mostrar="3";
+                banner.src="img/Fondos/Andina.jpg"
         }
         else if(region==='Llanera'){
         	mostrar="4";
+                banner.src="img/Fondos/llanera.jpg"
         }
         if(nivelSel==='Basico'){
                 nivel="1";
