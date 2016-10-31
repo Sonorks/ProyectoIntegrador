@@ -1,0 +1,1 @@
+---Para atlantica/porro1.txt se utiliza b, pero debería ir br, falta añadir dicho dibujo
