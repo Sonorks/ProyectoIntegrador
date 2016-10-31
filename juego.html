@@ -12,15 +12,14 @@
   <img id="bannerRegion" style= 'width:100%' src="img/Fondos/CostaPacifica.jpg" alt="Banner Image"/>
 </head>
 <body  onfocus="s()" onkeydown="s()" ng-controller="DatosController as DatosCtrl">
-  <div id="infoCont" style="float:left;width:30%;font-family=;font-Family: sans-serif;font-size: larger;text-align:left;text-align:center;">
+  <div id="infoCont" style="float:left;width:25%;font-family=;font-Family: sans-serif;font-size: larger;text-align:left;">
     <h2 id="usuarioLbl">Hola </h2>
     <h2 id="regionLbl">Región: </h2>
  </div>
-  <div style="float:left;width:30%;height:200px;">
+  <div style="float:left;width:15%;height:200px;">
     <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
   </div>
-<div style="float: right;width: 30%;">
-  <div align="center">
+<div align="center" style="float: left;width: 25%;">
     <select id="selectNota" >
       <option value="2n"> Blanca </option>
       <option value="4n"> Negra </option>
@@ -29,19 +28,20 @@
       <option value="32n"> Fusa </option>
     </select>
     <label for="bpm">Beats por Minuto</label>
-    <input type="range" min="0" max="330" value="92" id="bpm" step="10" oninput="outputUpdate(value)">
+    <input type="range" min="0" max="330" value="60" id="bpm" step="10" oninput="outputUpdate(value)">
     <!--<input type="text" id="bpm_display" style="width: 60;"></input>-->
-    <output for="bpm" id="beats">92 bpm</output><br>
+    <output for="bpm" id="beats">60 bpm</output><br>
     <button type="button" class="boton" onClick="metronomo()">
       Actualiza Metronomo
     </button>
-    <select-song></select-song>
+</div>
+<div align="center" style="float: right;width: 25%;">
+    <select-song style="display:block;padding-bottom:10px;"></select-song>
     <select id=selectInstrumento></select>
     <select id=selectInstrumento2></select>
     <button type="button" class ="boton" id = "BotonInicio" onClick="readTextFile()">
       JUGAR!
     </button>
-  </div>
 </div>
 <center class="pixi">
     <div class="juego" id="canvas">
