@@ -3,17 +3,18 @@
 	var mostrar;
 
 	ang.controller('DatosController', function(){
+        document.getElementById("divReiniciar").style.display = "none";
         document.getElementById("regionLbl").innerHTML += localStorage.getItem("region");
         document.getElementById("usuarioLbl").innerHTML += localStorage.getItem("usuario");
         region = localStorage.getItem("region");
         var banner = document.getElementById("bannerRegion");
         if(region==='Costa Pacifica'){
         	mostrar="1";
-                banner.src="img/Fondos/CostaPacifica.jpg"
+                banner.src="img/Fondos/pacifico.jpg"
         }
         else if(region==='Atlantica'){
         	mostrar="2";
-                banner.src="img/Fondos/CostaCaribe.jpg"
+                banner.src="img/Fondos/atlantico.jpg"
         }
         else if(region==='Andina'){
         	mostrar="3";

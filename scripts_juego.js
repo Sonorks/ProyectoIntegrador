@@ -52,7 +52,8 @@ var denMetrica;
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
-
+  document.getElementById("divJugar").style.display = "none";
+  document.getElementById("divReiniciar").style.display = "block";
   var region = localStorage.getItem("region"); //Obtenemos el nombre de la region seleccionada
   var regionId = localStorage.getItem("regionId"); //obtenemos id de region seleccionada
   var cancion = "select"+regionId; //aqui con el id de la region

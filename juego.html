@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <title>TARATATAPP</title>
-  <img id="bannerRegion" style= 'width:100%' src="img/Fondos/CostaPacifica.jpg" alt="Banner Image"/>
+  <img id="bannerRegion" style= 'width:100%' src="" alt="Banner Image"/>
 </head>
 <body  onfocus="s()" onkeydown="s()" ng-controller="DatosController as DatosCtrl">
   <div id="infoCont" style="float:left;width:25%;font-family=;font-Family: sans-serif;font-size: larger;text-align:left;">
@@ -35,12 +35,17 @@
       Actualiza Metronomo
     </button>
 </div>
-<div align="center" style="float: right;width: 25%;">
+<div id="divJugar" align="center" style="float: right;width: 25%;">
     <select-song style="display:block;padding-bottom:10px;"></select-song>
     <select id=selectInstrumento></select>
     <select id=selectInstrumento2></select>
     <button type="button" class ="boton" id = "BotonInicio" onClick="readTextFile()">
       JUGAR!
+    </button>
+</div>
+<div id="divReiniciar" align="center" style="float: right; width: 25%;" style-display="none">
+    <button type="button" class ="boton" id = "BotonReinicio" onClick="location.href='modo.html'">
+      Reiniciar!
     </button>
 </div>
 <center class="pixi">
