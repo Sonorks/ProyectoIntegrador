@@ -51,14 +51,7 @@ var valor_semicorchea = 0.0625;
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
   var region = localStorage.getItem("region"); //Obtenemos el nombre de la region seleccionada
-  var arrayRegiones = document.getElementByClassName("botonRegion"); //array con todos elementos con class
-  var regionId;
-  for (var i = 0; i < arrayRegiones.length; i++) {
-    if(arrayRegiones[i].name===region){
-      regionId = arrayRegiones[i];
-      break;
-    }
-  }
+  var regionId = localStorage.getItem("regionId"); //obtenemos id de region seleccionada
   var cancion = "select"+regionId; //aqui con el id de la region
   var song1 = document.getElementById(cancion).value;
   var numMetrica = 4;

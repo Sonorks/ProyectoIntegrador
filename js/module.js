@@ -6,7 +6,7 @@
         document.getElementById("regionLbl").innerHTML += localStorage.getItem("region");
         document.getElementById("usuarioLbl").innerHTML += localStorage.getItem("usuario");
         region = localStorage.getItem("region");
-        var banner = document.getElementById("bannerNivel");
+        var banner = document.getElementById("bannerRegion");
         if(region==='Costa Pacifica'){
         	mostrar="1";
                 banner.src="img/Fondos/CostaPacifica.jpg"

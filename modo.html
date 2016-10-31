@@ -11,25 +11,28 @@
       Regiones
     </div>
     <div id="regiones" style="width:50%;">
-      <input name="Costa Pacifica" id="costa_pacifica" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
-      <input name="Atlantica" id="atlantica" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/atlantica.jpg"/>
-      <input name="Andina" id="andina" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/andina.jpg"/>
-      <input name="Llanera" id="llanera" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/llanera.jpg"/>
+      <input name="Costa Pacifica" id="costa_pacifica" onclick="getRegion(this.name,this.id)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
+      <input name="Atlantica" id="atlantica" onclick="getRegion(this.name,this.id)" type="image" class="botonRegion" src="img/region/atlantica.jpg"/>
+      <input name="Andina" id="andina" onclick="getRegion(this.name,this.id)" type="image" class="botonRegion" src="img/region/andina.jpg"/>
+      <input name="Llanera" id="llanera" onclick="getRegion(this.name,this.id)" type="image" class="botonRegion" src="img/region/llanera.jpg"/>
     </div>
   </div>
   <div><center><input type="button" value="Empezar" onclick="getData()" class="boton"/></center></div>
   <script>
 
     var region= "";
+    var regionId = "";
     //se llama despues de darle al boton empezar
     function getData(){
       localStorage.setItem("region",region);
       location.href="juego.html";
+      localStorage.setItem("regionId",regionId);
     }
 
     //se llama cuando se toca alguna region y guarda el nombre de la region
-    function getRegion(nameRegion){
+    function getRegion(nameRegion, idRegion){
       region = nameRegion;
+      regionId = idRegion;
     }
   </script>
 
