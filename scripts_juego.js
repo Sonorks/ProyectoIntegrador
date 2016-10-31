@@ -60,7 +60,7 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
   numMetrica = 4;
   denMetrica = 4;
   metronomo();//llama al metronomo para tomar la velocidad.
-  file1 = "./canciones/"+region+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
+  file1 = "./canciones/"+region+"/"+song1+"1.txt"; //Directorio del archivo de ritmos para el pentagrama superior
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET",file1,false);
   rawFile.setRequestHeader('Content-Type','text/plain')
@@ -76,7 +76,7 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
     }
   }
   rawFile.send(null);
-  file2 = "./canciones/"+region+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama inferior
+  file2 = "./canciones/"+region+"/"+song1+"2.txt"; //Directorio del archivo de ritmos para el pentagrama inferior
   var rawFile2 = new XMLHttpRequest();
   rawFile2.open("GET",file2,false);
   rawFile2.setRequestHeader('Content-Type','text/plain')
