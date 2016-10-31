@@ -50,13 +50,20 @@ var valor_semicorchea = 0.0625;
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
-var nivel = localStorage.getItem("nivel");
-var region = localStorage.getItem("region");
-var cancion = "select"+region+nivel;
-var song1 = document.getElementById(cancion).value;
+  var region = localStorage.getItem("region"); //Obtenemos el nombre de la region seleccionada
+  var arrayRegiones = document.getElementByClassName("botonRegion"); //array con todos elementos con class
+  var regionId;
+  for (var i = 0; i < arrayRegiones.length; i++) {
+    if(arrayRegiones[i].name===region){
+      regionId = arrayRegiones[i];
+      break;
+    }
+  }
+  var cancion = "select"+regionId; //aqui con el id de la region
+  var song1 = document.getElementById(cancion).value;
   var numMetrica = 4;
   var denMetrica = 4;
-  file1 = "./canciones/"+region+"/"+nivel+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
+  file1 = "./canciones/"+region+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET",file1,false);
   rawFile.setRequestHeader('Content-Type','text/plain')
@@ -72,7 +79,7 @@ var song1 = document.getElementById(cancion).value;
     }
   }
   rawFile.send(null);
-  file2 = "./canciones/"+region+"/"+nivel+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama inferior
+  file2 = "./canciones/"+region+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama inferior
   var rawFile2 = new XMLHttpRequest();
   rawFile2.open("GET",file2,false);
   rawFile2.setRequestHeader('Content-Type','text/plain')

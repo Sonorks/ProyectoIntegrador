@@ -11,18 +11,11 @@
       Regiones
     </div>
     <div id="regiones" style="width:50%;">
-      <input name="Costa_pacifica" id="Costa_pacifica" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
-      <input id="Costa_caribe" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/costa_caribe.jpg"/>
-      <input id="Andina" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/andina.jpg"/>
-      <input id="Llanera" onclick="getRegion(this.id)" type="image" class="botonRegion" src="img/region/llanera.jpg"/>
+      <input name="Costa Pacifica" id="costa_pacifica" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
+      <input name="Atlantica" id="atlantica" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/costa_caribe.jpg"/>
+      <input name="Andina" id="andina" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/andina.jpg"/>
+      <input name="Llanera" id="llanera" onclick="getRegion(this.name)" type="image" class="botonRegion" src="img/region/llanera.jpg"/>
     </div>
-    <b style="font-family:sans-serif;font-size: larger;">Nivel:</b>
-    <select id="selectNivel">
-      <option value="Basico" > Básico </option>
-      <option value="Intermedio" > Intermedio </option>
-      <option value="Dificil" > Difícil </option>
-      <option value="Experto" > Experto </option>
-    </select>
   </div>
   <div><center><input type="button" value="Empezar" onclick="getData()" class="boton"/></center></div>
   <script>
@@ -30,9 +23,6 @@
     var region= "";
     //se llama despues de darle al boton empezar
     function getData(){
-      var mostrar;
-      var nivel = document.getElementById("selectNivel").value;
-      localStorage.setItem("nivel",nivel);
       localStorage.setItem("region",region);
       location.href="juego.html";
     }

@@ -1,70 +1,19 @@
 <div align="center" id="divSelect" style="display:block;float:none;">
     <h2>Escoge canción:</h2>
-    <select id="selectCosta_pacificaBasico" ng-show="DatosCtrl.regionSelected('1') && DatosCtrl.nivelSelected('1')">
+    <select id="selectcosta_pacifica" ng-show="DatosCtrl.regionSelected('1')">
 	    <option value="porrochocoano1" > Porro Chocoano 1 </option>
 		<option value="currulao1" > Currulao 1 </option>
 	</select>
-	<select id="selectCosta_pacificaIntermedio" ng-show="DatosCtrl.regionSelected('1') && DatosCtrl.nivelSelected('2')">
-	    <option value="porrochocoano1" > Intermedio Pacifico 1 </option>
-		<option value="currulao1" > Intermedio Pacifico 2 </option>
-	</select>
-	<select id="selectCosta_pacificaDificil" ng-show="DatosCtrl.regionSelected('1') && DatosCtrl.nivelSelected('3')">
-	    <option value="porrochocoano1" > dificil Pacifico 1 </option>
-		<option value="currulao1" > dificil Pacifico 1 </option>
-	</select>
-	<select id="selectCosta_pacificaExperto" ng-show="DatosCtrl.regionSelected('1') && DatosCtrl.nivelSelected('4')">
-	    <option value="porrochocoano1" > experto Pacifico 1 </option>
-		<option value="currulao1" > experto Pacifico 1 </option>
-	</select>
-
-    <select id="selectCosta_caribeBasico" ng-show="DatosCtrl.regionSelected('2') && DatosCtrl.nivelSelected('1')">
-    	<option value="1" >Basico Caribe 1 </option>
-		<option value="2" >Basico Caribe 2 </option>
+    <select id="selectatlantica" ng-show="DatosCtrl.regionSelected('2')">
+    	<option value="1" > Caribe 1 </option>
+		<option value="2" > Caribe 2 </option>
     </select>
-    <select id="selectCosta_caribeIntermedio" ng-show="DatosCtrl.regionSelected('2') && DatosCtrl.nivelSelected('2')">
-    	<option value="1" >Intermedio Caribe 1 </option>
-		<option value="2" >Intermedio Caribe 2 </option>
+    <select id="selectandina" ng-show="DatosCtrl.regionSelected('3')">
+    	<option value="1" > Andina 1 </option>
+		<option value="2" > Andina 2 </option>
     </select>
-    <select id="selectCosta_caribeDificil" ng-show="DatosCtrl.regionSelected('2') && DatosCtrl.nivelSelected('3')">
-    	<option value="1" >Dificil Caribe 1 </option>
-		<option value="2" >Dificil Caribe 2 </option>
-    </select>
-    <select id="selectCosta_caribeExperto" ng-show="DatosCtrl.regionSelected('2') && DatosCtrl.nivelSelected('4')">
-    	<option value="1" >Experto Caribe 1 </option>
-		<option value="2" >Experto Caribe 2 </option>
-    </select>
-
-    <select id="selectSongAndinaBasico" ng-show="DatosCtrl.regionSelected('3') && DatosCtrl.nivelSelected('1')">
-    	<option value="1" >Basico Andina 1 </option>
-		<option value="2" >Basico Andina 2 </option>
-    </select>
-    <select id="selectSongAndinaIntermedio" ng-show="DatosCtrl.regionSelected('3') && DatosCtrl.nivelSelected('2')">
-    	<option value="1" >Intermedio Andina 1 </option>
-		<option value="2" >Intermedio Andina 2 </option>
-    </select>
-    <select id="selectSongAndinaDificil" ng-show="DatosCtrl.regionSelected('3') && DatosCtrl.nivelSelected('3')">
-    	<option value="1" >Dificil Andina 1 </option>
-		<option value="2" >Dificil Andina 2 </option>
-    </select>
-    <select id="selectSongAndinaExperto" ng-show="DatosCtrl.regionSelected('3') && DatosCtrl.nivelSelected('4')">
-    	<option value="1" >Experto Andina 1 </option>
-		<option value="2" >Experto Andina 2 </option>
-    </select>
-
-    <select id="selectSongLlaneraBasico" ng-show="DatosCtrl.regionSelected('4') && DatosCtrl.nivelSelected('1')">
-	    <option value="1" >Basico Llanera 1 </option>
-		<option value="2" >Basico Llanera 2 </option>
-    </select>
-     <select id="selectSongLlaneraIntermedio" ng-show="DatosCtrl.regionSelected('4') && DatosCtrl.nivelSelected('2')">
-	    <option value="1" >Intermedio Llanera 1 </option>
-		<option value="2" >Intermedio Llanera 2 </option>
-    </select>
-     <select id="selectSongLlaneraDificil" ng-show="DatosCtrl.regionSelected('4') && DatosCtrl.nivelSelected('3')">
-	    <option value="1" >Dificil Llanera 1 </option>
-		<option value="2" >Dificil Llanera 2 </option>
-    </select>
-     <select id="selectSongLlaneraExperto" ng-show="DatosCtrl.regionSelected('4') && DatosCtrl.nivelSelected('4')">
-	    <option value="1" >Experto Llanera 1 </option>
-		<option value="2" >Experto Llanera 2 </option>
+    <select id="selectllanera" ng-show="DatosCtrl.regionSelected('4')">
+	    <option value="1" > Llanera 1 </option>
+		<option value="2" > Llanera 2 </option>
     </select>
  </div>

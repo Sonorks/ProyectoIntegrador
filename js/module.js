@@ -1,20 +1,17 @@
 (function() {
 	var ang = angular.module('taratatapp',[]);
 	var mostrar;
-        var nivel;
 
 	ang.controller('DatosController', function(){
-		document.getElementById("nivelLbl").innerHTML += localStorage.getItem("nivel");
         document.getElementById("regionLbl").innerHTML += localStorage.getItem("region");
         document.getElementById("usuarioLbl").innerHTML += localStorage.getItem("usuario");
         region = localStorage.getItem("region");
-        nivelSel = localStorage.getItem("nivel");
         var banner = document.getElementById("bannerNivel");
-        if(region==='Costa_pacifica'){
+        if(region==='Costa Pacifica'){
         	mostrar="1";
                 banner.src="img/Fondos/CostaPacifica.jpg"
         }
-        else if(region==='Costa_caribe'){
+        else if(region==='Atlantica'){
         	mostrar="2";
                 banner.src="img/Fondos/CostaCaribe.jpg"
         }
@@ -26,19 +23,6 @@
         	mostrar="4";
                 banner.src="img/Fondos/llanera.jpg"
         }
-        if(nivelSel==='Basico'){
-                nivel="1";
-        }
-        else if(nivelSel==='Intermedio'){
-                nivel="2";
-        }
-        else if(nivelSel==='Dificil'){
-                nivel="3";
-        }
-        else if(nivelSel==='Experto'){
-                nivel="4";
-        }
-        console.log(nivel);
         this.regionSelected = function(regionSel){
         	if(regionSel===mostrar){
         		return true;
@@ -47,14 +31,6 @@
         		return false;
         	}
         };
-        this.nivelSelected = function(nivelSelec){
-                if(nivelSelec===nivel){
-                        return true;
-                }
-                else{
-                        return false;
-                }
-        }
         var instrumentos;
         FileInstruments = "./audios/listaAudios.txt"; //Directorio del archivo de audios
           var rawFile = new XMLHttpRequest();
@@ -71,7 +47,7 @@
               }
             }
           };
-          rawFile.send(null);  
+          rawFile.send(null);
 
         var sel = document.getElementById('selectInstrumento');
         var sel2= document.getElementById('selectInstrumento2');
@@ -92,6 +68,6 @@
 			templateUrl: 'html/select.html'
 		};
 	});
-        
-        
+
+
 })();
