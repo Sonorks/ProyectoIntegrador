@@ -29,10 +29,11 @@
       <option value="32n"> Fusa </option>
     </select>
     <label for="bpm">Beats por Minuto</label>
-    <input type="range" min="0" max="330" value="92" id="bpm" step="2" oninput="outputUpdate(value)">
+    <input type="range" min="0" max="330" value="92" id="bpm" step="10" oninput="outputUpdate(value)">
+    <!--<input type="text" id="bpm_display" style="width: 60;"></input>-->
     <output for="bpm" id="beats">92 bpm</output><br>
     <button type="button" class="boton" onClick="metronomo()">
-      Metronomo
+      Actualiza Metronomo
     </button>
     <select-song></select-song>
     <select id=selectInstrumento></select>

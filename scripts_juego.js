@@ -34,8 +34,8 @@ var notasTocadas2 = [];
 var count = 0;
 var añadiduras = [];
 var partituras = [];
-var posicion=700;
-var posicion2 = 700;
+var posicion=800;
+var posicion2 = 800;
 var posiciones2  =[];//= [800,900,1100,1250,1400,1600,1700,1900,2050,2200,2400,2500,2700,2850,3000,3200,3300,3500,3650,3800];
 var posiciones = []//; [700,800,900,950,1050,1100,1200,1250,1350,1450,1500,1600,1700,1750,1850,1900,2000,2050,2150,2250,2300,2400,2500,2550,2600,2650,2750,2800,2850,2950,3000,3050,3100,3200,3300,3350,3400,3450,3550,3600,3650,3750,3800,3850,3900];
 var ritmo1=[];
@@ -46,16 +46,20 @@ var valor_blanca = 0.5;
 var valor_negra = 0.25;
 var valor_corchea = 0.125;
 var valor_semicorchea = 0.0625;
+var numMetrica;
+var denMetrica;
 
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
 {
+
   var region = localStorage.getItem("region"); //Obtenemos el nombre de la region seleccionada
   var regionId = localStorage.getItem("regionId"); //obtenemos id de region seleccionada
   var cancion = "select"+regionId; //aqui con el id de la region
   var song1 = document.getElementById(cancion).value;
-  var numMetrica = 4;
-  var denMetrica = 4;
+  numMetrica = 4;
+  denMetrica = 4;
+  metronomo();//llama al metronomo para tomar la velocidad.
   file1 = "./canciones/"+region+"/"+song1+".txt"; //Directorio del archivo de ritmos para el pentagrama superior
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET",file1,false);
@@ -2007,26 +2011,50 @@ function animate() {
 var eventId; //id del evento del metronomo
 var bpm_note = [120,60,30,15,7.5];
 var time_signature = ["2n","4n","8n","16n","32n"];
+var width_note = [200,100,50,25,12.5]; //tamaño en pixeles de cada nota
 function metronomo() {
   "use strict";
   var nota = document.getElementById("selectNota").value;   //tomamos valor de nota
   var bpm = document.getElementById("bpm").value;           //tomamos valor de bpm
   var noteHertz = getNoteHertz(nota, bpm);
   var noteLength = getNoteLength(nota,bpm);
+  var width_note = getNoteWidth(nota);
   var synth = new Tone.Synth().toMaster(); //este muchacho lanza el sonido
   Tone.Transport.clear(eventId); //elimina el metronomo previo
   Tone.Transport.start();
   eventId = Tone.Transport.scheduleRepeat(function (time) {
     synth.triggerAttackRelease("A2",nota);
   }, noteLength);
-  level = noteHertz; //Actualiza el nivel del juego
+  var y = 60; //ticks por seg que se corre el requestAnimationFrame
+  var tiempo_compas = noteLength*numMetrica; //tiempo que dura compas
+  console.log("tiempo_compas :" + tiempo_compas);
+  var pixeles_por_compas = width_note*numMetrica+20; //pixeles a recorrer por compas
+  console.log("pixeles_por_compas : " + pixeles_por_compas);
+  level = pixeles_por_compas/(tiempo_compas*y); //actualiza nivel de juego
+  console.log("valor de level: " + level);
+}
+/**
+Retorna el tamaño en pixeles que le corresponde a note en el pentagrama
+param note: nota seleccionada
+return noteWidth: tamaño en pixeles de nota
+*/
+function getNoteWidth(note){
+  var noteWidth = 100; //default value negra
+  for (var i = 0; i < width_note.length; i++) {
+    if(note===time_signature[i]){
+        noteWidth = width_note[i];
+        break;
+      }
+  }
+  console.log("Tamaño de nota " + note + ":" + noteWidth);
+  return noteWidth;
 }
 
 /**
 Obtiene la duracion exacta de la nota dado un tempo en bpm
 param note Nota o modulacion
 param bpm tempo en beats por minuto
-return noteLength Duración exacta de la nota
+return noteLength Duración exacta de la nota en segundos
 */
 function getNoteLength(note,bpm){
   var noteLength = 1; //default value
