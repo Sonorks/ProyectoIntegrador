@@ -58,6 +58,7 @@ b, strong {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    margin: 10px;
     font-size: 16px;
 }
 
