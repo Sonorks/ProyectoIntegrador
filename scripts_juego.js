@@ -2022,9 +2022,10 @@ function metronomo() {
   var width_note = getNoteWidth(nota);
   var synth = new Tone.Synth().toMaster(); //este muchacho lanza el sonido
   Tone.Transport.clear(eventId); //elimina el metronomo previo
-  Tone.Transport.start();
+  //Tone.Transport.start();
   eventId = Tone.Transport.scheduleRepeat(function (time) {
-    synth.triggerAttackRelease("A2",nota);
+    synth.triggerAttackRelease(A4,nota);
+
   }, noteLength);
   var y = 60; //ticks por seg que se corre el requestAnimationFrame
   var tiempo_compas = noteLength*numMetrica; //tiempo que dura compas
