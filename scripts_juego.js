@@ -48,6 +48,8 @@ var valor_corchea = 0.125;
 var valor_semicorchea = 0.0625;
 var numMetrica;
 var denMetrica;
+var sonidos = [];
+var sonidos2 = [];
 
 
 function readTextFile(file) //Leemos los archivos de ritmos usando una peticion HTTP Request. Como HTTP usualmente es para acceso remoto, para usarlo local permitimos a chrome hacerlo con allow--files-from-local
@@ -94,7 +96,44 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
     }
   }
   rawFile2.send(null);
+
+  file3 = "./canciones/"+region+"/"+song1+"1sonido.txt";
+  var rawFile3 = new XMLHttpRequest();
+  rawFile3.open("GET",file3,false);
+  rawFile3.setRequestHeader('Content-Type','text/plain')
+  rawFile3.onreadystatechange = function ()
+  {
+    if(rawFile3.readyState === 4)
+    {
+      if(rawFile3.status === 200 || rawFile3.status == 0)
+      {
+        var allText = rawFile3.responseText;
+        sonidos = allText.split(","); //En el archivo las notas estan separadas por comas (,)
+      }
+    }
+  }
+  rawFile3.send(null);
+
+  file4 = "./canciones/"+region+"/"+song1+"2sonido.txt";
+  var rawFile4 = new XMLHttpRequest();
+  rawFile4.open("GET",file4,false);
+  rawFile4.setRequestHeader('Content-Type','text/plain')
+  rawFile4.onreadystatechange = function ()
+  {
+    if(rawFile4.readyState === 4)
+    {
+      if(rawFile4.status === 200 || rawFile4.status == 0)
+      {
+        var allText = rawFile4.responseText;
+        sonidos2 = allText.split(","); //En el archivo las notas estan separadas por comas (,)
+      }
+    }
+  }
+  rawFile4.send(null);
+
   //console.log(partituras);
+  //console.log(sonidos);
+  //console.log(sonidos2);
   numMetrica = parseInt(partituras[0]);
   denMetrica = parseInt(partituras[1]);
   partituras.splice(0,2);
@@ -2008,6 +2047,8 @@ function animate() {
   if(counter2===posiciones2.length && counter === notas.length){
     console.log("Fin del juego");
   }
+  //console.log("valor del counter: "+ counter + " cantidad de notas en 2: " + partituras.length);
+  //console.log("valor del counter2: "+ counter2 + " cantidad de notas en 2: " + partituras2.length);
   requestAnimationFrame(animate);
   renderer.render(stage);
 
@@ -2099,23 +2140,25 @@ function outputUpdate(vol) {
 
 function izq() {
   "use strict";
-  var ins = document.getElementById("selectInstrumento").value;
+  var ins = sonidos2[counter2];
   var ruta ="audios/"+ins+".mp3";
   var sound = new Howl({
     src: [ruta]
   });
   sound.play();
+  //console.log("Sonido tocado izq: " + sonidos2[counter2]);
   puntaje(false);
 }
 
 function der() {
   "use strict";
-  var ins2 = document.getElementById("selectInstrumento2").value;
+  var ins2 = sonidos[counter];
   var ruta2 ="audios/"+ins2+".mp3";
   var sound2 = new Howl({
     src: [ruta2]
   });
   sound2.play();
+  //console.log("Sonido tocado der: " + sonidos[counter]);
   puntaje(true);
 }
 function s(Event) {

@@ -1,1 +1,1 @@
-bombo,bombo,redoblante,tom3,tom3,tom3,redoblante,tom3,redoblante,tom3,bombo,bombo,redoblante,tom3,tom3,tom3,redoblante,tom3,redoblante,tom3,bombo,bombo,redoblante,tom3,tom3,tom3,redoblante,tom3,redoblante,tom3
+bombo,redoblante,tom3,tom3,tom3,redoblante,tom3,redoblante,tom3,bombo,redoblante,tom3,tom3,tom3,redoblante,tom3,redoblante,tom3,bombo,redoblante,tom3,tom3,tom3,redoblante,tom3,redoblante,tom3
