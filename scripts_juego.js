@@ -58,8 +58,8 @@ function readTextFile(file) //Leemos los archivos de ritmos usando una peticion 
   var regionId = localStorage.getItem("regionId"); //obtenemos id de region seleccionada
   var cancion = "select"+regionId; //aqui con el id de la region
   var song1 = document.getElementById(cancion).value;
-  numMetrica = 6;
-  denMetrica = 8;
+  numMetrica = 4;
+  denMetrica = 4;
   metronomo();//llama al metronomo para tomar la velocidad.
   file1 = "./canciones/"+region+"/"+song1+"1.txt"; //Directorio del archivo de ritmos para el pentagrama superior
   var rawFile = new XMLHttpRequest();
