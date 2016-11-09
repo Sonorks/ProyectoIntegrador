@@ -2017,11 +2017,11 @@ var eventId; //id del evento del metronomo
 var bpm_note = [120,60,30,15,7.5];
 var time_signature = ["2n","4n","8n","16n","32n"];
 var width_note = [200,100,50,25,12.5]; //tamaño en pixeles de cada nota
+
 function metronomo() {
   "use strict";
   var nota = document.getElementById("selectNota").value;   //tomamos valor de nota
   var bpm = document.getElementById("bpm").value;           //tomamos valor de bpm
-  var noteHertz = getNoteHertz(nota, bpm);
   var noteLength = getNoteLength(nota,bpm);
   var width_note = getNoteWidth(nota);
   var synth = new Tone.Synth().toMaster(); //este muchacho lanza el sonido
@@ -2099,7 +2099,8 @@ function outputUpdate(vol) {
 
 function izq() {
   "use strict";
-  var ins = document.getElementById("selectInstrumento").value;
+  //var ins = document.getElementById("selectInstrumento").value;
+  var ins = "campana";
   var ruta ="audios/"+ins+".mp3";
   var sound = new Howl({
     src: [ruta]
@@ -2110,7 +2111,8 @@ function izq() {
 
 function der() {
   "use strict";
-  var ins2 = document.getElementById("selectInstrumento2").value;
+  //var ins2 = document.getElementById("selectInstrumento2").value;
+  var ins2 = "campana";
   var ruta2 ="audios/"+ins2+".mp3";
   var sound2 = new Howl({
     src: [ruta2]

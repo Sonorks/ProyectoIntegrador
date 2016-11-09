@@ -32,6 +32,7 @@
         		return false;
         	}
         };
+        /**
         var instrumentos;
         FileInstruments = "./audios/listaAudios.txt"; //Directorio del archivo de audios
           var rawFile = new XMLHttpRequest();
@@ -61,7 +62,7 @@
             opt2.value = instrumentos[i];
             sel.appendChild(opt);
             sel2.appendChild(opt2);
-        }
+        }**/
 	});
 	ang.directive('selectSong', function(){
 		return{
