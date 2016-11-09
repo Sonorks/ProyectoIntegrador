@@ -1,1 +1,1 @@
-nx,cx,cx,nx,cx,cx,nx,cx,cx,sq,c,n,nx,cx,cx,nx,cx,cx,nx,cx,cx,sq,c,n,nx,cx,cx,nx,cx,scx,scx,,c,c,c,c,,c,c,n,nx,cx,cx,nx,cx,scx,scx,,c,c,c,c,,c,c,n
+4,4,nx,cx,cx,nx,cx,cx,nx,cx,cx,sq,c,n,nx,cx,cx,nx,cx,cx,nx,cx,cx,sq,c,n,nx,cx,cx,nx,cx,scx,scx,,c,c,c,c,,c,c,n,nx,cx,cx,nx,cx,scx,scx,,c,c,c,c,,c,c,n

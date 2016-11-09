@@ -1,1 +1,1 @@
-n,sq,cx,c,c,,c,cx,c,,cx,nr,n,sq,cx,c,c,,c,cx,c,,cx,nr,n,sq,cx,c,c,,c,cx,c,,cx,nr
+6,8,n,sq,cx,c,c,,c,cx,c,,cx,nr,n,sq,cx,c,c,,c,cx,c,,cx,nr,n,sq,cx,c,c,,c,cx,c,,cx,nr

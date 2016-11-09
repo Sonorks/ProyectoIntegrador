@@ -1,1 +1,1 @@
-nx,nx,nr,n,sq,c,sq,c,n,c,c,b,n,nx,sq,c,sq,c,n,c,c,b,n,nx,sq,c,sq,c,n,c,c
+4,4,nx,nx,nr,n,sq,c,sq,c,n,c,c,b,n,nx,sq,c,sq,c,n,c,c,b,n,nx,sq,c,sq,c,n,c,c
