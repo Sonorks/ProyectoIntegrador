@@ -6,15 +6,19 @@
 <script src="js/howler.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/module.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <head>
   <meta charset="utf-8">
   <title>TARATATAPP</title>
   <img id="bannerRegion" style= 'width:100%' src="" alt="Banner Image"/>
 </head>
 <body  onfocus="s()" onkeydown="s()" ng-controller="DatosController as DatosCtrl">
-  <div id="infoCont" style="float:left;width:25%;font-family=;font-Family: sans-serif;font-size: larger;text-align:left;">
-    <h2 id="usuarioLbl">Hola </h2>
-    <h2 id="regionLbl">Región: </h2>
+  <div class="panel panel-info" id="infoCont" style="float:left;width:15%;margin:15">
+    <div class="panel-heading"><h4>Información</h4></div>
+    <div class="panel-body">
+      <h4 id="usuarioLbl">Hola </h4>
+      <h4>Region: <strong id="regionLbl"></strong></h4>
+    </div>
  </div>
   <div style="float:left;width:15%;height:200px;">
     <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
@@ -52,5 +56,9 @@
     <div class="juego" id="canvas">
     </div>
   </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 </body>
 </html>

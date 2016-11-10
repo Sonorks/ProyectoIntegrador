@@ -3,35 +3,49 @@
 <head>
   <meta charset="utf-8">
   <title>Taratatapp! Aprende Música Jugando</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+ 
 </head>
 <body>
 <img id="banner" style="height: 300px" src="img/Fondos/Fondobanner.jpg" alt="Banner Image"/>
-  <div id="loginForm">
-    <form id="login">
-      <p>¿Como te llamas?:<p>
-      <input type="text" id="username"><br>
-      <input type="button" value="Inicio" class="boton" onclick="openPage()" />
-    </form>
+  <div class="panel panel-default" id="loginForm">
+    <div class="panel-heading"><h3>¿Como te llamas?</h3></div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" id="username" placeholder="Nombre"><br>
+            <input type="button" value="Inicio" class="btn btn-primary" onclick="openPage()" />
+          </div>
+        </form>
+      </div>
   </div>
   <div id="instrucciones">
-    <h1>
-      Bienvenido!
-     </h1>
-    <p>
+  <div class="panel panel-primary" >
+    <div class="panel-heading">
+      <h3>Bienvenido!</h3>
+    </div>
+    <div class="panel-body">
       Taratatapp es un juego que permitirá a los estudiantes de música, más específicamente de percusión, adquirir y perfeccionar sus habilidades rítmicas haciendo énfasis en la disociación motora. <br> Debes tocar cada figura musical junto cuando pase
       por la barra detectora. Como son dos ritmos distintos, posiblemente tendrás que usar tus dos manos para seguirlos!
-    </p>
-    <h2>
-      Controles
-     </h2>
-    <p>
+    </div>
+  </div>
+  <div class="panel panel-info" >
+    <div class="panel-heading">
+    <h3>Controles</h3></div>
+    <div class="panel-body">
       Presiona "k" para tocar el ritmo del pentagrama superior. <br> Presiona "s" para tocar el ritmo del pentagrama inferior.
-    </p>
-    <h2>Puntaje</h2>
-    <p>
-      Si no tocas la nota, recibiras una penalizacion de 200 puntos.<br> Si tocas la nota cerca a la barra, recibiras 100 puntos. <br> Si tocas la nota justo cuando pasa por la barra, recibiras 100 puntos.<br><br>
+    </div>
+  </div>
+  <div class="panel panel-info">
+    <div class="panel-heading"><h3>Puntaje</h3></div>
+    <div class="panel-body">
+      Si no tocas la nota, recibiras una penalizacion de 200 puntos.<br> Si tocas la nota cerca a la barra, recibiras 100 puntos. <br> Si tocas la nota justo cuando pasa por la barra, recibiras 200 puntos.<br><br>
       <h4>Buena Suerte</h4>
-    </p>
+    </div>
+  </div>
   </div>
   <script type="text/javascript">
   	function openPage(){
@@ -39,6 +53,10 @@
   		location.href="modo.html";
   	}
   </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 
 </body>

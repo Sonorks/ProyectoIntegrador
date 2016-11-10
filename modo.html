@@ -1,15 +1,17 @@
 <html>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <head>
   <meta charset="utf-8">
   <title>Taratatapp! Modo de Juego</title>
 </head>
 <body>
   <img id="banner" style="height: 300px" src="img/Fondos/Fondobanner.jpg" alt="Banner Image"/>
-  <div align="center" style="display:block;">
-    <div style="float:left;width: 30%;font-family=;font-Family: sans-serif;font-size: x-large;text-align:right;font-weight: bold;">
+  <div class=".col-md-4">
+  <div align="center" style="display:block;margin:20;">
+    <h1>
       Regiones
-    </div>
+    </h1>
     <div id="regiones" style="width:50%;">
       <input name="Costa Pacifica" id="costa_pacifica" onclick="getRegion(this.name,this.id)" type="image" class="botonRegion" src="img/region/costa_pacifica.jpg"/>
       <input name="Atlantica" id="atlantica" onclick="getRegion(this.name,this.id)" type="image" class="botonRegion" src="img/region/atlantica.jpg"/>
@@ -17,7 +19,8 @@
       <input name="Llanera" id="llanera" onclick="getRegion(this.name,this.id)" type="image" class="botonRegion" src="img/region/llanera.jpg"/>
     </div>
   </div>
-  <div><center><input type="button" value="Empezar" onclick="getData()" class="boton"/></center></div>
+  <div><center><input type="button" value="Empezar" onclick="getData()" class="btn btn-lg btn-success"/></center></div>
+  </div>
   <script>
 
     var region= "";
@@ -35,6 +38,10 @@
       regionId = idRegion;
     }
   </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 </body>
 

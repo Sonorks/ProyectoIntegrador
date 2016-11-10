@@ -1,14 +1,14 @@
 html {
-    background: #999999;
 }
 
 body {
     margin: 0;
     padding: 0;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: 100% 100%;
     opacity: 100;
     background-position: center;
+    background: url(img/Fondos/fondo.jpg) no-repeat center center fixed; 
 
 
 }
@@ -23,9 +23,7 @@ body {
     }
 
 div {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+    
 }
 
 label {
@@ -35,13 +33,7 @@ label {
     display: block;
 }
 
-h2 {
-    margin-top: 1.3em;
-}
 
-h3 {
-    color: darkgreen;
-}
 a {
     color: #0083e8;
 }
@@ -79,11 +71,13 @@ input {
 #loginForm{
   width:15%;
   float:left;
+  margin:20;
 }
 
 #instrucciones{
     width: 70%;
   float:left;
+  margin:20;
 }
 
 .botonRegion {
@@ -102,7 +96,4 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.5;
     margin-top:0;
     font-family:Tahoma;
-}
-p {
-  font-family:Tahoma;
 }
