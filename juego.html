@@ -13,44 +13,51 @@
   <img id="bannerRegion" style= 'width:100%' src="" alt="Banner Image"/>
 </head>
 <body  onfocus="s()" onkeydown="s()" ng-controller="DatosController as DatosCtrl">
-  <div class="panel panel-info" id="infoCont" style="float:left;width:15%;margin:15">
-    <div class="panel-heading"><h4>Información</h4></div>
+  <div class="panel panel-primary" id="infoCont" style="float:left;width:15%;margin:15;height:200px;">
+    <div class="panel-heading"><h4>INFORMACION</h4></div>
     <div class="panel-body">
       <h4 id="usuarioLbl">Hola </h4>
       <h4>Region: <strong id="regionLbl"></strong></h4>
     </div>
  </div>
-  <div style="float:left;width:15%;height:200px;">
-    <center><h1>PUNTAJE:</h1><h1 type="label" id="Score">0</h1></center>
+  <div align="center" class="panel panel-primary" style="float:left;width:15%;height:200px;margin:15">
+    <div class="panel-heading"><h4>PUNTAJE</h4></div>
+    <div class="panel-body"><center><h1 type="label" id="Score">0</h1></center></div>
   </div>
-<div align="center" style="float: left;width: 25%;">
-    <select id="selectNota" >
-      <option value="2n"> Blanca </option>
-      <option value="4n"> Negra </option>
-      <option value="8n"> Corchea </option>
-      <option value="16n"> Semicorchea </option>
-      <option value="32n"> Fusa </option>
-    </select>
-    <label for="bpm">Beats por Minuto</label>
-    <input type="range" min="0" max="330" value="60" id="bpm" step="10" oninput="outputUpdate(value)">
-    <!--<input type="text" id="bpm_display" style="width: 60;"></input>-->
-    <output for="bpm" id="beats">60 bpm</output><br>
-    <button type="button" class="boton" onClick="metronomo()">
-      Actualiza Metronomo
-    </button>
+<div class="panel panel-primary" align="center" style="float: left;width: 25%;margin:15;">
+    <div class="panel-heading"><h4>METRONOMO</h4></div>
+      <div class="panel-body">
+        <select class="form-control" id="selectNota" >
+          <option value="2n"> Blanca </option>
+          <option value="4n"> Negra </option>
+          <option value="8n"> Corchea </option>
+          <option value="16n"> Semicorchea </option>
+          <option value="32n"> Fusa </option>
+        </select><br>
+        <input type="range" min="0" max="330" value="60" id="bpm" step="10" oninput="outputUpdate(value)">
+        <!--<input type="text" id="bpm_display" style="width: 60;"></input>-->
+        <output for="bpm" id="beats">60 bpm</output><br>
+        <button type="button" class="btn btn-success" onClick="metronomo()">
+          Actualiza Metronomo
+        </button>
+      </div>
 </div>
-<div id="divJugar" align="center" style="float: right;width: 25%;">
-    <select-song style="display:block;padding-bottom:10px;"></select-song>
+<div class="panel panel-primary" id="divJugar" align="center" style="float: left; margin: 15px; width: 30%;">
+    <div class="panel-heading"><h4>ESCOGE CANCION</h4></div>
+    <div class="panel-body"><select-song style="display:block;padding-bottom:10px;"></select-song>
     <!--<select id=selectInstrumento></select>
     <select id=selectInstrumento2></select>-->
-    <button type="button" class ="boton" id = "BotonInicio" onClick="readTextFile()">
+    <button type="button" class ="btn btn-success" id = "BotonInicio" onClick="readTextFile()">
       JUGAR!
     </button>
+    </div>
 </div>
-<div id="divReiniciar" align="center" style="float: right; width: 25%;" style-display="none">
-    <button type="button" class ="boton" id = "BotonReinicio" onClick="location.href='modo.html'">
+<div class="panel panel-info" id="divReiniciar" align="center" style="float: left; width: 25%; margin:15;" style-display="none">
+    <div class="panel-heading"><h4>REINICIAR</h4></div>
+    <div class="panel-body">"<button type="button" class ="boton" id = "BotonReinicio" onClick="location.href='modo.html'">
       Reiniciar!
     </button>
+    </div>
 </div>
 <center class="pixi">
     <div class="juego" id="canvas">
